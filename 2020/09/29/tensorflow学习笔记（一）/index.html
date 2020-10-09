@@ -304,35 +304,33 @@
     <div class="post-body" itemprop="articleBody">
         <p>tensorflow常用函数</p>
 <a id="more"></a>
-
-<h2 id="创建张量"><a href="#创建张量" class="headerlink" title="创建张量"></a>创建张量</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">tf.constant(<span class="number">1.2</span>) <span class="comment"># 创建一个0维张量，也叫标量，shape为[]</span></span><br><span class="line">tf.constant([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]) <span class="comment"># 创建一个1维张量，也叫向量，shape为[3]</span></span><br><span class="line">tf.constant([[<span class="number">2</span>, <span class="number">3</span>], [<span class="number">1</span>, <span class="number">4</span>]]) <span class="comment"># 创建一个2维张量，也叫矩阵，shape为[2, 2]</span></span><br><span class="line">tf.constant([[[<span class="number">1</span>, <span class="number">2</span>], [<span class="number">2</span>, <span class="number">3</span>]], [[<span class="number">2</span>, <span class="number">3</span>], [<span class="number">3</span>, <span class="number">4</span>]]]) <span class="comment"># 创建一个3维张量，shape为[2, 2, 2]</span></span><br></pre></td></tr></table></figure>
-
+<h2 id="创建张量">创建张量</h2>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">tf.constant(<span class="number">1.2</span>) <span class="comment"># 创建一个0维张量，也叫标量，shape为[]</span></span><br><span class="line">tf.constant([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]) <span class="comment"># 创建一个1维张量，也叫向量，shape为[3]</span></span><br><span class="line">tf.constant([[<span class="number">2</span>, <span class="number">3</span>], [<span class="number">1</span>, <span class="number">4</span>]]) <span class="comment"># 创建一个2维张量，也叫矩阵，shape为[2, 2]</span></span><br><span class="line">tf.constant([[[<span class="number">1</span>, <span class="number">2</span>], [<span class="number">2</span>, <span class="number">3</span>]], [[<span class="number">2</span>, <span class="number">3</span>], [<span class="number">3</span>, <span class="number">4</span>]]]) <span class="comment"># 创建一个3维张量，shape为[2, 2, 2]</span></span><br></pre></td></tr></table></figure>
 <p>1维及以上的张量都要用list来创建。</p>
 <p>另外，还支持传入字符串和布尔类型变量来创建张量。但是tensorflow类型的布尔变量和python内置类型的布尔变量并不相等。</p>
 <p>可以用dtype参数指定传入数据的精度，访问张量的dtype变量可以获得它的数据精度。</p>
 <p>使用<code>tf.cast(tensor, dtype)</code>改变张量的精度，其中，tensor表示待转换数据精度的张量，dtype表示将其转换成的精度。转换时，要注意可能发生的溢出错误。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">a = tf.constant(<span class="number">12345678</span>, dtype=int32) <span class="comment"># 组成a的数据精度被指定为int32</span></span><br><span class="line">print(a.dtype) <span class="comment"># 结果为int32</span></span><br><span class="line">a = tf.cast(a, dtype=double) <span class="comment"># 将a的数据精度改为double</span></span><br></pre></td></tr></table></figure>
-
 <p>另外，<code>tf.convert_to_tensor()</code>也可以将Numpry Array和Python List对象转化为张量，其用法和<code>tf.constant()</code>一样，二者功能也一样。</p>
-<h2 id="创建待优化张量"><a href="#创建待优化张量" class="headerlink" title="创建待优化张量"></a>创建待优化张量</h2><p>为了区分需要计算梯度信息的张量与不需要计算梯度信息的张量，TensorFlow 增加了 一种专门的数据类型来支持梯度信息的记录：tf.Variable。tf.Variable 类型在普通的张量类 型基础上添加了 name，trainable 等属性来支持计算图的构建。由于梯度运算会消耗大量的 计算资源，而且会自动更新相关参数，对于不需要的优化的张量，如神经网络的输入𝑿， 不需要通过 tf.Variable 封装；相反，对于需要计算梯度并优化的张量，如神经网络层的𝑾 和𝒃，需要通过 tf.Variable 包裹以便TensorFlow跟踪相关梯度信息。</p>
+<h2 id="创建待优化张量">创建待优化张量</h2>
+<p>为了区分需要计算梯度信息的张量与不需要计算梯度信息的张量，TensorFlow 增加了 一种专门的数据类型来支持梯度信息的记录：tf.Variable。tf.Variable 类型在普通的张量类 型基础上添加了 name，trainable 等属性来支持计算图的构建。由于梯度运算会消耗大量的 计算资源，而且会自动更新相关参数，对于不需要的优化的张量，如神经网络的输入𝑿， 不需要通过 tf.Variable 封装；相反，对于需要计算梯度并优化的张量，如神经网络层的𝑾 和𝒃，需要通过 tf.Variable 包裹以便TensorFlow跟踪相关梯度信息。</p>
 <p>可以将普通张量传入来创建，也可以直接创建。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">a = tf.constant([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>])</span><br><span class="line">aa = tf.Variable(a)</span><br><span class="line">aaa = tf.Variable([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>])</span><br><span class="line">print(a.trainable) <span class="comment"># trainable变量表示是否需要优化，对于待优化张量，这个值一般为True，也可以设置为False</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="其余常用创建方法"><a href="#其余常用创建方法" class="headerlink" title="其余常用创建方法"></a>其余常用创建方法</h2><h3 id="创建全0或全1张量"><a href="#创建全0或全1张量" class="headerlink" title="创建全0或全1张量"></a>创建全0或全1张量</h3><h2 id="拼接函数"><a href="#拼接函数" class="headerlink" title="拼接函数"></a>拼接函数</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tf.concat(tensors, axis)</span><br></pre></td></tr></table></figure>
-
+<h2 id="其余常用创建方法">其余常用创建方法</h2>
+<h3 id="创建全0或全1张量">创建全0或全1张量</h3>
+<h2 id="拼接函数">拼接函数</h2>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tf.concat(tensors, axis)</span><br></pre></td></tr></table></figure>
 <p>其中，tensors表示需要拼接的张量，axis表示在哪一个维度上拼接，要求非拼接的维度必须一致。例如：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">a = tf.random.normal([<span class="number">4</span>, <span class="number">6</span>, <span class="number">10</span>])</span><br><span class="line">b = tf.random.normal([<span class="number">6</span>, <span class="number">6</span>, <span class="number">10</span>])</span><br><span class="line">c = tf.concat([a, b], axis=<span class="number">0</span>)</span><br><span class="line"><span class="comment"># c的shape为(10, 6, 10)</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="堆叠函数"><a href="#堆叠函数" class="headerlink" title="堆叠函数"></a>堆叠函数</h2><p>拼接函数直接在现有维度上合并，不创建新的维度，如果需要创建新的维度，使用堆叠函数。</p>
+<h2 id="堆叠函数">堆叠函数</h2>
+<p>拼接函数直接在现有维度上合并，不创建新的维度，如果需要创建新的维度，使用堆叠函数。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tf.stack(tensors, axis)</span><br></pre></td></tr></table></figure>
-
 <p>其中，tensors表示需要堆叠的张量，axis表示新维度插入的维度，当axis&gt;=0时，插入在该维度之前，当axis&lt;0时，插入在该维度之后。</p>
 <p>堆叠函数需要所有被堆叠的张量维度都一致。例如：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">a = tf.random.normal([<span class="number">35</span>, <span class="number">8</span>])</span><br><span class="line">b = tf.random.normal([<span class="number">35</span>, <span class="number">8</span>])</span><br><span class="line">c = tf.stack([a, b], axis=<span class="number">2</span>)</span><br><span class="line"><span class="comment"># c的shape为(35, 8, 2)</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="分割函数"><a href="#分割函数" class="headerlink" title="分割函数"></a>分割函数</h2><p>分割函数是拼接的逆函数。</p>
+<h2 id="分割函数">分割函数</h2>
+<p>分割函数是拼接的逆函数。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tf.split(x, num_or_size_splits, axis)</span><br></pre></td></tr></table></figure>
-
 <p>其中</p>
 <ul>
 <li>x表示待分割张量</li>
@@ -340,7 +338,6 @@
 <li>axis表示指定在哪个维度进行分割</li>
 </ul>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">a = tf.random.normal([<span class="number">10</span>, <span class="number">35</span>, <span class="number">8</span>])</span><br><span class="line">result = tf.split(a, <span class="number">10</span>, axis=<span class="number">0</span>)</span><br><span class="line"><span class="comment"># result长度为10，其中每个元素的shape为(1, 35, 8)</span></span><br><span class="line">result2 = tf.split(a, [<span class="number">4</span>, <span class="number">2</span>, <span class="number">2</span>, <span class="number">2</span>], axis=<span class="number">0</span>)</span><br><span class="line"><span class="comment"># result2长度为4，其中4个元素的shape分别为(4, 35, 8), (2, 35, 8), (2, 35, 8), (2, 35, 8)</span></span><br></pre></td></tr></table></figure>
-
 <p>特别地，如果希望在某个维度上全部按长度为 1 的方式分割，还可以使用 <code>tf.unstack(x, axis)</code>函数。这种方式是 tf.split 的一种特殊情况，切割长度固定为 1，只需要指定切割维度 的索引号即可。</p>
 
     </div>
