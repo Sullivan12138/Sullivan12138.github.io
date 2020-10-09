@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title>Hello World</title>
+    <url>/2020/10/09/hello-world/</url>
+    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+<h2 id="quick-start">Quick Start</h2>
+<h3 id="create-a-new-post">Create a new post</h3>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
+<h3 id="run-server">Run server</h3>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
+<h3 id="generate-static-files">Generate static files</h3>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
+<h3 id="deploy-to-remote-sites">Deploy to remote sites</h3>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+]]></content>
+  </entry>
+  <entry>
+    <title>Kotlin空指针</title>
+    <url>/2020/10/04/Kotlin%E7%A9%BA%E6%8C%87%E9%92%88/</url>
+    <content><![CDATA[<p>Kotlin中默认所有参数和变量都非空，例如：</p>
+<figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">    doStudy(<span class="literal">null</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">doStudy</span><span class="params">(study: <span class="type">Study</span>)</span></span> &#123;</span><br><span class="line">    study.readBooks()</span><br><span class="line">    study.doHomework()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这段代码会报错，因为传入了空指针。</p>
+<p>要想定义可以为空的参数或变量，需要在类型名后面加上?，上述代码改成下面这样就可以了</p>
+<figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">doStudy</span><span class="params">(study: <span class="type">Study</span>?)</span></span> &#123;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>但是这时study的两个方法又会报错，因为这时可以传入空指针了，编译器会暗示我们进行空指针检查，我们可以用?.运算符，这个运算符表示如果为空就不执行返回Null，如果非空就执行。</p>
+<figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line">study?.readBooks()</span><br><span class="line">study?.doHomework()</span><br></pre></td></tr></table></figure>
+<p>另外还有?:运算符，这个运算符表示如果左边的语句非空就返回左边的执行结果，否则返回右边的执行结果。</p>
+<figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line"><span class="keyword">val</span> c = a?:b</span><br><span class="line">表示</span><br><span class="line"><span class="keyword">val</span> c = <span class="keyword">if</span> (a != <span class="literal">null</span>) &#123;</span><br><span class="line">    a</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    b</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>!!是非空断言语句，表示我们告诉编译器它前面的对象就是非空的，不需要空指针检查。</p>
+<p>let是Kotlin一个内置函数，它将调用它的变量传入后面的lambda表达式中。它可以用来和?.结合。</p>
+<p>上述的代码</p>
+<figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line">study?.readBooks()</span><br><span class="line">study?.doHomework()</span><br></pre></td></tr></table></figure>
+<p>实际上执行了两次if else判断，用let可以简化</p>
+<figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line">study?.let &#123; stu -&gt;</span><br><span class="line">           stu.readBooks()</span><br><span class="line">           stu.doHomework()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>先判断study是否非空，如果非空就执行let函数，将study传入，执行后面的两个函数</p>
+<p>此外let可以用于处理全局变量的判空问题，但是if不可以。</p>
+]]></content>
+      <tags>
+        <tag>Android开发</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>math-plugin-test</title>
+    <url>/2020/10/09/math-plugin-test/</url>
+    <content><![CDATA[<p>The famous matter-energy equation <span class="math inline">\(\eqref{eq1}\)</span> proposed by Einstein...</p>
+<p><span class="math display">\[\begin{equation} \label{eq1}
+e=mc^2
+\end{equation}\]</span></p>
+]]></content>
+      <tags>
+        <tag>test</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>tensorflow学习笔记（一）</title>
+    <url>/2020/09/29/tensorflow%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%80%EF%BC%89/</url>
+    <content><![CDATA[<p>tensorflow常用函数</p>
+<a id="more"></a>
+<h2 id="创建张量">创建张量</h2>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">tf.constant(<span class="number">1.2</span>) <span class="comment"># 创建一个0维张量，也叫标量，shape为[]</span></span><br><span class="line">tf.constant([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]) <span class="comment"># 创建一个1维张量，也叫向量，shape为[3]</span></span><br><span class="line">tf.constant([[<span class="number">2</span>, <span class="number">3</span>], [<span class="number">1</span>, <span class="number">4</span>]]) <span class="comment"># 创建一个2维张量，也叫矩阵，shape为[2, 2]</span></span><br><span class="line">tf.constant([[[<span class="number">1</span>, <span class="number">2</span>], [<span class="number">2</span>, <span class="number">3</span>]], [[<span class="number">2</span>, <span class="number">3</span>], [<span class="number">3</span>, <span class="number">4</span>]]]) <span class="comment"># 创建一个3维张量，shape为[2, 2, 2]</span></span><br></pre></td></tr></table></figure>
+<p>1维及以上的张量都要用list来创建。</p>
+<p>另外，还支持传入字符串和布尔类型变量来创建张量。但是tensorflow类型的布尔变量和python内置类型的布尔变量并不相等。</p>
+<p>可以用dtype参数指定传入数据的精度，访问张量的dtype变量可以获得它的数据精度。</p>
+<p>使用<code>tf.cast(tensor, dtype)</code>改变张量的精度，其中，tensor表示待转换数据精度的张量，dtype表示将其转换成的精度。转换时，要注意可能发生的溢出错误。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">a = tf.constant(<span class="number">12345678</span>, dtype=int32) <span class="comment"># 组成a的数据精度被指定为int32</span></span><br><span class="line">print(a.dtype) <span class="comment"># 结果为int32</span></span><br><span class="line">a = tf.cast(a, dtype=double) <span class="comment"># 将a的数据精度改为double</span></span><br></pre></td></tr></table></figure>
+<p>另外，<code>tf.convert_to_tensor()</code>也可以将Numpry Array和Python List对象转化为张量，其用法和<code>tf.constant()</code>一样，二者功能也一样。</p>
+<h2 id="创建待优化张量">创建待优化张量</h2>
+<p>为了区分需要计算梯度信息的张量与不需要计算梯度信息的张量，TensorFlow 增加了 一种专门的数据类型来支持梯度信息的记录：tf.Variable。tf.Variable 类型在普通的张量类 型基础上添加了 name，trainable 等属性来支持计算图的构建。由于梯度运算会消耗大量的 计算资源，而且会自动更新相关参数，对于不需要的优化的张量，如神经网络的输入𝑿， 不需要通过 tf.Variable 封装；相反，对于需要计算梯度并优化的张量，如神经网络层的𝑾 和𝒃，需要通过 tf.Variable 包裹以便TensorFlow跟踪相关梯度信息。</p>
+<p>可以将普通张量传入来创建，也可以直接创建。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">a = tf.constant([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>])</span><br><span class="line">aa = tf.Variable(a)</span><br><span class="line">aaa = tf.Variable([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>])</span><br><span class="line">print(a.trainable) <span class="comment"># trainable变量表示是否需要优化，对于待优化张量，这个值一般为True，也可以设置为False</span></span><br></pre></td></tr></table></figure>
+<h2 id="其余常用创建方法">其余常用创建方法</h2>
+<h3 id="创建全0或全1张量">创建全0或全1张量</h3>
+<h2 id="拼接函数">拼接函数</h2>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">tf.concat(tensors, axis)</span><br></pre></td></tr></table></figure>
+<p>其中，tensors表示需要拼接的张量，axis表示在哪一个维度上拼接，要求非拼接的维度必须一致。例如：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">a = tf.random.normal([<span class="number">4</span>, <span class="number">6</span>, <span class="number">10</span>])</span><br><span class="line">b = tf.random.normal([<span class="number">6</span>, <span class="number">6</span>, <span class="number">10</span>])</span><br><span class="line">c = tf.concat([a, b], axis=<span class="number">0</span>)</span><br><span class="line"><span class="comment"># c的shape为(10, 6, 10)</span></span><br></pre></td></tr></table></figure>
+<h2 id="堆叠函数">堆叠函数</h2>
+<p>拼接函数直接在现有维度上合并，不创建新的维度，如果需要创建新的维度，使用堆叠函数。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">tf.stack(tensors, axis)</span><br></pre></td></tr></table></figure>
+<p>其中，tensors表示需要堆叠的张量，axis表示新维度插入的维度，当axis&gt;=0时，插入在该维度之前，当axis&lt;0时，插入在该维度之后。</p>
+<p>堆叠函数需要所有被堆叠的张量维度都一致。例如：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">a = tf.random.normal([<span class="number">35</span>, <span class="number">8</span>])</span><br><span class="line">b = tf.random.normal([<span class="number">35</span>, <span class="number">8</span>])</span><br><span class="line">c = tf.stack([a, b], axis=<span class="number">2</span>)</span><br><span class="line"><span class="comment"># c的shape为(35, 8, 2)</span></span><br></pre></td></tr></table></figure>
+<h2 id="分割函数">分割函数</h2>
+<p>分割函数是拼接的逆函数。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">tf.split(x, num_or_size_splits, axis)</span><br></pre></td></tr></table></figure>
+<p>其中</p>
+<ul>
+<li>x表示待分割张量</li>
+<li>num_or_size_splits表示切割方案。当其为单个值时，如10，表示等长切割为10份。当其为List时，表示按list的结构去分割。</li>
+<li>axis表示指定在哪个维度进行分割</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">a = tf.random.normal([<span class="number">10</span>, <span class="number">35</span>, <span class="number">8</span>])</span><br><span class="line">result = tf.split(a, <span class="number">10</span>, axis=<span class="number">0</span>)</span><br><span class="line"><span class="comment"># result长度为10，其中每个元素的shape为(1, 35, 8)</span></span><br><span class="line">result2 = tf.split(a, [<span class="number">4</span>, <span class="number">2</span>, <span class="number">2</span>, <span class="number">2</span>], axis=<span class="number">0</span>)</span><br><span class="line"><span class="comment"># result2长度为4，其中4个元素的shape分别为(4, 35, 8), (2, 35, 8), (2, 35, 8), (2, 35, 8)</span></span><br></pre></td></tr></table></figure>
+<p>特别地，如果希望在某个维度上全部按长度为 1 的方式分割，还可以使用 <code>tf.unstack(x, axis)</code>函数。这种方式是 tf.split 的一种特殊情况，切割长度固定为 1，只需要指定切割维度 的索引号即可。</p>
+]]></content>
+      <tags>
+        <tag>tensorflow</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>安卓开发学习笔记（一）</title>
+    <url>/2020/10/07/%E5%AE%89%E5%8D%93%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%80%EF%BC%89/</url>
+    <content><![CDATA[<h2 id="文件结构">文件结构</h2>
+<p>app/src/main/java目录下存放所有的java代码和Kotlin代码。app/src/main/AndroidManifest.xml是整个Android项目的配置文件，程序中定义的四大组件（Activity、Service、BroadcastReceiver、ContentProvider）都要在这里注册了以后才能用。app/src/main/res目录下，以drawable开头的文件夹存放着图片，以mipmap开头的存放着图标，以values开头的存放着字符串、样式、颜色等配置，以layout开头的存放着布局文件。所有界面都是通过XML文件编写出来的。</p>
+<h2 id="声明activity">声明Activity</h2>
+<p>Activity是一种可以包含用户界面的组件，主要用于和用户进行交互。一个应用程序可以包含0个或多个Activity，但是不包含Activity的应用程序很少见。</p>
+<p>项目中任何Activity都要重写onCreate()方法。每一个Activity最好都要对应一个布局文件。</p>
+<p>Activity必须要在AndroidManifest.xml文件中注册，注册的方法为：</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">activity</span> <span class="attr">android:name</span>=<span class="string">&quot;.FirstActivity&quot;</span> &gt;</span><span class="tag">&lt;/<span class="name">activity</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>不过一般Android Studio会自动帮我们创建。上面的android:name用来指定注册哪一个Activity，而.FirstActivity是com.example.activitytest.FirstActivity的缩写写。因为AndroidManifest.xml文件已经在最外层的 &lt;manifest&gt; 中指定了包名，所以这里可以省略包名。</p>
+<p>配置主Activity的方式是在&lt;activity&gt;标签内部加上&lt;intent-filter&gt;标签，并在其中加上<code>&lt;action android:name="android.intent.action.MAIN" /&gt;         &lt;category android:name="android.intent.category.LAUNCHER" /&gt;</code>此外还可以用android:label属性指定Activity标题栏的内容，标题栏显示在Activity最顶部，而且会成为启动器（Launcher）中应用程序显示的名称。</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">android</span> <span class="attr">android:name</span>=<span class="string">&quot;.FirstActivity&quot;</span></span></span><br><span class="line"><span class="tag">         <span class="attr">android:label</span>=<span class="string">&quot;This is FirstActivity&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">intent-filter</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">action</span> <span class="attr">android:name</span>=<span class="string">&quot;android.intent.action.MAIN&quot;</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">category</span> <span class="attr">android:name</span>=<span class="string">&quot;android.intent.category.LAUNCHER&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">intent-filter</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">android</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>如果没有声明主Activity，这个应用程序就不能运行，但是可以作为库文件被其他应用程序调用。</p>
+<h2 id="toast">Toast</h2>
+<p>Toast是一种提醒方式，过一段时间后会消失，并且不会占用任何屏幕空间。</p>
+<figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line"><span class="keyword">val</span> button1: Button = findViewById(R.id.button1)</span><br><span class="line">button1.setOnClickListener &#123;</span><br><span class="line">    Toast.makeText(<span class="keyword">this</span>, <span class="string">&quot;You clicked Button 1&quot;</span>, Toast.LENGTH_SHORT).show()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>findViewById()用于获取布局文件中定义的元素，这个id是在XML文件中的<code>&lt;android:id="@+id/button1"</code>定义的。findViewById返回的是一个继承自View的泛型对象，Kotlin无法自动推导出它是Button还是其他控件，因此需要强制类型转换。</p>
+<p>Toast的用法很简单，通过静态方法makeText()方法创建一个Toast对象，然后调用show()方法将Toast显示出来。makeText()需要传入3个参数，第一个是context，也就是Toast要求的上下文，由于Activity本身就是一个Context对象，因此直接传入this即可。第二个是Toast显示的文本内容，第三个是显示的时长，有两个内置常量可以选择：Toast.LENGTH_SHORT和Toast.LENGTH_LONG</p>
+<p>Kotlin编写的Android项目在app/build.gradle文件的头部默认引入了一个kotlin-android-extensions插件，这个插件会根据布局文件中定义的控件id自动生成一个具有相同名称的变量，我们可以在Activity中直接使用这些变量，就不再需要findViewById()方法了。当然还是建议使用Android Studio的自动补全功能，因为这些自动生成的变量也是需要导包的。</p>
+<h2 id="menu">Menu</h2>
+<p>menu通过Android Studio中Menu resource file文件创建，它的xml文件开头是<code>&lt;menu&gt;</code>标签，而AndroidManifest.xml开头是<code>&lt;manifest&gt;</code>标签，layout文件开头是<code>&lt;Layout&gt;</code>标签。</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">menu</span> <span class="attr">xmlns:android</span>=<span class="string">&quot;http://schemas.android.com/apk/res/android&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">item</span></span></span><br><span class="line"><span class="tag">          <span class="attr">android:id</span>=<span class="string">&quot;@+id/add_item&quot;</span></span></span><br><span class="line"><span class="tag">          <span class="attr">android:title</span>=<span class="string">&quot;Add&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">item</span></span></span><br><span class="line"><span class="tag">          <span class="attr">android:id</span>=<span class="string">&quot;@+id/remove_item&quot;</span></span></span><br><span class="line"><span class="tag">          <span class="attr">android:title</span>=<span class="string">&quot;Remove&quot;</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">menu</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p><code>&lt;item&gt;</code>标签用于创建一个菜单项，通过<code>&lt;android:id&gt;</code>给这个菜单项指定一个id，通过<code>&lt;android:title&gt;</code>给这个菜单项指定一个名称。</p>
+<p>然后需要重写onCreateOptionsMenu()方法。</p>
+<figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line"><span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">onCreateOptionsMenu</span><span class="params">(menu: <span class="type">Menu</span>?)</span></span>: <span class="built_in">Boolean</span> &#123;</span><br><span class="line">    menuInflater.inflate(R.menu.main, menu)</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>menuInflater实际上是调用了父类的getMenuInflater()方法，返回一个menuInflater对象。它的inflate()方法接受两个参数，第一个参数用于指定我们通过哪个资源文件来创建菜单，第二个参数用于指定我们的菜单项添加到哪个Menu对象之中，这里我们直接使用onCreateOptionsMenu()方法中传入的menu参数。最后返回true表示将菜单显示出来。</p>
+<p>通过重写onOptionsItemSelected()方法来定义当我们点击菜单时的响应事件。</p>
+<figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line"><span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">onOptionsItemSelected</span><span class="params">(item: <span class="type">MenuItem</span>)</span></span>: <span class="built_in">Boolean</span> &#123;</span><br><span class="line">    <span class="keyword">when</span> (item.itemId) &#123;</span><br><span class="line">        R.id.add_item -&gt; Toast.makeText(<span class="keyword">this</span>, <span class="string">&quot;You clicked Add&quot;</span>, Toast.LENGTH_SHORT).show()</span><br><span class="line">        R.id.remove_item -&gt; Toast.makeText(<span class="keyword">this</span>, <span class="string">&quot;You clicked Remove&quot;</span>, Toast.LENGTH_SHORT).show()</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>通过<code>item.itemId</code>判断点击的是哪个菜单项</p>
+<h2 id="销毁activity">销毁Activity</h2>
+<p>按下back键可以销毁，也可以在代码中调用finish()方法销毁。</p>
+<figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line">button1.setOnClickListener &#123;</span><br><span class="line">    finish()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+]]></content>
+      <tags>
+        <tag>Android开发</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>用多台电脑写博客</title>
+    <url>/2020/10/08/%E7%94%A8%E5%A4%9A%E5%8F%B0%E7%94%B5%E8%84%91%E5%86%99%E5%8D%9A%E5%AE%A2/</url>
+    <content><![CDATA[<p>这篇博客用于记录我是如何在实验室电脑和自己的笔记本上同时更新博客的。</p>
+<p>这句话来自实验室电脑</p>
+]]></content>
+      <categories>
+        <category>自学</category>
+      </categories>
+      <tags>
+        <tag>hexo</tag>
+      </tags>
+  </entry>
+</search>
