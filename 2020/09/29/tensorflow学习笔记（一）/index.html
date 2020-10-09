@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.0/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"taowei1999.com","root":"/","scheme":"Gemini","version":"8.0.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}};
+  </script>
+
+  <meta name="description" content="tensorflow常用函数">
+<meta property="og:type" content="article">
+<meta property="og:title" content="tensorflow学习笔记（一）">
+<meta property="og:url" content="http://taowei1999.com/2020/09/29/tensorflow%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%80%EF%BC%89/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="tensorflow常用函数">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-09-29T02:46:27.000Z">
+<meta property="article:modified_time" content="2020-10-08T14:42:40.130Z">
+<meta property="article:author" content="fwxiaotao">
+<meta property="article:tag" content="tensorflow">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://taowei1999.com/2020/09/29/tensorflow%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%80%EF%BC%89/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>tensorflow学习笔记（一） | Hexo</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Hexo</h1>
+      <i class="logo-line"></i>
+    </a>
+      <img class="custom-logo-image" src="/uploads/custom-logo.jpg" alt="Hexo">
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-schedule">
+
+    <a href="/schedule/" rel="section"><i class="fa fa-calendar fa-fw"></i>日程表</a>
+
+  </li>
+        <li class="menu-item menu-item-sitemap">
+
+    <a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>站点地图</a>
+
+  </li>
+        <li class="menu-item menu-item-commonweal">
+
+    <a href="/404/" rel="section"><i class="fa fa-heartbeat fa-fw"></i>公益 404</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <section class="post-toc-wrap sidebar-panel">
+          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E5%BC%A0%E9%87%8F"><span class="nav-number">1.</span> <span class="nav-text">创建张量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E5%BE%85%E4%BC%98%E5%8C%96%E5%BC%A0%E9%87%8F"><span class="nav-number">2.</span> <span class="nav-text">创建待优化张量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B6%E4%BD%99%E5%B8%B8%E7%94%A8%E5%88%9B%E5%BB%BA%E6%96%B9%E6%B3%95"><span class="nav-number">3.</span> <span class="nav-text">其余常用创建方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E5%85%A80%E6%88%96%E5%85%A81%E5%BC%A0%E9%87%8F"><span class="nav-number">3.1.</span> <span class="nav-text">创建全0或全1张量</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8B%BC%E6%8E%A5%E5%87%BD%E6%95%B0"><span class="nav-number">4.</span> <span class="nav-text">拼接函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A0%86%E5%8F%A0%E5%87%BD%E6%95%B0"><span class="nav-number">5.</span> <span class="nav-text">堆叠函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%86%E5%89%B2%E5%87%BD%E6%95%B0"><span class="nav-number">6.</span> <span class="nav-text">分割函数</span></a></li></ol></div>
+      </section>
+      <!--/noindex-->
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">fwxiaotao</p>
+  <div class="site-description" itemprop="description">一个用于记录学习笔记和生活心得的博客网站</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="cc-license site-overview-item animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed-zh" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+      </section>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+      
+
+      
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://taowei1999.com/2020/09/29/tensorflow%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%80%EF%BC%89/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="fwxiaotao">
+      <meta itemprop="description" content="一个用于记录学习笔记和生活心得的博客网站">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          tensorflow学习笔记（一）
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2020-09-29 10:46:27" itemprop="dateCreated datePublished" datetime="2020-09-29T10:46:27+08:00">2020-09-29</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2020-10-08 22:42:40" itemprop="dateModified" datetime="2020-10-08T22:42:40+08:00">2020-10-08</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>tensorflow常用函数</p>
+<a id="more"></a>
+
+<h2 id="创建张量"><a href="#创建张量" class="headerlink" title="创建张量"></a>创建张量</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">tf.constant(<span class="number">1.2</span>) <span class="comment"># 创建一个0维张量，也叫标量，shape为[]</span></span><br><span class="line">tf.constant([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]) <span class="comment"># 创建一个1维张量，也叫向量，shape为[3]</span></span><br><span class="line">tf.constant([[<span class="number">2</span>, <span class="number">3</span>], [<span class="number">1</span>, <span class="number">4</span>]]) <span class="comment"># 创建一个2维张量，也叫矩阵，shape为[2, 2]</span></span><br><span class="line">tf.constant([[[<span class="number">1</span>, <span class="number">2</span>], [<span class="number">2</span>, <span class="number">3</span>]], [[<span class="number">2</span>, <span class="number">3</span>], [<span class="number">3</span>, <span class="number">4</span>]]]) <span class="comment"># 创建一个3维张量，shape为[2, 2, 2]</span></span><br></pre></td></tr></table></figure>
+
+<p>1维及以上的张量都要用list来创建。</p>
+<p>另外，还支持传入字符串和布尔类型变量来创建张量。但是tensorflow类型的布尔变量和python内置类型的布尔变量并不相等。</p>
+<p>可以用dtype参数指定传入数据的精度，访问张量的dtype变量可以获得它的数据精度。</p>
+<p>使用<code>tf.cast(tensor, dtype)</code>改变张量的精度，其中，tensor表示待转换数据精度的张量，dtype表示将其转换成的精度。转换时，要注意可能发生的溢出错误。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">a = tf.constant(<span class="number">12345678</span>, dtype=int32) <span class="comment"># 组成a的数据精度被指定为int32</span></span><br><span class="line">print(a.dtype) <span class="comment"># 结果为int32</span></span><br><span class="line">a = tf.cast(a, dtype=double) <span class="comment"># 将a的数据精度改为double</span></span><br></pre></td></tr></table></figure>
+
+<p>另外，<code>tf.convert_to_tensor()</code>也可以将Numpry Array和Python List对象转化为张量，其用法和<code>tf.constant()</code>一样，二者功能也一样。</p>
+<h2 id="创建待优化张量"><a href="#创建待优化张量" class="headerlink" title="创建待优化张量"></a>创建待优化张量</h2><p>为了区分需要计算梯度信息的张量与不需要计算梯度信息的张量，TensorFlow 增加了 一种专门的数据类型来支持梯度信息的记录：tf.Variable。tf.Variable 类型在普通的张量类 型基础上添加了 name，trainable 等属性来支持计算图的构建。由于梯度运算会消耗大量的 计算资源，而且会自动更新相关参数，对于不需要的优化的张量，如神经网络的输入𝑿， 不需要通过 tf.Variable 封装；相反，对于需要计算梯度并优化的张量，如神经网络层的𝑾 和𝒃，需要通过 tf.Variable 包裹以便TensorFlow跟踪相关梯度信息。</p>
+<p>可以将普通张量传入来创建，也可以直接创建。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">a = tf.constant([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>])</span><br><span class="line">aa = tf.Variable(a)</span><br><span class="line">aaa = tf.Variable([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>])</span><br><span class="line">print(a.trainable) <span class="comment"># trainable变量表示是否需要优化，对于待优化张量，这个值一般为True，也可以设置为False</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="其余常用创建方法"><a href="#其余常用创建方法" class="headerlink" title="其余常用创建方法"></a>其余常用创建方法</h2><h3 id="创建全0或全1张量"><a href="#创建全0或全1张量" class="headerlink" title="创建全0或全1张量"></a>创建全0或全1张量</h3><h2 id="拼接函数"><a href="#拼接函数" class="headerlink" title="拼接函数"></a>拼接函数</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tf.concat(tensors, axis)</span><br></pre></td></tr></table></figure>
+
+<p>其中，tensors表示需要拼接的张量，axis表示在哪一个维度上拼接，要求非拼接的维度必须一致。例如：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">a = tf.random.normal([<span class="number">4</span>, <span class="number">6</span>, <span class="number">10</span>])</span><br><span class="line">b = tf.random.normal([<span class="number">6</span>, <span class="number">6</span>, <span class="number">10</span>])</span><br><span class="line">c = tf.concat([a, b], axis=<span class="number">0</span>)</span><br><span class="line"><span class="comment"># c的shape为(10, 6, 10)</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="堆叠函数"><a href="#堆叠函数" class="headerlink" title="堆叠函数"></a>堆叠函数</h2><p>拼接函数直接在现有维度上合并，不创建新的维度，如果需要创建新的维度，使用堆叠函数。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tf.stack(tensors, axis)</span><br></pre></td></tr></table></figure>
+
+<p>其中，tensors表示需要堆叠的张量，axis表示新维度插入的维度，当axis&gt;=0时，插入在该维度之前，当axis&lt;0时，插入在该维度之后。</p>
+<p>堆叠函数需要所有被堆叠的张量维度都一致。例如：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">a = tf.random.normal([<span class="number">35</span>, <span class="number">8</span>])</span><br><span class="line">b = tf.random.normal([<span class="number">35</span>, <span class="number">8</span>])</span><br><span class="line">c = tf.stack([a, b], axis=<span class="number">2</span>)</span><br><span class="line"><span class="comment"># c的shape为(35, 8, 2)</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="分割函数"><a href="#分割函数" class="headerlink" title="分割函数"></a>分割函数</h2><p>分割函数是拼接的逆函数。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tf.split(x, num_or_size_splits, axis)</span><br></pre></td></tr></table></figure>
+
+<p>其中</p>
+<ul>
+<li>x表示待分割张量</li>
+<li>num_or_size_splits表示切割方案。当其为单个值时，如10，表示等长切割为10份。当其为List时，表示按list的结构去分割。</li>
+<li>axis表示指定在哪个维度进行分割</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">a = tf.random.normal([<span class="number">10</span>, <span class="number">35</span>, <span class="number">8</span>])</span><br><span class="line">result = tf.split(a, <span class="number">10</span>, axis=<span class="number">0</span>)</span><br><span class="line"><span class="comment"># result长度为10，其中每个元素的shape为(1, 35, 8)</span></span><br><span class="line">result2 = tf.split(a, [<span class="number">4</span>, <span class="number">2</span>, <span class="number">2</span>, <span class="number">2</span>], axis=<span class="number">0</span>)</span><br><span class="line"><span class="comment"># result2长度为4，其中4个元素的shape分别为(4, 35, 8), (2, 35, 8), (2, 35, 8), (2, 35, 8)</span></span><br></pre></td></tr></table></figure>
+
+<p>特别地，如果希望在某个维度上全部按长度为 1 的方式分割，还可以使用 <code>tf.unstack(x, axis)</code>函数。这种方式是 tf.split 的一种特殊情况，切割长度固定为 1，只需要指定切割维度 的索引号即可。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>fwxiaotao
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="http://taowei1999.com/2020/09/29/tensorflow%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%80%EF%BC%89/" title="tensorflow学习笔记（一）">http://taowei1999.com/2020/09/29/tensorflow学习笔记（一）/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed-zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/tensorflow/" rel="tag"># tensorflow</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+            </div>
+            <div class="post-nav-item">
+                <a href="/2020/10/04/Kotlin%E7%A9%BA%E6%8C%87%E9%92%88/" rel="next" title="Kotlin空指针">
+                  Kotlin空指针 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+      
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      
+
+      
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">fwxiaotao</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.0/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
