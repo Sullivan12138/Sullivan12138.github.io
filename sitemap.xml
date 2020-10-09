@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://taowei1999.com/2020/10/09/math-plugin-test/</loc>
+    
+    <lastmod>2020-10-09</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://taowei1999.com/404/index.html</loc>
     
     <lastmod>2020-10-09</lastmod>
@@ -89,6 +96,13 @@
   
   <url>
     <loc>http://taowei1999.com/tags/hexo/</loc>
+    <lastmod>2020-10-09</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://taowei1999.com/tags/test/</loc>
     <lastmod>2020-10-09</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
