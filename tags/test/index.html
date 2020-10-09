@@ -469,6 +469,18 @@ document.addEventListener('pjax:success', () => {
   window.addEventListener('load', loadCount, false);
 </script>
 
+<script>
+NexT.utils.loadComments('#valine-comments', () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js', () => {
+    new Valine(Object.assign({"enable":true,"appId":"okH1FIpoDFc1rBhhWjSbmvJU-gzGzoHsz# Your leancloud application appid","appKey":"I3V6fWAzSLUk2kJkcyWIy8qG# Your leancloud application appkey","serverURLs":null,"placeholder":"Just go go","avatar":"mm","meta":["nick","mail","link"],"pageSize":10,"lang":null,"visitor":false,"comment_count":true,"recordIP":false,"enableQQ":false,"requiredFields":[]}, {
+      el: '#valine-comments',
+      path: "/tags/test/",
+      serverURLs: "https://okh1fipo.api.lncldglobal.com"
+    }));
+  }, window.Valine);
+});
+</script>
+
     </div>
 </body>
 </html>
