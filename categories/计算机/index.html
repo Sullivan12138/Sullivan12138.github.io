@@ -23,21 +23,18 @@
     var CONFIG = {"hostname":"taowei1999.com","root":"/","scheme":"Gemini","version":"8.0.1","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":true,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
   </script>
 
-  <meta name="description" content="文件结构 app&#x2F;src&#x2F;main&#x2F;java目录下存放所有的java代码和Kotlin代码。app&#x2F;src&#x2F;main&#x2F;AndroidManifest.xml是整个Android项目的配置文件，程序中定义的四大组件（Activity、Service、BroadcastReceiver、ContentProvider）都要在这里注册了以后才能用。app&#x2F;src&#x2F;main&#x2F;res目录下，以drawabl">
-<meta property="og:type" content="article">
-<meta property="og:title" content="安卓开发学习笔记（一）">
-<meta property="og:url" content="http://taowei1999.com/2020/10/07/%E5%AE%89%E5%8D%93%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%80%EF%BC%89/index.html">
+  <meta name="description" content="一个用于记录学习笔记和生活心得的博客网站">
+<meta property="og:type" content="website">
+<meta property="og:title" content="fwxiaotao博客站">
+<meta property="og:url" content="http://taowei1999.com/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/index.html">
 <meta property="og:site_name" content="fwxiaotao博客站">
-<meta property="og:description" content="文件结构 app&#x2F;src&#x2F;main&#x2F;java目录下存放所有的java代码和Kotlin代码。app&#x2F;src&#x2F;main&#x2F;AndroidManifest.xml是整个Android项目的配置文件，程序中定义的四大组件（Activity、Service、BroadcastReceiver、ContentProvider）都要在这里注册了以后才能用。app&#x2F;src&#x2F;main&#x2F;res目录下，以drawabl">
+<meta property="og:description" content="一个用于记录学习笔记和生活心得的博客网站">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2020-10-07T11:00:53.000Z">
-<meta property="article:modified_time" content="2020-10-08T14:42:40.131Z">
 <meta property="article:author" content="fwxiaotao">
-<meta property="article:tag" content="Android开发">
 <meta name="twitter:card" content="summary">
 
 
-<link rel="canonical" href="http://taowei1999.com/2020/10/07/%E5%AE%89%E5%8D%93%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%80%EF%BC%89/">
+<link rel="canonical" href="http://taowei1999.com/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/">
 
 
 <script data-pjax class="page-configurations">
@@ -45,13 +42,13 @@
   CONFIG.page = {
     sidebar: "",
     isHome : false,
-    isPost : true,
+    isPost : false,
     lang   : 'zh-CN'
   };
 </script><script src="https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget@latest/autoload.js"></script>
 
 
-  <title>安卓开发学习笔记（一） | fwxiaotao博客站</title>
+  <title>分类: 计算机 | fwxiaotao博客站</title>
   
 
 
@@ -143,7 +140,7 @@
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">4</span></a>
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">3</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -153,7 +150,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">6</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">3</span></a>
 
   </li>
         <li class="menu-item menu-item-commonweal">
@@ -205,7 +202,7 @@
 
   <aside class="sidebar">
 
-    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+    <div class="sidebar-inner sidebar-overview-active">
       <ul class="sidebar-nav">
         <li class="sidebar-nav-toc">
           文章目录
@@ -217,7 +214,6 @@
 
       <!--noindex-->
       <section class="post-toc-wrap sidebar-panel">
-          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84"><span class="nav-number">1.</span> <span class="nav-text">文件结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A3%B0%E6%98%8Eactivity"><span class="nav-number">2.</span> <span class="nav-text">声明Activity</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#toast"><span class="nav-number">3.</span> <span class="nav-text">Toast</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#menu"><span class="nav-number">4.</span> <span class="nav-text">Menu</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%94%80%E6%AF%81activity"><span class="nav-number">5.</span> <span class="nav-text">销毁Activity</span></a></li></ol></div>
       </section>
       <!--/noindex-->
 
@@ -233,7 +229,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">6</span>
+          <span class="site-state-item-count">3</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -246,7 +242,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-count">3</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -560,208 +556,98 @@ if(canvas.getContext){
 </noscript>
 
 
-    <div class="main-inner post posts-expand">
+    <div class="main-inner category posts-collapse">
       
 
       
 
   
-
-
-<div class="post-block">
   
   
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://taowei1999.com/2020/10/07/%E5%AE%89%E5%8D%93%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%80%EF%BC%89/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="fwxiaotao">
-      <meta itemprop="description" content="一个用于记录学习笔记和生活心得的博客网站">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="fwxiaotao博客站">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          安卓开发学习笔记（一）
-        </h1>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2020-10-07 19:00:53" itemprop="dateCreated datePublished" datetime="2020-10-07T19:00:53+08:00">2020-10-07</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2020-10-08 22:42:40" itemprop="dateModified" datetime="2020-10-08T22:42:40+08:00">2020-10-08</time>
-      </span>
-
-  
-    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="far fa-eye"></i>
-      </span>
-      <span class="post-meta-item-text">阅读次数：</span>
-      <span id="busuanzi_value_page_pv"></span>
-    </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus：</span>
-    
-    <a title="disqus" href="/2020/10/07/%E5%AE%89%E5%8D%93%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%80%EF%BC%89/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2020/10/07/安卓开发学习笔记（一）/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
+  <div class="post-block">
+    <div class="post-content">
+      <div class="collection-title">
+        <h2 class="collection-header">计算机
+          <small>分类</small>
+        </h2>
       </div>
-      <div class="post-meta">
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>3.4k</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>3 分钟</span>
-    </span>
-</div>
 
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-        <h2 id="文件结构">文件结构</h2>
-<p>app/src/main/java目录下存放所有的java代码和Kotlin代码。app/src/main/AndroidManifest.xml是整个Android项目的配置文件，程序中定义的四大组件（Activity、Service、BroadcastReceiver、ContentProvider）都要在这里注册了以后才能用。app/src/main/res目录下，以drawable开头的文件夹存放着图片，以mipmap开头的存放着图标，以values开头的存放着字符串、样式、颜色等配置，以layout开头的存放着布局文件。所有界面都是通过XML文件编写出来的。</p>
-<h2 id="声明activity">声明Activity</h2>
-<p>Activity是一种可以包含用户界面的组件，主要用于和用户进行交互。一个应用程序可以包含0个或多个Activity，但是不包含Activity的应用程序很少见。</p>
-<p>项目中任何Activity都要重写onCreate()方法。每一个Activity最好都要对应一个布局文件。</p>
-<p>Activity必须要在AndroidManifest.xml文件中注册，注册的方法为：</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">activity</span> <span class="attr">android:name</span>=<span class="string">&quot;.FirstActivity&quot;</span> &gt;</span><span class="tag">&lt;/<span class="name">activity</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p>不过一般Android Studio会自动帮我们创建。上面的android:name用来指定注册哪一个Activity，而.FirstActivity是com.example.activitytest.FirstActivity的缩写写。因为AndroidManifest.xml文件已经在最外层的 &lt;manifest&gt; 中指定了包名，所以这里可以省略包名。</p>
-<p>配置主Activity的方式是在&lt;activity&gt;标签内部加上&lt;intent-filter&gt;标签，并在其中加上<code>&lt;action android:name="android.intent.action.MAIN" /&gt;         &lt;category android:name="android.intent.category.LAUNCHER" /&gt;</code>此外还可以用android:label属性指定Activity标题栏的内容，标题栏显示在Activity最顶部，而且会成为启动器（Launcher）中应用程序显示的名称。</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">android</span> <span class="attr">android:name</span>=<span class="string">&quot;.FirstActivity&quot;</span></span></span><br><span class="line"><span class="tag">         <span class="attr">android:label</span>=<span class="string">&quot;This is FirstActivity&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">intent-filter</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">action</span> <span class="attr">android:name</span>=<span class="string">&quot;android.intent.action.MAIN&quot;</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">category</span> <span class="attr">android:name</span>=<span class="string">&quot;android.intent.category.LAUNCHER&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">intent-filter</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">android</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p>如果没有声明主Activity，这个应用程序就不能运行，但是可以作为库文件被其他应用程序调用。</p>
-<h2 id="toast">Toast</h2>
-<p>Toast是一种提醒方式，过一段时间后会消失，并且不会占用任何屏幕空间。</p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> button1: Button = findViewById(R.id.button1)</span><br><span class="line">button1.setOnClickListener &#123;</span><br><span class="line">    Toast.makeText(<span class="keyword">this</span>, <span class="string">&quot;You clicked Button 1&quot;</span>, Toast.LENGTH_SHORT).show()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>findViewById()用于获取布局文件中定义的元素，这个id是在XML文件中的<code>&lt;android:id="@+id/button1"</code>定义的。findViewById返回的是一个继承自View的泛型对象，Kotlin无法自动推导出它是Button还是其他控件，因此需要强制类型转换。</p>
-<p>Toast的用法很简单，通过静态方法makeText()方法创建一个Toast对象，然后调用show()方法将Toast显示出来。makeText()需要传入3个参数，第一个是context，也就是Toast要求的上下文，由于Activity本身就是一个Context对象，因此直接传入this即可。第二个是Toast显示的文本内容，第三个是显示的时长，有两个内置常量可以选择：Toast.LENGTH_SHORT和Toast.LENGTH_LONG</p>
-<p>Kotlin编写的Android项目在app/build.gradle文件的头部默认引入了一个kotlin-android-extensions插件，这个插件会根据布局文件中定义的控件id自动生成一个具有相同名称的变量，我们可以在Activity中直接使用这些变量，就不再需要findViewById()方法了。当然还是建议使用Android Studio的自动补全功能，因为这些自动生成的变量也是需要导包的。</p>
-<h2 id="menu">Menu</h2>
-<p>menu通过Android Studio中Menu resource file文件创建，它的xml文件开头是<code>&lt;menu&gt;</code>标签，而AndroidManifest.xml开头是<code>&lt;manifest&gt;</code>标签，layout文件开头是<code>&lt;Layout&gt;</code>标签。</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">menu</span> <span class="attr">xmlns:android</span>=<span class="string">&quot;http://schemas.android.com/apk/res/android&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">item</span></span></span><br><span class="line"><span class="tag">          <span class="attr">android:id</span>=<span class="string">&quot;@+id/add_item&quot;</span></span></span><br><span class="line"><span class="tag">          <span class="attr">android:title</span>=<span class="string">&quot;Add&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">item</span></span></span><br><span class="line"><span class="tag">          <span class="attr">android:id</span>=<span class="string">&quot;@+id/remove_item&quot;</span></span></span><br><span class="line"><span class="tag">          <span class="attr">android:title</span>=<span class="string">&quot;Remove&quot;</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">menu</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p><code>&lt;item&gt;</code>标签用于创建一个菜单项，通过<code>&lt;android:id&gt;</code>给这个菜单项指定一个id，通过<code>&lt;android:title&gt;</code>给这个菜单项指定一个名称。</p>
-<p>然后需要重写onCreateOptionsMenu()方法。</p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">onCreateOptionsMenu</span><span class="params">(menu: <span class="type">Menu</span>?)</span></span>: <span class="built_in">Boolean</span> &#123;</span><br><span class="line">    menuInflater.inflate(R.menu.main, menu)</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>menuInflater实际上是调用了父类的getMenuInflater()方法，返回一个menuInflater对象。它的inflate()方法接受两个参数，第一个参数用于指定我们通过哪个资源文件来创建菜单，第二个参数用于指定我们的菜单项添加到哪个Menu对象之中，这里我们直接使用onCreateOptionsMenu()方法中传入的menu参数。最后返回true表示将菜单显示出来。</p>
-<p>通过重写onOptionsItemSelected()方法来定义当我们点击菜单时的响应事件。</p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">onOptionsItemSelected</span><span class="params">(item: <span class="type">MenuItem</span>)</span></span>: <span class="built_in">Boolean</span> &#123;</span><br><span class="line">    <span class="keyword">when</span> (item.itemId) &#123;</span><br><span class="line">        R.id.add_item -&gt; Toast.makeText(<span class="keyword">this</span>, <span class="string">&quot;You clicked Add&quot;</span>, Toast.LENGTH_SHORT).show()</span><br><span class="line">        R.id.remove_item -&gt; Toast.makeText(<span class="keyword">this</span>, <span class="string">&quot;You clicked Remove&quot;</span>, Toast.LENGTH_SHORT).show()</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>通过<code>item.itemId</code>判断点击的是哪个菜单项</p>
-<h2 id="销毁activity">销毁Activity</h2>
-<p>按下back键可以销毁，也可以在代码中调用finish()方法销毁。</p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">button1.setOnClickListener &#123;</span><br><span class="line">    finish()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
+      
+    <div class="collection-year">
+      <span class="collection-header">2020</span>
     </div>
 
-    
-    
-    
-
-    <footer class="post-footer">
-          <div class="reward-container">
-  <div>您的关注与支持是我更新最大的动力！</div>
-  <button onclick="document.querySelector('.post-reward').classList.toggle('active');">
-    赞赏
-  </button>
-  <div class="post-reward">
-      <div>
-        <img src="/images/wechatpay.png" alt="fwxiaotao 微信">
-        <span>微信</span>
-      </div>
-      <div>
-        <img src="/images/alipay.png" alt="fwxiaotao 支付宝">
-        <span>支付宝</span>
+  <article itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+      <div class="post-meta-container">
+        <time itemprop="dateCreated"
+              datetime="2020-10-07T19:00:53+08:00"
+              content="2020-10-07">
+          10-07
+        </time>
       </div>
 
-  </div>
-</div>
+      <div class="post-title">
+          <a class="post-title-link" href="/2020/10/07/Android%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%80%EF%BC%89/" itemprop="url">
+            <span itemprop="name">安卓开发学习笔记（一）</span>
+          </a>
+      </div>
 
-          
-
-<div class="post-copyright">
-<ul>
-  <li class="post-copyright-author">
-      <strong>本文作者： </strong>fwxiaotao
-  </li>
-  <li class="post-copyright-link">
-      <strong>本文链接：</strong>
-      <a href="http://taowei1999.com/2020/10/07/%E5%AE%89%E5%8D%93%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%80%EF%BC%89/" title="安卓开发学习笔记（一）">http://taowei1999.com/2020/10/07/安卓开发学习笔记（一）/</a>
-  </li>
-  <li class="post-copyright-license">
-    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed-zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
-  </li>
-</ul>
-</div>
-
-          <div class="post-tags">
-              <a href="/tags/Android%E5%BC%80%E5%8F%91/" rel="tag"><i class="fa fa-tag"></i> Android开发</a>
-          </div>
-
-        
-
-          <div class="post-nav">
-            <div class="post-nav-item">
-                <a href="/2020/10/04/Kotlin%E7%A9%BA%E6%8C%87%E9%92%88/" rel="prev" title="Kotlin空指针">
-                  <i class="fa fa-chevron-left"></i> Kotlin空指针
-                </a>
-            </div>
-            <div class="post-nav-item">
-                <a href="/2020/10/08/%E7%94%A8%E5%A4%9A%E5%8F%B0%E7%94%B5%E8%84%91%E5%86%99%E5%8D%9A%E5%AE%A2/" rel="next" title="用多台电脑写博客">
-                  用多台电脑写博客 <i class="fa fa-chevron-right"></i>
-                </a>
-            </div>
-          </div>
-    </footer>
+      
+    </header>
   </article>
-</div>
 
+  <article itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+      <div class="post-meta-container">
+        <time itemprop="dateCreated"
+              datetime="2020-10-04T17:36:05+08:00"
+              content="2020-10-04">
+          10-04
+        </time>
+      </div>
 
+      <div class="post-title">
+          <a class="post-title-link" href="/2020/10/04/Kotlin%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url">
+            <span itemprop="name">Kotlin空指针</span>
+          </a>
+      </div>
 
+      
+    </header>
+  </article>
+
+  <article itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+      <div class="post-meta-container">
+        <time itemprop="dateCreated"
+              datetime="2020-09-29T10:46:27+08:00"
+              content="2020-09-29">
+          09-29
+        </time>
+      </div>
+
+      <div class="post-title">
+          <a class="post-title-link" href="/2020/09/29/tensorflow%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%80%EF%BC%89/" itemprop="url">
+            <span itemprop="name">tensorflow学习笔记（一）</span>
+          </a>
+      </div>
+
+      
+    </header>
+  </article>
+
+    </div>
+  </div>
+  
+  
+  
+
+  
 
 
 
       
-    
-  <div class="comments">
-    <div id="disqus_thread">
-      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
-    </div>
-  </div>
-  
 
 <script>
   window.addEventListener('tabs:register', () => {
@@ -809,7 +695,7 @@ if(canvas.getContext){
       <i class="fa fa-chart-line"></i>
     </span>
       <span>站点总字数：</span>
-    <span title="站点总字数">7k</span>
+    <span title="站点总字数">6k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
@@ -990,7 +876,7 @@ document.addEventListener('pjax:success', () => {
       quicklink.listen({
         timeout : 3000,
         priority: true,
-        ignores : [uri => uri.includes('#'),uri => uri === 'http://taowei1999.com/2020/10/07/%E5%AE%89%E5%8D%93%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%80%EF%BC%89/',]
+        ignores : [uri => uri.includes('#'),uri => uri === 'http://taowei1999.com/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/',]
       });
       });
   </script>
@@ -1004,26 +890,6 @@ document.addEventListener('pjax:success', () => {
   }
   // defer loading until the whole page loading is completed
   window.addEventListener('load', loadCount, false);
-</script>
-<script>
-  var disqus_config = function() {
-    this.page.url = "http://taowei1999.com/2020/10/07/%E5%AE%89%E5%8D%93%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%80%EF%BC%89/";
-    this.page.identifier = "2020/10/07/安卓开发学习笔记（一）/";
-    this.page.title = "安卓开发学习笔记（一）";
-    };
-  NexT.utils.loadComments('#disqus_thread', () => {
-    if (window.DISQUS) {
-      DISQUS.reset({
-        reload: true,
-        config: disqus_config
-      });
-    } else {
-      var d = document, s = d.createElement('script');
-      s.src = 'https://fwxiaotao.disqus.com/embed.js';
-      s.setAttribute('data-timestamp', '' + +new Date());
-      (d.head || d.body).appendChild(s);
-    }
-  });
 </script>
 
 
