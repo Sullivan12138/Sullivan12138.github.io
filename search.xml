@@ -6,6 +6,7 @@
     <content><![CDATA[<p>Kotlin中默认所有参数和变量都非空，例如：</p>
 <figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">    doStudy(<span class="literal">null</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">doStudy</span><span class="params">(study: <span class="type">Study</span>)</span></span> &#123;</span><br><span class="line">    study.readBooks()</span><br><span class="line">    study.doHomework()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>这段代码会报错，因为传入了空指针。</p>
+<a id="more"></a>
 <p>要想定义可以为空的参数或变量，需要在类型名后面加上?，上述代码改成下面这样就可以了</p>
 <figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">doStudy</span><span class="params">(study: <span class="type">Study</span>?)</span></span> &#123;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>但是这时study的两个方法又会报错，因为这时可以传入空指针了，编译器会暗示我们进行空指针检查，我们可以用?.运算符，这个运算符表示如果为空就不执行返回Null，如果非空就执行。</p>
@@ -33,6 +34,7 @@
     <url>/2020/10/07/Android%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%80%EF%BC%89/</url>
     <content><![CDATA[<h2 id="文件结构">文件结构</h2>
 <p>app/src/main/java目录下存放所有的java代码和Kotlin代码。app/src/main/AndroidManifest.xml是整个Android项目的配置文件，程序中定义的四大组件（Activity、Service、BroadcastReceiver、ContentProvider）都要在这里注册了以后才能用。app/src/main/res目录下，以drawable开头的文件夹存放着图片，以mipmap开头的存放着图标，以values开头的存放着字符串、样式、颜色等配置，以layout开头的存放着布局文件。所有界面都是通过XML文件编写出来的。</p>
+<a id="more"></a>
 <h2 id="声明activity">声明Activity</h2>
 <p>Activity是一种可以包含用户界面的组件，主要用于和用户进行交互。一个应用程序可以包含0个或多个Activity，但是不包含Activity的应用程序很少见。</p>
 <p>项目中任何Activity都要重写onCreate()方法。每一个Activity最好都要对应一个布局文件。</p>
@@ -72,12 +74,11 @@
   <entry>
     <title>tensorflow学习笔记（一）</title>
     <url>/2020/09/29/tensorflow%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%80%EF%BC%89/</url>
-    <content><![CDATA[<p>tensorflow常用函数</p>
-<a id="more"></a>
-<h2 id="创建张量">创建张量</h2>
+    <content><![CDATA[<h2 id="创建张量">创建张量</h2>
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line">tf.constant(<span class="number">1.2</span>) <span class="comment"># 创建一个0维张量，也叫标量，shape为[]</span></span><br><span class="line">tf.constant([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]) <span class="comment"># 创建一个1维张量，也叫向量，shape为[3]</span></span><br><span class="line">tf.constant([[<span class="number">2</span>, <span class="number">3</span>], [<span class="number">1</span>, <span class="number">4</span>]]) <span class="comment"># 创建一个2维张量，也叫矩阵，shape为[2, 2]</span></span><br><span class="line">tf.constant([[[<span class="number">1</span>, <span class="number">2</span>], [<span class="number">2</span>, <span class="number">3</span>]], [[<span class="number">2</span>, <span class="number">3</span>], [<span class="number">3</span>, <span class="number">4</span>]]]) <span class="comment"># 创建一个3维张量，shape为[2, 2, 2]</span></span><br></pre></td></tr></table></figure>
 <p>1维及以上的张量都要用list来创建。</p>
 <p>另外，还支持传入字符串和布尔类型变量来创建张量。但是tensorflow类型的布尔变量和python内置类型的布尔变量并不相等。</p>
+<a id="more"></a>
 <p>可以用dtype参数指定传入数据的精度，访问张量的dtype变量可以获得它的数据精度。</p>
 <p>使用<code>tf.cast(tensor, dtype)</code>改变张量的精度，其中，tensor表示待转换数据精度的张量，dtype表示将其转换成的精度。转换时，要注意可能发生的溢出错误。</p>
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line">a = tf.constant(<span class="number">12345678</span>, dtype=int32) <span class="comment"># 组成a的数据精度被指定为int32</span></span><br><span class="line">print(a.dtype) <span class="comment"># 结果为int32</span></span><br><span class="line">a = tf.cast(a, dtype=double) <span class="comment"># 将a的数据精度改为double</span></span><br></pre></td></tr></table></figure>
