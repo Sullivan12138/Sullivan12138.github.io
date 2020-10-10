@@ -1,6 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>2020-10-11杂谈</title>
+    <url>/2020/10/11/2020-10-11%E6%9D%82%E8%B0%88/</url>
+    <content><![CDATA[<p>Python中三个有用的函数：</p>
+<ul>
+<li>max()，可以传入数组，直接返回数组的最大值，与之对应的还有min()</li>
+<li>enumerate()，可以传入数组，返回(i, num)的序列，其中i为下标，num为数组对应下标处的元素，可以用于for循环</li>
+<li>sum()，可以传入数组，直接返回数组元素之和</li>
+</ul>
+<p>另外，Python中//表示除法向下取整，类似C语言里的除法，Python里面的/是返回浮点数的。</p>
+<p>定义一个一维全0数组可以这样写：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">nums = [<span class="number">0</span>] * n</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>计算机</category>
+      </categories>
+      <tags>
+        <tag>每日杂谈</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>安卓开发学习笔记（一）</title>
     <url>/2020/10/07/Android%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%80%EF%BC%89/</url>
     <content><![CDATA[<h2 id="文件结构">文件结构</h2>
@@ -44,7 +64,7 @@
   </entry>
   <entry>
     <title>Kotlin空指针</title>
-    <url>/2020/10/04/Kotlin%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</url>
+    <url>/2020/10/04/Kotlin%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%80%EF%BC%89/</url>
     <content><![CDATA[<p>Kotlin中默认所有参数和变量都非空，例如：</p>
 <figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">    doStudy(<span class="literal">null</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">doStudy</span><span class="params">(study: <span class="type">Study</span>)</span></span> &#123;</span><br><span class="line">    study.readBooks()</span><br><span class="line">    study.doHomework()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>这段代码会报错，因为传入了空指针。</p>
