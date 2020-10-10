@@ -3,7 +3,7 @@
   <entry>
     <title>Kotlin空指针</title>
     <url>/2020/10/04/Kotlin%E7%A9%BA%E6%8C%87%E9%92%88/</url>
-    <content><![CDATA[<p>Kotlin中默认所有参数和变量都非空，例如：</p>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>Kotlin中默认所有参数和变量都非空，例如：</p>
 <figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">    doStudy(<span class="literal">null</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">doStudy</span><span class="params">(study: <span class="type">Study</span>)</span></span> &#123;</span><br><span class="line">    study.readBooks()</span><br><span class="line">    study.doHomework()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>这段代码会报错，因为传入了空指针。</p>
 <p>要想定义可以为空的参数或变量，需要在类型名后面加上?，上述代码改成下面这样就可以了</p>
@@ -26,21 +26,9 @@
       </tags>
   </entry>
   <entry>
-    <title>math-plugin-test</title>
-    <url>/2020/10/09/math-plugin-test/</url>
-    <content><![CDATA[<p>The famous matter-energy equation <span class="math inline">\(\eqref{eq1}\)</span> proposed by Einstein...</p>
-<p><span class="math display">\[\begin{equation} \label{eq1}
-e=mc^2
-\end{equation}\]</span></p>
-]]></content>
-      <tags>
-        <tag>test</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Hello World</title>
     <url>/2020/10/09/hello-world/</url>
-    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
 <h2 id="quick-start">Quick Start</h2>
 <h3 id="create-a-new-post">Create a new post</h3>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
@@ -57,9 +45,21 @@ e=mc^2
 ]]></content>
   </entry>
   <entry>
+    <title>math-plugin-test</title>
+    <url>/2020/10/09/math-plugin-test/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>The famous matter-energy equation <span class="math inline">\(\eqref{eq1}\)</span> proposed by Einstein...</p>
+<p><span class="math display">\[\begin{equation} \label{eq1}
+e=mc^2
+\end{equation}\]</span></p>
+]]></content>
+      <tags>
+        <tag>test</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>tensorflow学习笔记（一）</title>
     <url>/2020/09/29/tensorflow%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%80%EF%BC%89/</url>
-    <content><![CDATA[<p>tensorflow常用函数</p>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>tensorflow常用函数</p>
 <a id="more"></a>
 <h2 id="创建张量">创建张量</h2>
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line">tf.constant(<span class="number">1.2</span>) <span class="comment"># 创建一个0维张量，也叫标量，shape为[]</span></span><br><span class="line">tf.constant([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]) <span class="comment"># 创建一个1维张量，也叫向量，shape为[3]</span></span><br><span class="line">tf.constant([[<span class="number">2</span>, <span class="number">3</span>], [<span class="number">1</span>, <span class="number">4</span>]]) <span class="comment"># 创建一个2维张量，也叫矩阵，shape为[2, 2]</span></span><br><span class="line">tf.constant([[[<span class="number">1</span>, <span class="number">2</span>], [<span class="number">2</span>, <span class="number">3</span>]], [[<span class="number">2</span>, <span class="number">3</span>], [<span class="number">3</span>, <span class="number">4</span>]]]) <span class="comment"># 创建一个3维张量，shape为[2, 2, 2]</span></span><br></pre></td></tr></table></figure>
@@ -104,7 +104,7 @@ e=mc^2
   <entry>
     <title>安卓开发学习笔记（一）</title>
     <url>/2020/10/07/%E5%AE%89%E5%8D%93%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%80%EF%BC%89/</url>
-    <content><![CDATA[<h2 id="文件结构">文件结构</h2>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><h2 id="文件结构">文件结构</h2>
 <p>app/src/main/java目录下存放所有的java代码和Kotlin代码。app/src/main/AndroidManifest.xml是整个Android项目的配置文件，程序中定义的四大组件（Activity、Service、BroadcastReceiver、ContentProvider）都要在这里注册了以后才能用。app/src/main/res目录下，以drawable开头的文件夹存放着图片，以mipmap开头的存放着图标，以values开头的存放着字符串、样式、颜色等配置，以layout开头的存放着布局文件。所有界面都是通过XML文件编写出来的。</p>
 <h2 id="声明activity">声明Activity</h2>
 <p>Activity是一种可以包含用户界面的组件，主要用于和用户进行交互。一个应用程序可以包含0个或多个Activity，但是不包含Activity的应用程序很少见。</p>
@@ -142,7 +142,7 @@ e=mc^2
   <entry>
     <title>用多台电脑写博客</title>
     <url>/2020/10/08/%E7%94%A8%E5%A4%9A%E5%8F%B0%E7%94%B5%E8%84%91%E5%86%99%E5%8D%9A%E5%AE%A2/</url>
-    <content><![CDATA[<p>这篇博客用于记录我是如何在实验室电脑和自己的笔记本上同时更新博客的。</p>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="/assets/css/APlayer.min.css"><script src="/assets/js/APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>这篇博客用于记录我是如何在实验室电脑和自己的笔记本上同时更新博客的。</p>
 <p>这句话来自实验室电脑</p>
 ]]></content>
       <categories>
