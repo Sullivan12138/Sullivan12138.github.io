@@ -1,35 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>Kotlin空指针</title>
-    <url>/2020/10/04/Kotlin%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</url>
-    <content><![CDATA[<p>Kotlin中默认所有参数和变量都非空，例如：</p>
-<figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">    doStudy(<span class="literal">null</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">doStudy</span><span class="params">(study: <span class="type">Study</span>)</span></span> &#123;</span><br><span class="line">    study.readBooks()</span><br><span class="line">    study.doHomework()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>这段代码会报错，因为传入了空指针。</p>
-<a id="more"></a>
-<p>要想定义可以为空的参数或变量，需要在类型名后面加上?，上述代码改成下面这样就可以了</p>
-<figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">doStudy</span><span class="params">(study: <span class="type">Study</span>?)</span></span> &#123;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>但是这时study的两个方法又会报错，因为这时可以传入空指针了，编译器会暗示我们进行空指针检查，我们可以用?.运算符，这个运算符表示如果为空就不执行返回Null，如果非空就执行。</p>
-<figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line">study?.readBooks()</span><br><span class="line">study?.doHomework()</span><br></pre></td></tr></table></figure>
-<p>另外还有?:运算符，这个运算符表示如果左边的语句非空就返回左边的执行结果，否则返回右边的执行结果。</p>
-<figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line"><span class="keyword">val</span> c = a?:b</span><br><span class="line">表示</span><br><span class="line"><span class="keyword">val</span> c = <span class="keyword">if</span> (a != <span class="literal">null</span>) &#123;</span><br><span class="line">    a</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    b</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>!!是非空断言语句，表示我们告诉编译器它前面的对象就是非空的，不需要空指针检查。</p>
-<p>let是Kotlin一个内置函数，它将调用它的变量传入后面的lambda表达式中。它可以用来和?.结合。</p>
-<p>上述的代码</p>
-<figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line">study?.readBooks()</span><br><span class="line">study?.doHomework()</span><br></pre></td></tr></table></figure>
-<p>实际上执行了两次if else判断，用let可以简化</p>
-<figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line">study?.let &#123; stu -&gt;</span><br><span class="line">           stu.readBooks()</span><br><span class="line">           stu.doHomework()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>先判断study是否非空，如果非空就执行let函数，将study传入，执行后面的两个函数</p>
-<p>此外let可以用于处理全局变量的判空问题，但是if不可以。</p>
-]]></content>
-      <categories>
-        <category>计算机</category>
-      </categories>
-      <tags>
-        <tag>Kotlin</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>安卓开发学习笔记（一）</title>
     <url>/2020/10/07/Android%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%80%EF%BC%89/</url>
     <content><![CDATA[<h2 id="文件结构">文件结构</h2>
@@ -69,6 +40,35 @@
       </categories>
       <tags>
         <tag>Android开发</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Kotlin空指针</title>
+    <url>/2020/10/04/Kotlin%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</url>
+    <content><![CDATA[<p>Kotlin中默认所有参数和变量都非空，例如：</p>
+<figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">    doStudy(<span class="literal">null</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">doStudy</span><span class="params">(study: <span class="type">Study</span>)</span></span> &#123;</span><br><span class="line">    study.readBooks()</span><br><span class="line">    study.doHomework()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这段代码会报错，因为传入了空指针。</p>
+<a id="more"></a>
+<p>要想定义可以为空的参数或变量，需要在类型名后面加上?，上述代码改成下面这样就可以了</p>
+<figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">doStudy</span><span class="params">(study: <span class="type">Study</span>?)</span></span> &#123;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>但是这时study的两个方法又会报错，因为这时可以传入空指针了，编译器会暗示我们进行空指针检查，我们可以用?.运算符，这个运算符表示如果为空就不执行返回Null，如果非空就执行。</p>
+<figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line">study?.readBooks()</span><br><span class="line">study?.doHomework()</span><br></pre></td></tr></table></figure>
+<p>另外还有?:运算符，这个运算符表示如果左边的语句非空就返回左边的执行结果，否则返回右边的执行结果。</p>
+<figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line"><span class="keyword">val</span> c = a?:b</span><br><span class="line">表示</span><br><span class="line"><span class="keyword">val</span> c = <span class="keyword">if</span> (a != <span class="literal">null</span>) &#123;</span><br><span class="line">    a</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    b</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>!!是非空断言语句，表示我们告诉编译器它前面的对象就是非空的，不需要空指针检查。</p>
+<p>let是Kotlin一个内置函数，它将调用它的变量传入后面的lambda表达式中。它可以用来和?.结合。</p>
+<p>上述的代码</p>
+<figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line">study?.readBooks()</span><br><span class="line">study?.doHomework()</span><br></pre></td></tr></table></figure>
+<p>实际上执行了两次if else判断，用let可以简化</p>
+<figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line">study?.let &#123; stu -&gt;</span><br><span class="line">           stu.readBooks()</span><br><span class="line">           stu.doHomework()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>先判断study是否非空，如果非空就执行let函数，将study传入，执行后面的两个函数</p>
+<p>此外let可以用于处理全局变量的判空问题，但是if不可以。</p>
+]]></content>
+      <categories>
+        <category>计算机</category>
+      </categories>
+      <tags>
+        <tag>Kotlin</tag>
       </tags>
   </entry>
   <entry>
