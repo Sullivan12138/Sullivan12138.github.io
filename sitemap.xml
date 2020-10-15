@@ -2,6 +2,20 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://taowei1999.com/2020/10/15/latex%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%80%EF%BC%89/</loc>
+    
+    <lastmod>2020-10-15</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://taowei1999.com/2020/10/11/Kotlin%E5%85%A5%E9%97%A8/</loc>
+    
+    <lastmod>2020-10-11</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://taowei1999.com/2020/10/11/leetcode416%E9%A2%98%E8%A7%A3/</loc>
     
     <lastmod>2020-10-11</lastmod>
@@ -16,7 +30,7 @@
   </url>
   
   <url>
-    <loc>http://taowei1999.com/2020/10/04/Kotlin%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%80%EF%BC%89/</loc>
+    <loc>http://taowei1999.com/2020/10/04/Kotlin%E7%A9%BA%E6%8C%87%E9%92%88/</loc>
     
     <lastmod>2020-10-10</lastmod>
     
@@ -74,50 +88,78 @@
 
   <url>
     <loc>http://taowei1999.com/</loc>
-    <lastmod>2020-10-11</lastmod>
+    <lastmod>2020-10-15</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
 
   
   <url>
+    <loc>http://taowei1999.com/tags/Kotlin/</loc>
+    <lastmod>2020-10-15</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>http://taowei1999.com/tags/%E6%AF%8F%E6%97%A5%E6%9D%82%E8%B0%88/</loc>
-    <lastmod>2020-10-11</lastmod>
+    <lastmod>2020-10-15</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://taowei1999.com/tags/Android%E5%BC%80%E5%8F%91/</loc>
-    <lastmod>2020-10-11</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://taowei1999.com/tags/Kotlin/</loc>
-    <lastmod>2020-10-11</lastmod>
+    <lastmod>2020-10-15</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://taowei1999.com/tags/%E7%AE%97%E6%B3%95/</loc>
-    <lastmod>2020-10-11</lastmod>
+    <lastmod>2020-10-15</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://taowei1999.com/tags/leetcode/</loc>
-    <lastmod>2020-10-11</lastmod>
+    <lastmod>2020-10-15</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://taowei1999.com/tags/latex/</loc>
+    <lastmod>2020-10-15</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://taowei1999.com/tags/%E8%AE%BA%E6%96%87%E5%86%99%E4%BD%9C/</loc>
+    <lastmod>2020-10-15</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://taowei1999.com/tags/word/</loc>
+    <lastmod>2020-10-15</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://taowei1999.com/tags/ppt/</loc>
+    <lastmod>2020-10-15</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://taowei1999.com/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/</loc>
-    <lastmod>2020-10-11</lastmod>
+    <lastmod>2020-10-15</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
@@ -126,7 +168,7 @@
   
   <url>
     <loc>http://taowei1999.com/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/</loc>
-    <lastmod>2020-10-11</lastmod>
+    <lastmod>2020-10-15</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
