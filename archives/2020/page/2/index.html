@@ -23,25 +23,18 @@
     var CONFIG = {"hostname":"taowei1999.com","root":"/","scheme":"Gemini","version":"8.0.1","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":true,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
   </script>
 
-  <meta name="description" content="题目描述 给定一个只包含正整数的非空数组。是否可以将这个数组分割成两个子集，使得两个子集的元素和相等。 注意: 每个数组中的元素不会超过 100 数组的大小不会超过 200 示例 1: 输入: [1, 5, 11, 5] 输出: true 解释: 数组可以分割成 [1, 5, 5] 和 [11]. 示例 2: 输入: [1, 2, 3, 5] 输出: false 解释: 数组不能分割成两个元素和相">
-<meta property="og:type" content="article">
-<meta property="og:title" content="leetcode416题解">
-<meta property="og:url" content="http://taowei1999.com/2020/10/11/leetcode416%E9%A2%98%E8%A7%A3/index.html">
+  <meta name="description" content="一个用于记录学习笔记和生活心得的博客网站">
+<meta property="og:type" content="website">
+<meta property="og:title" content="fwxiaotao博客站">
+<meta property="og:url" content="http://taowei1999.com/archives/2020/page/2/index.html">
 <meta property="og:site_name" content="fwxiaotao博客站">
-<meta property="og:description" content="题目描述 给定一个只包含正整数的非空数组。是否可以将这个数组分割成两个子集，使得两个子集的元素和相等。 注意: 每个数组中的元素不会超过 100 数组的大小不会超过 200 示例 1: 输入: [1, 5, 11, 5] 输出: true 解释: 数组可以分割成 [1, 5, 5] 和 [11]. 示例 2: 输入: [1, 2, 3, 5] 输出: false 解释: 数组不能分割成两个元素和相">
+<meta property="og:description" content="一个用于记录学习笔记和生活心得的博客网站">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://tva1.sinaimg.cn/large/007S8ZIlgy1gjl2uugoisj30vk044mxk.jpg">
-<meta property="og:image" content="https://tva1.sinaimg.cn/large/007S8ZIlgy1gjl2v7hzz6j30g802kgln.jpg">
-<meta property="article:published_time" content="2020-10-10T23:48:19.000Z">
-<meta property="article:modified_time" content="2020-10-11T00:23:24.446Z">
 <meta property="article:author" content="fwxiaotao">
-<meta property="article:tag" content="算法">
-<meta property="article:tag" content="leetcode">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://tva1.sinaimg.cn/large/007S8ZIlgy1gjl2uugoisj30vk044mxk.jpg">
 
 
-<link rel="canonical" href="http://taowei1999.com/2020/10/11/leetcode416%E9%A2%98%E8%A7%A3/">
+<link rel="canonical" href="http://taowei1999.com/archives/2020/page/2/">
 
 
 <script data-pjax class="page-configurations">
@@ -49,13 +42,13 @@
   CONFIG.page = {
     sidebar: "",
     isHome : false,
-    isPost : true,
+    isPost : false,
     lang   : 'zh-CN'
   };
 </script><script src="https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget@latest/autoload.js"></script>
 
 
-  <title>leetcode416题解 | fwxiaotao博客站</title>
+  <title>归档 | fwxiaotao博客站</title>
   
 
 
@@ -209,7 +202,7 @@
 
   <aside class="sidebar">
 
-    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+    <div class="sidebar-inner sidebar-overview-active">
       <ul class="sidebar-nav">
         <li class="sidebar-nav-toc">
           文章目录
@@ -221,7 +214,6 @@
 
       <!--noindex-->
       <section class="post-toc-wrap sidebar-panel">
-          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A2%98%E7%9B%AE%E6%8F%8F%E8%BF%B0"><span class="nav-number">1.</span> <span class="nav-text">题目描述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A2%98%E8%A7%A3"><span class="nav-number">2.</span> <span class="nav-text">题解</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81"><span class="nav-number">3.</span> <span class="nav-text">代码</span></a></li></ol></div>
       </section>
       <!--/noindex-->
 
@@ -564,216 +556,80 @@ if(canvas.getContext){
 </noscript>
 
 
-    <div class="main-inner post posts-expand">
+    <div class="main-inner archive posts-collapse">
       
 
       
 
   
-
-
-<div class="post-block">
   
   
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://taowei1999.com/2020/10/11/leetcode416%E9%A2%98%E8%A7%A3/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="fwxiaotao">
-      <meta itemprop="description" content="一个用于记录学习笔记和生活心得的博客网站">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="fwxiaotao博客站">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          leetcode416题解
-        </h1>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-      
-
-      <time title="创建时间：2020-10-11 07:48:19 / 修改时间：08:23:24" itemprop="dateCreated datePublished" datetime="2020-10-11T07:48:19+08:00">2020-10-11</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/" itemprop="url" rel="index"><span itemprop="name">计算机</span></a>
-        </span>
-    </span>
-
-  
-    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="far fa-eye"></i>
-      </span>
-      <span class="post-meta-item-text">阅读次数：</span>
-      <span id="busuanzi_value_page_pv"></span>
-    </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus：</span>
-    
-    <a title="disqus" href="/2020/10/11/leetcode416%E9%A2%98%E8%A7%A3/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2020/10/11/leetcode416题解/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
+  <div class="post-block">
+    <div class="post-content">
+      <div class="collection-title">
+        <span class="collection-header">嗯..! 目前共计 12 篇日志。 继续努力。</span>
       </div>
-      <div class="post-meta">
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>1.8k</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>2 分钟</span>
-    </span>
-</div>
 
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-        <h2 id="题目描述">题目描述</h2>
-<p>给定一个只包含正整数的非空数组。是否可以将这个数组分割成两个子集，使得两个子集的元素和相等。</p>
-<p>注意:</p>
-<p>每个数组中的元素不会超过 100 数组的大小不会超过 200</p>
-<p>示例 1:</p>
-<p>输入: [1, 5, 11, 5]</p>
-<p>输出: true</p>
-<p>解释: 数组可以分割成 [1, 5, 5] 和 [11].</p>
-<p>示例 2:</p>
-<p>输入: [1, 2, 3, 5]</p>
-<p>输出: false</p>
-<p>解释: 数组不能分割成两个元素和相等的子集.</p>
-<a id="more"></a>
-<h2 id="题解">题解</h2>
-<p><strong>本题是一个NP完全问题！！！</strong>所以想在多项式时间内完成是不可能的，我们必须尝试非多项式时间复杂度的算法，例如时间复杂度与元素大小相关的<strong>动态规划</strong>。实际上，这道题可以换一种表述：给定一个只包含正整数的非空数组 [0]nums[0]，判断是否可以从数组中选出一些数字，使得这些数字的和等于整个数组的元素和的一半。因此这个问题可以转换成「0−1 背包问题」。这道题与传统的「0−1 背包问题」的区别在于，传统的「0−1 背包问题」要求选取的物品的重量之和不能超过背包的总容量，这道题则要求选取的数字的和恰好等于整个数组的元素和的一半。类似于传统的「0−1 背包问题」，可以使用动态规划求解。</p>
-<p>在使用动态规划求解之前，首先需要进行以下判断。</p>
-<p>根据数组的长度 n 判断数组是否可以被划分。如果 n&lt;2，则不可能将数组分割成元素和相等的两个子集，因此直接返回 false。</p>
-<p>计算整个数组的元素和 sum 以及最大元素 maxNum。如果sum 是奇数，则不可能将数组分割成元素和相等的两个子集，因此直接返回 false。如果sum 是偶数，则令 target=sum/2，需要判断是否可以从数组中选出一些数字，使得这些数字的和等于target。如果 maxNum&gt;target，则除了maxNum 以外的所有元素之和一定小于target，因此不可能将数组分割成元素和相等的两个子集，直接返回 false。</p>
-<p>创建二维数组 dp，包含 n 行target+1 列，其中 dp[i][j] 表示从数组的[0,i] 下标范围内选取若干个正整数（可以是 0 个），是否存在一种选取方案使得被选取的正整数的和等于 j。初始时，dp 中的全部元素都是 false。</p>
-<p>在定义状态之后，需要考虑边界情况。以下两种情况都属于边界情况。</p>
-<p>如果不选取任何正整数，则被选取的正整数等于 0。因此对于所有0≤i&lt;n，都有dp[i][0]=true。</p>
-<p>当i==0 时，只有一个正整数nums[0] 可以被选取，因此dp[i][0]=true。</p>
-<p>对于 i&gt;0且j&gt;0 的情况，如何确定dp[i][j] 的值？需要分别考虑以下两种情况。</p>
-<p>如果j≥nums[i]，则对于当前的数字nums[i]，可以选取也可以不选取，两种情况只要有一个为 true，就有dp[i][j]=true。</p>
-<p>如果不选取nums[i]，则dp[i][j]=dp[i−1][j]； 如果选取nums[i]，则 dp[i][j]=dp[i−1][j−nums[i]]。 如果 j &lt;nums[i]，则在选取的数字的和等于 j 的情况下无法选取当前的数字nums[i]，因此有dp[i][j]=dp[i−1][j]。</p>
-<p>状态转移方程如下：</p>
-<p><img data-src="https://tva1.sinaimg.cn/large/007S8ZIlgy1gjl2uugoisj30vk044mxk.jpg" /></p>
-<p>最终得到 dp[n−1][target] 即为答案。</p>
-<p>但是可以发现在计算dp 的过程中，每一行的 dp 值都只与上一行的 dp 值有关，因此只需要一个一维数组即可将空间复杂度降到 O(target)。此时的转移方程为：</p>
-<p><img data-src="https://tva1.sinaimg.cn/large/007S8ZIlgy1gjl2v7hzz6j30g802kgln.jpg" /></p>
-<p>且需要注意的是第二层的循环我们需要从大到小计算，因为如果我们从小到大更新dp 值，那么在计算dp[j] 值的时候，dp[j−nums[i]] 已经是被更新过的状态，不再是上一行的dp 值。</p>
-<p><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/partition-equal-subset-sum/solution/fen-ge-deng-he-zi-ji-by-leetcode-solution/">题解来源</a></p>
-<h2 id="代码">代码</h2>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">canPartition</span>(<span class="params">self, nums: List[int]</span>) -&gt; bool:</span></span><br><span class="line">        n = len(nums)</span><br><span class="line">        <span class="keyword">if</span> n &lt; <span class="number">2</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line">        total = sum(nums)</span><br><span class="line">        maxNum = max(nums)</span><br><span class="line">        target = total // <span class="number">2</span></span><br><span class="line">        <span class="keyword">if</span> total % <span class="number">2</span> <span class="keyword">or</span> maxNum &gt; target:</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line">        dp = [<span class="literal">True</span>] + [<span class="literal">False</span>] * target</span><br><span class="line">        <span class="keyword">for</span> _, num <span class="keyword">in</span> enumerate(nums):</span><br><span class="line">            <span class="keyword">for</span> j <span class="keyword">in</span> range(target, num - <span class="number">1</span>, <span class="number">-1</span>):</span><br><span class="line">                dp[j] |= dp[j - num]</span><br><span class="line">        <span class="keyword">return</span> dp[target]</span><br></pre></td></tr></table></figure>
-
+      
+    <div class="collection-year">
+      <span class="collection-header">2020</span>
     </div>
 
-    
-    
-    
-
-    <footer class="post-footer">
-          <div class="reward-container">
-  <div>您的关注与支持是我更新最大的动力！</div>
-  <button onclick="document.querySelector('.post-reward').classList.toggle('active');">
-    赞赏
-  </button>
-  <div class="post-reward">
-      <div>
-        <img src="/images/wechatpay.png" alt="fwxiaotao 微信">
-        <span>微信</span>
-      </div>
-      <div>
-        <img src="/images/alipay.png" alt="fwxiaotao 支付宝">
-        <span>支付宝</span>
+  <article itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+      <div class="post-meta-container">
+        <time itemprop="dateCreated"
+              datetime="2020-10-04T17:36:05+08:00"
+              content="2020-10-04">
+          10-04
+        </time>
       </div>
 
-  </div>
-</div>
+      <div class="post-title">
+          <a class="post-title-link" href="/2020/10/04/Kotlin%E7%A9%BA%E6%8C%87%E9%92%88/" itemprop="url">
+            <span itemprop="name">Kotlin空指针</span>
+          </a>
+      </div>
 
-          
-
-<div class="post-copyright">
-<ul>
-  <li class="post-copyright-author">
-      <strong>本文作者： </strong>fwxiaotao
-  </li>
-  <li class="post-copyright-link">
-      <strong>本文链接：</strong>
-      <a href="http://taowei1999.com/2020/10/11/leetcode416%E9%A2%98%E8%A7%A3/" title="leetcode416题解">http://taowei1999.com/2020/10/11/leetcode416题解/</a>
-  </li>
-  <li class="post-copyright-license">
-    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed-zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
-  </li>
-</ul>
-</div>
-
-          <div class="post-tags">
-              <a href="/tags/%E7%AE%97%E6%B3%95/" rel="tag"><i class="fa fa-tag"></i> 算法</a>
-              <a href="/tags/leetcode/" rel="tag"><i class="fa fa-tag"></i> leetcode</a>
-          </div>
-
-        
-
-          <div class="post-nav">
-            <div class="post-nav-item">
-                <a href="/2020/10/11/2020-10-11%E6%9D%82%E8%B0%88/" rel="prev" title="2020-10-11杂谈">
-                  <i class="fa fa-chevron-left"></i> 2020-10-11杂谈
-                </a>
-            </div>
-            <div class="post-nav-item">
-                <a href="/2020/10/11/Kotlin%E5%85%A5%E9%97%A8/" rel="next" title="Kotlin入门">
-                  Kotlin入门 <i class="fa fa-chevron-right"></i>
-                </a>
-            </div>
-          </div>
-    </footer>
+      
+    </header>
   </article>
-</div>
+
+  <article itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+      <div class="post-meta-container">
+        <time itemprop="dateCreated"
+              datetime="2020-09-29T10:46:27+08:00"
+              content="2020-09-29">
+          09-29
+        </time>
+      </div>
+
+      <div class="post-title">
+          <a class="post-title-link" href="/2020/09/29/tensorflow%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%80%EF%BC%89/" itemprop="url">
+            <span itemprop="name">tensorflow学习笔记（一）</span>
+          </a>
+      </div>
+
+      
+    </header>
+  </article>
 
 
+    </div>
+  </div>
+  
+  
+  
 
+  
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" href="/archives/2020/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/archives/2020/">1</a><span class="page-number current">2</span>
+  </nav>
 
 
 
       
-    
-  <div class="comments">
-    <div id="disqus_thread">
-      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
-    </div>
-  </div>
-  
 
 <script>
   window.addEventListener('tabs:register', () => {
@@ -1002,7 +858,7 @@ document.addEventListener('pjax:success', () => {
       quicklink.listen({
         timeout : 3000,
         priority: true,
-        ignores : [uri => uri.includes('#'),uri => uri === 'http://taowei1999.com/2020/10/11/leetcode416%E9%A2%98%E8%A7%A3/',]
+        ignores : [uri => uri.includes('#'),uri => uri === 'http://taowei1999.com/archives/2020/page/2/',]
       });
       });
   </script>
@@ -1016,26 +872,6 @@ document.addEventListener('pjax:success', () => {
   }
   // defer loading until the whole page loading is completed
   window.addEventListener('load', loadCount, false);
-</script>
-<script>
-  var disqus_config = function() {
-    this.page.url = "http://taowei1999.com/2020/10/11/leetcode416%E9%A2%98%E8%A7%A3/";
-    this.page.identifier = "2020/10/11/leetcode416题解/";
-    this.page.title = "leetcode416题解";
-    };
-  NexT.utils.loadComments('#disqus_thread', () => {
-    if (window.DISQUS) {
-      DISQUS.reset({
-        reload: true,
-        config: disqus_config
-      });
-    } else {
-      var d = document, s = d.createElement('script');
-      s.src = 'https://fwxiaotao.disqus.com/embed.js';
-      s.setAttribute('data-timestamp', '' + +new Date());
-      (d.head || d.body).appendChild(s);
-    }
-  });
 </script>
 
 

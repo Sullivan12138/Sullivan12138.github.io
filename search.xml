@@ -1,38 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>Kotlin入门</title>
-    <url>/2020/10/11/Kotlin%E5%85%A5%E9%97%A8/</url>
-    <content><![CDATA[<p>编译型语言的特点是编译器会将我们的源代码一次性地编译成计算机可识别的二进制文件，而解释型语言的特点是解释器会一行行地读取我们的源代码然后实时地将他们解释称计算机可识别的二进制数据，所以解释型语言效率差一些。</p>
-<p>虽然Java是先编译再运行的，但是Java编译之后生成的并不是计算机可识别的二进制文件，而是一种特殊的class文件，这种文件只有Java虚拟机才能识别，这个Java虚拟机实际上是一种解释器，它将class文件解释成计算机可识别的二进制文件，所以Java实际属于解释型语言。</p>
-<p>那么，如果我们开发一门新的语言，将它编译成同样规格的class文件，Java虚拟机能不能识别呢？答案是肯定的。这就是Kotlin语言的工作原理。</p>
-<a id="more"></a>
-<p>在Android Studio中新建一个kotlin文件，命名为hello-world.kt，输入以下代码：</p>
-<figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">  println(<span class="string">&quot;Hello, world!&quot;</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>这就是我们第一个kotlin文件了，它会输出"Hello, world!"</p>
-<h2 id="变量">变量</h2>
-<p>在Java中如果想要定义一个变量，需要在变量前面声明这个变量的类型。而在Kotlin中只允许在变量前声明两种关键字：<strong>val</strong>和<strong>var</strong>。</p>
-<p>val(value)用于声明一个不可变的变量，这种变量在初始赋值以后再也不能重新赋值。var(variable)用于声明一个可变的变量。变量本身的类型由Kotlin的类型推导机制确定。</p>
-<p>Kotlin中完全抛弃了Java中的基本数据类型，全部使用了对象数据类型。</p>
-<p><strong>永远优先使用val来声明，当val无法满足需求时再用var</strong>。</p>
-<p>Kotlin中定义函数的方法如下：</p>
-<figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">methodName</span><span class="params">(param1: <span class="type">Int</span>, param2: <span class="type">Int</span>)</span></span>: <span class="built_in">Int</span> &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>当一个函数中只有一行代码时，Kotlin允许我们不必编写函数体，直接将唯一的一行代码写在函数定义的尾部，中间用等号连接即可。</p>
-<figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">largerNumber</span><span class="params">(num1: <span class="type">Int</span>, num2: <span class="type">Int</span>)</span></span>: <span class="built_in">Int</span> = max(num1, num2)</span><br></pre></td></tr></table></figure>
-<p>并且由于类型推导极致，还可以再简化一下：</p>
-<figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">largerNumber</span><span class="params">(num1: <span class="type">Int</span>, num2: <span class="type">Int</span>)</span></span> = max(num1, num2)</span><br></pre></td></tr></table></figure>
-<h2 id="逻辑控制">逻辑控制</h2>
-<h3 id="if语句">if语句</h3>
-<p>kotlin中的if可以有返回值，返回值就是if语句每一个条件中最后一行代码的返回值</p>
-]]></content>
-      <categories>
-        <category>计算机</category>
-      </categories>
-      <tags>
-        <tag>Kotlin</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>2020-10-11杂谈</title>
     <url>/2020/10/11/2020-10-11%E6%9D%82%E8%B0%88/</url>
     <content><![CDATA[<p>Python中三个有用的函数：</p>
@@ -50,35 +18,6 @@
       </categories>
       <tags>
         <tag>每日杂谈</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Kotlin空指针</title>
-    <url>/2020/10/04/Kotlin%E7%A9%BA%E6%8C%87%E9%92%88/</url>
-    <content><![CDATA[<p>Kotlin中默认所有参数和变量都非空，例如：</p>
-<figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">    doStudy(<span class="literal">null</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">doStudy</span><span class="params">(study: <span class="type">Study</span>)</span></span> &#123;</span><br><span class="line">    study.readBooks()</span><br><span class="line">    study.doHomework()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>这段代码会报错，因为传入了空指针。</p>
-<a id="more"></a>
-<p>要想定义可以为空的参数或变量，需要在类型名后面加上?，上述代码改成下面这样就可以了</p>
-<figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">doStudy</span><span class="params">(study: <span class="type">Study</span>?)</span></span> &#123;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>但是这时study的两个方法又会报错，因为这时可以传入空指针了，编译器会暗示我们进行空指针检查，我们可以用?.运算符，这个运算符表示如果为空就不执行返回Null，如果非空就执行。</p>
-<figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line">study?.readBooks()</span><br><span class="line">study?.doHomework()</span><br></pre></td></tr></table></figure>
-<p>另外还有?:运算符，这个运算符表示如果左边的语句非空就返回左边的执行结果，否则返回右边的执行结果。</p>
-<figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line"><span class="keyword">val</span> c = a?:b</span><br><span class="line">表示</span><br><span class="line"><span class="keyword">val</span> c = <span class="keyword">if</span> (a != <span class="literal">null</span>) &#123;</span><br><span class="line">    a</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    b</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>!!是非空断言语句，表示我们告诉编译器它前面的对象就是非空的，不需要空指针检查。</p>
-<p>let是Kotlin一个内置函数，它将调用它的变量传入后面的lambda表达式中。它可以用来和?.结合。</p>
-<p>上述的代码</p>
-<figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line">study?.readBooks()</span><br><span class="line">study?.doHomework()</span><br></pre></td></tr></table></figure>
-<p>实际上执行了两次if else判断，用let可以简化</p>
-<figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line">study?.let &#123; stu -&gt;</span><br><span class="line">           stu.readBooks()</span><br><span class="line">           stu.doHomework()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>先判断study是否非空，如果非空就执行let函数，将study传入，执行后面的两个函数</p>
-<p>此外let可以用于处理全局变量的判空问题，但是if不可以。</p>
-]]></content>
-      <categories>
-        <category>计算机</category>
-      </categories>
-      <tags>
-        <tag>Kotlin</tag>
       </tags>
   </entry>
   <entry>
@@ -121,6 +60,404 @@
       </categories>
       <tags>
         <tag>Android开发</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Kotlin入门</title>
+    <url>/2020/10/11/Kotlin%E5%85%A5%E9%97%A8/</url>
+    <content><![CDATA[<p>编译型语言的特点是编译器会将我们的源代码一次性地编译成计算机可识别的二进制文件，而解释型语言的特点是解释器会一行行地读取我们的源代码然后实时地将他们解释称计算机可识别的二进制数据，所以解释型语言效率差一些。</p>
+<p>虽然Java是先编译再运行的，但是Java编译之后生成的并不是计算机可识别的二进制文件，而是一种特殊的class文件，这种文件只有Java虚拟机才能识别，这个Java虚拟机实际上是一种解释器，它将class文件解释成计算机可识别的二进制文件，所以Java实际属于解释型语言。</p>
+<p>那么，如果我们开发一门新的语言，将它编译成同样规格的class文件，Java虚拟机能不能识别呢？答案是肯定的。这就是Kotlin语言的工作原理。</p>
+<a id="more"></a>
+<p>在Android Studio中新建一个kotlin文件，命名为hello-world.kt，输入以下代码：</p>
+<figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">  println(<span class="string">&quot;Hello, world!&quot;</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这就是我们第一个kotlin文件了，它会输出"Hello, world!"</p>
+<h2 id="变量">变量</h2>
+<p>在Java中如果想要定义一个变量，需要在变量前面声明这个变量的类型。而在Kotlin中只允许在变量前声明两种关键字：<strong>val</strong>和<strong>var</strong>。</p>
+<p>val(value)用于声明一个不可变的变量，这种变量在初始赋值以后再也不能重新赋值。var(variable)用于声明一个可变的变量。变量本身的类型由Kotlin的类型推导机制确定。</p>
+<p>Kotlin中完全抛弃了Java中的基本数据类型，全部使用了对象数据类型。</p>
+<p><strong>永远优先使用val来声明，当val无法满足需求时再用var</strong>。</p>
+<p>Kotlin中定义函数的方法如下：</p>
+<figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">methodName</span><span class="params">(param1: <span class="type">Int</span>, param2: <span class="type">Int</span>)</span></span>: <span class="built_in">Int</span> &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>当一个函数中只有一行代码时，Kotlin允许我们不必编写函数体，直接将唯一的一行代码写在函数定义的尾部，中间用等号连接即可。</p>
+<figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">largerNumber</span><span class="params">(num1: <span class="type">Int</span>, num2: <span class="type">Int</span>)</span></span>: <span class="built_in">Int</span> = max(num1, num2)</span><br></pre></td></tr></table></figure>
+<p>并且由于类型推导极致，还可以再简化一下：</p>
+<figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">largerNumber</span><span class="params">(num1: <span class="type">Int</span>, num2: <span class="type">Int</span>)</span></span> = max(num1, num2)</span><br></pre></td></tr></table></figure>
+<h2 id="逻辑控制">逻辑控制</h2>
+<h3 id="if语句">if语句</h3>
+<p>kotlin中的if可以有返回值，返回值就是if语句每一个条件中最后一行代码的返回值</p>
+]]></content>
+      <categories>
+        <category>计算机</category>
+      </categories>
+      <tags>
+        <tag>Kotlin</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Rust学习笔记（一）</title>
+    <url>/2020/10/17/Rust%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%80%EF%BC%89/</url>
+    <content><![CDATA[<p>mut用来声明可变数据，数据默认不可变，用let来声明。可以在声明一个数据以后再次声明一个同名的，这时前面的会被覆盖</p>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> a = <span class="number">1</span></span><br><span class="line"><span class="keyword">let</span> <span class="keyword">mut</span> b = <span class="number">1</span></span><br><span class="line">a = <span class="number">2</span> <span class="comment">// 这句话会报错</span></span><br><span class="line">b = <span class="number">2</span> <span class="comment">// 这句话可以</span></span><br><span class="line"><span class="keyword">let</span> a = <span class="string">&quot;Hello&quot;</span> <span class="comment">// a变成了字符串&quot;Hello&quot;</span></span><br></pre></td></tr></table></figure>
+<a id="more"></a>
+<p>&amp;表示不可变引用，&amp;mut 表示可变引用，对可变数据可以使用&amp;和&amp;mut，对不可变数据只能用&amp;</p>
+<p>声明函数：</p>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">foo</span></span>(param1: <span class="built_in">i32</span>) -&gt; <span class="built_in">i32</span> &#123;</span><br><span class="line">  <span class="built_in">println!</span>(<span class="string">&quot;&#123;&#125;&quot;</span>, param1)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>函数参数必须声明类型。表达式是不带分号的语句，表达式返回值但是语句不返回值，所以函数最后一句可以用一个不带分号的语句写，从而省略return语句</p>
+<p>我们并不对返回值命名，但要在箭头（<code>-&gt;</code>）后声明它的类型。</p>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> x = (<span class="keyword">let</span> y = <span class="number">5</span>); <span class="comment">//错误，因为let y = 5不返回值</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>有符号整型：i8、i16、i32、i64、i128、isize（在64位机器上是64位，在32位机器上是32位）</p></li>
+<li><p>无符号整型：u8、u16、u32、u64、u128、size</p></li>
+<li><p>浮点型：f32、f64</p></li>
+<li><p>布尔型：bool</p></li>
+</ul>
+<p>比较长的可以用_分隔开，例如5_000_000</p>
+<p>整型最大最小值：std::i32::MAX、std::i32::MIN，把32换成其他数字就是其他位数下的最大最小值</p>
+<p>println!()为输出函数，{}类似于C语言里面的%d，但是它可以匹配任何内容，所以输出很方便</p>
+<p>rust中注释是//</p>
+<p>if表达式后面不用加()</p>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    <span class="keyword">let</span> number = <span class="number">3</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> number &lt; <span class="number">5</span> &#123;</span><br><span class="line">        <span class="built_in">println!</span>(<span class="string">&quot;condition was true&quot;</span>);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="built_in">println!</span>(<span class="string">&quot;condition was false&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>if是表达式，它返回一个值</p>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    <span class="keyword">let</span> condition = <span class="literal">true</span>;</span><br><span class="line">    <span class="keyword">let</span> number = <span class="keyword">if</span> condition &#123;</span><br><span class="line">        <span class="number">5</span></span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="number">6</span></span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;The value of number is: &#123;&#125;&quot;</span>, number);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>rust有三种循环：</p>
+<ul>
+<li><p>loop</p>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    <span class="keyword">loop</span> &#123;</span><br><span class="line">        <span class="built_in">println!</span>(<span class="string">&quot;again!&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>loop会不停地执行，使用break退出，并且break后面可以指定返回值</p>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    <span class="keyword">let</span> <span class="keyword">mut</span> counter = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">let</span> result = <span class="keyword">loop</span> &#123;</span><br><span class="line">        counter += <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> counter == <span class="number">10</span> &#123;</span><br><span class="line">            <span class="keyword">break</span> counter * <span class="number">2</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;The result is &#123;&#125;&quot;</span>, result);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>while</p>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    <span class="keyword">let</span> <span class="keyword">mut</span> number = <span class="number">3</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> number != <span class="number">0</span> &#123;</span><br><span class="line">        <span class="built_in">println!</span>(<span class="string">&quot;&#123;&#125;!&quot;</span>, number);</span><br><span class="line"></span><br><span class="line">        number = number - <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;LIFTOFF!!!&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>while后面的条件也不加()</p></li>
+<li><p>for</p>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    <span class="keyword">let</span> a = [<span class="number">10</span>, <span class="number">20</span>, <span class="number">30</span>, <span class="number">40</span>, <span class="number">50</span>];</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> element <span class="keyword">in</span> a.iter() &#123;</span><br><span class="line">        <span class="built_in">println!</span>(<span class="string">&quot;the value is: &#123;&#125;&quot;</span>, element);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>for后面可以跟range和iter这样的方法</p></li>
+</ul>
+]]></content>
+      <categories>
+        <category>计算机</category>
+      </categories>
+      <tags>
+        <tag>Rust</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Kotlin空指针</title>
+    <url>/2020/10/04/Kotlin%E7%A9%BA%E6%8C%87%E9%92%88/</url>
+    <content><![CDATA[<p>Kotlin中默认所有参数和变量都非空，例如：</p>
+<figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">    doStudy(<span class="literal">null</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">doStudy</span><span class="params">(study: <span class="type">Study</span>)</span></span> &#123;</span><br><span class="line">    study.readBooks()</span><br><span class="line">    study.doHomework()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这段代码会报错，因为传入了空指针。</p>
+<a id="more"></a>
+<p>要想定义可以为空的参数或变量，需要在类型名后面加上?，上述代码改成下面这样就可以了</p>
+<figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">doStudy</span><span class="params">(study: <span class="type">Study</span>?)</span></span> &#123;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>但是这时study的两个方法又会报错，因为这时可以传入空指针了，编译器会暗示我们进行空指针检查，我们可以用?.运算符，这个运算符表示如果为空就不执行返回Null，如果非空就执行。</p>
+<figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line">study?.readBooks()</span><br><span class="line">study?.doHomework()</span><br></pre></td></tr></table></figure>
+<p>另外还有?:运算符，这个运算符表示如果左边的语句非空就返回左边的执行结果，否则返回右边的执行结果。</p>
+<figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line"><span class="keyword">val</span> c = a?:b</span><br><span class="line">表示</span><br><span class="line"><span class="keyword">val</span> c = <span class="keyword">if</span> (a != <span class="literal">null</span>) &#123;</span><br><span class="line">    a</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    b</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>!!是非空断言语句，表示我们告诉编译器它前面的对象就是非空的，不需要空指针检查。</p>
+<p>let是Kotlin一个内置函数，它将调用它的变量传入后面的lambda表达式中。它可以用来和?.结合。</p>
+<p>上述的代码</p>
+<figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line">study?.readBooks()</span><br><span class="line">study?.doHomework()</span><br></pre></td></tr></table></figure>
+<p>实际上执行了两次if else判断，用let可以简化</p>
+<figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line">study?.let &#123; stu -&gt;</span><br><span class="line">           stu.readBooks()</span><br><span class="line">           stu.doHomework()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>先判断study是否非空，如果非空就执行let函数，将study传入，执行后面的两个函数</p>
+<p>此外let可以用于处理全局变量的判空问题，但是if不可以。</p>
+]]></content>
+      <categories>
+        <category>计算机</category>
+      </categories>
+      <tags>
+        <tag>Kotlin</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Rust学习笔记（三）</title>
+    <url>/2020/10/18/Rust%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%89%EF%BC%89/</url>
+    <content><![CDATA[<p>struct示例：</p>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="meta">#![allow(unused)]</span></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">User</span></span> &#123;</span><br><span class="line">    username: <span class="built_in">String</span>,</span><br><span class="line">    email: <span class="built_in">String</span>,</span><br><span class="line">    sign_in_count: <span class="built_in">u64</span>,</span><br><span class="line">    active: <span class="built_in">bool</span>,</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>前面写字段名，接:。后面写类型，接,。注意最后一个字段后面也要加,。</p>
+<p>如果要想让结构体中某一个字段变成可变的，必须让结构体整体可变。</p>
+<a id="more"></a>
+<p>如果字段名和参数完全一样，可以只写一个：</p>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="meta">#![allow(unused)]</span></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">User</span></span> &#123;</span><br><span class="line">    username: <span class="built_in">String</span>,</span><br><span class="line">    email: <span class="built_in">String</span>,</span><br><span class="line">    sign_in_count: <span class="built_in">u64</span>,</span><br><span class="line">    active: <span class="built_in">bool</span>,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">build_user</span></span>(email: <span class="built_in">String</span>, username: <span class="built_in">String</span>) -&gt; User &#123;</span><br><span class="line">    User &#123;</span><br><span class="line">        email: email,</span><br><span class="line">        username: username,</span><br><span class="line">        active: <span class="literal">true</span>,</span><br><span class="line">        sign_in_count: <span class="number">1</span>,</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">#![allow(unused)]</span></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">User</span></span> &#123;</span><br><span class="line">    username: <span class="built_in">String</span>,</span><br><span class="line">    email: <span class="built_in">String</span>,</span><br><span class="line">    sign_in_count: <span class="built_in">u64</span>,</span><br><span class="line">    active: <span class="built_in">bool</span>,</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 以下这个和上面的等价</span></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">build_user</span></span>(email: <span class="built_in">String</span>, username: <span class="built_in">String</span>) -&gt; User &#123;</span><br><span class="line">    User &#123;</span><br><span class="line">        email,</span><br><span class="line">        username,</span><br><span class="line">        active: <span class="literal">true</span>,</span><br><span class="line">        sign_in_count: <span class="number">1</span>,</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>下面展示了不使用更新语法时，如何在 <code>user2</code> 中创建一个新 <code>User</code> 实例。我们为 <code>email</code> 和 <code>username</code> 设置了新的值，其他值则使用了 <code>user1</code> 中的同名值：</p>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> user2 = User &#123;</span><br><span class="line">    email: <span class="built_in">String</span>::from(<span class="string">&quot;another@example.com&quot;</span>),</span><br><span class="line">    username: <span class="built_in">String</span>::from(<span class="string">&quot;anotherusername567&quot;</span>),</span><br><span class="line">    active: user1.active,</span><br><span class="line">    sign_in_count: user1.sign_in_count,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>使用结构体更新语法，我们可以通过更少的代码来达到相同的效果，如下所示。<code>..</code> 语法指定了剩余未显式设置值的字段应有与给定实例对应字段相同的值。</p>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> user2 = User &#123;</span><br><span class="line">    email: <span class="built_in">String</span>::from(<span class="string">&quot;another@example.com&quot;</span>),</span><br><span class="line">    username: <span class="built_in">String</span>::from(<span class="string">&quot;anotherusername567&quot;</span>),</span><br><span class="line">    ..user1</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>也可以定义与元组（在第三章讨论过）类似的结构体，称为 <strong>元组结构体</strong>（<em>tuple structs</em>）。元组结构体有着结构体名称提供的含义，但没有具体的字段名，只有字段的类型。当你想给整个元组取一个名字，并使元组成为与其他元组不同的类型时，元组结构体是很有用的，这时像常规结构体那样为每个字段命名就显得多余和形式化了。</p>
+<p>下面的Color和Point是元组结构体</p>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="meta">#![allow(unused)]</span></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Color</span></span>(<span class="built_in">i32</span>, <span class="built_in">i32</span>, <span class="built_in">i32</span>);</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Point</span></span>(<span class="built_in">i32</span>, <span class="built_in">i32</span>, <span class="built_in">i32</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> black = Color(<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>);</span><br><span class="line"><span class="keyword">let</span> origin = Point(<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>注意 <code>black</code> 和 <code>origin</code> 值的类型不同，因为它们是不同的元组结构体的实例。你定义的每一个结构体有其自己的类型，即使结构体中的字段有着相同的类型。例如，一个获取 <code>Color</code> 类型参数的函数不能接受 <code>Point</code> 作为参数，即便这两个类型都由三个 <code>i32</code> 值组成。在其他方面，元组结构体实例类似于元组：可以将其解构为单独的部分，也可以使用 <code>.</code> 后跟索引来访问单独的值，等等。</p>
+<p>在<code>User</code> 结构体的定义中，我们使用了自身拥有所有权的 <code>String</code> 类型而不是 <code>&amp;str</code> 字符串 slice 类型。这是一个有意而为之的选择，因为我们想要这个结构体拥有它所有的数据，为此只要整个结构体是有效的话其数据也是有效的。</p>
+<p>可以使结构体存储被其他对象拥有的数据的引用，不过这么做的话需要用上 <strong>生命周期</strong>（<em>lifetimes</em>）。生命周期确保结构体引用的数据有效性跟结构体本身保持一致。如果你尝试在结构体中存储一个引用而不指定生命周期将是无效的。</p>
+<p>结构体的一个使用示例：</p>
+<p>比如我们想要计算一个长方形的面积：</p>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    <span class="keyword">let</span> width1 = <span class="number">30</span>;</span><br><span class="line">    <span class="keyword">let</span> height1 = <span class="number">50</span>;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">println!</span>(</span><br><span class="line">        <span class="string">&quot;The area of the rectangle is &#123;&#125; square pixels.&quot;</span>,</span><br><span class="line">        area(width1, height1)</span><br><span class="line">    );</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">area</span></span>(width: <span class="built_in">u32</span>, height: <span class="built_in">u32</span>) -&gt; <span class="built_in">u32</span> &#123;</span><br><span class="line">    width * height</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>虽然可以运行，但是无法体现长和宽的关系。函数 <code>area</code> 本应该计算一个长方形的面积，不过函数却有两个参数。这两个参数是相关联的，不过程序本身却没有表现出这一点。将长度和宽度组合在一起将更易懂也更易处理。</p>
+<p>可以选择使用元组：</p>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    <span class="keyword">let</span> rect1 = (<span class="number">30</span>, <span class="number">50</span>);</span><br><span class="line"></span><br><span class="line">    <span class="built_in">println!</span>(</span><br><span class="line">        <span class="string">&quot;The area of the rectangle is &#123;&#125; square pixels.&quot;</span>,</span><br><span class="line">        area(rect1)</span><br><span class="line">    );</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">area</span></span>(dimensions: (<span class="built_in">u32</span>, <span class="built_in">u32</span>)) -&gt; <span class="built_in">u32</span> &#123;</span><br><span class="line">    dimensions.<span class="number">0</span> * dimensions.<span class="number">1</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>但是元组并没有给出元素的名称，所以计算变得更费解了。在计算面积时将宽和高弄混倒无关紧要，不过当在屏幕上绘制长方形时就有问题了！我们必须牢记 <code>width</code> 的元组索引是 <code>0</code>，<code>height</code> 的元组索引是 <code>1</code>。如果其他人要使用这些代码，他们必须要搞清楚这一点，并也要牢记于心。很容易忘记或者混淆这些值而造成错误，因为我们没有在代码中传达数据的意图。</p>
+<p>使用结构体会好很多：</p>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Rectangle</span></span> &#123;</span><br><span class="line">    width: <span class="built_in">u32</span>,</span><br><span class="line">    height: <span class="built_in">u32</span>,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    <span class="keyword">let</span> rect1 = Rectangle &#123; width: <span class="number">30</span>, height: <span class="number">50</span> &#125;;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">println!</span>(</span><br><span class="line">        <span class="string">&quot;The area of the rectangle is &#123;&#125; square pixels.&quot;</span>,</span><br><span class="line">        area(&amp;rect1)</span><br><span class="line">    );</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">area</span></span>(rectangle: &amp;Rectangle) -&gt; <span class="built_in">u32</span> &#123;</span><br><span class="line">    rectangle.width * rectangle.height</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>println!宏能处理很多类型的格式，不过，<code>&#123;&#125;</code> 默认告诉 <code>println!</code> 使用被称为 <code>Display</code> 的格式：意在提供给直接终端用户查看的输出。目前为止见过的基本类型都默认实现了 <code>Display</code>。不过结构体没有实现。</p>
+<p>我们可以在 <code>&#123;&#125;</code> 中加入 <code>:?</code> 指示符告诉 <code>println!</code> 我们想要使用叫做 <code>Debug</code> 的输出格式。<code>Debug</code> 是一个 trait，它允许我们以一种对开发者有帮助的方式打印结构体，以便当我们调试代码时能看到它的值。</p>
+<p>但是结构体也没有Debug这个trait。Rust <strong>确实</strong> 包含了打印出调试信息的功能，不过我们必须为结构体显式选择这个功能。为此，在结构体定义之前加上 <code>#[derive(Debug)]</code> 注解。</p>
+<p>也可以用{:#?}输出，会比{:?}显示的格式更漂亮</p>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line">rect1 is Rectangle &#123; width: <span class="number">30</span>, height: <span class="number">50</span> &#125; <span class="comment">// &#123;:?&#125;输出的</span></span><br><span class="line">rect1 is Rectangle &#123;</span><br><span class="line">    width: <span class="number">30</span>,</span><br><span class="line">    height: <span class="number">50</span></span><br><span class="line">&#125; <span class="comment">// &#123;:#?&#125;输出的</span></span><br></pre></td></tr></table></figure>
+<p>通过仅仅使用 <code>self</code> 作为第一个参数来使方法获取实例的所有权是很少见的；这种技术通常用在当方法将 <code>self</code> 转换成别的实例的时候，这时我们想要防止调用者在转换之后使用原始的实例。</p>
+<p>Rust 有一个叫 <strong>自动引用和解引用</strong>（<em>automatic referencing and dereferencing</em>）的功能。方法调用是 Rust 中少数几个拥有这种行为的地方。</p>
+<p>他是这样工作的：当使用 <code>object.something()</code> 调用方法时，Rust 会自动为 <code>object</code> 添加 <code>&amp;</code>、<code>&amp;mut</code> 或 <code>*</code> 以便使 <code>object</code> 与方法签名匹配。也就是说，这些代码是等价的：</p>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line">p1.distance(&amp;p2);</span><br><span class="line">(&amp;p1).distance(&amp;p2);</span><br></pre></td></tr></table></figure>
+<p>这也是为什么方法定义中声明参数是&amp;self，但是我们仍然能用struct而不是&amp;struct调用的原因。</p>
+<p><code>impl</code> 块的另一个有用的功能是：允许在 <code>impl</code> 块中定义 <strong>不</strong> 以 <code>self</code> 作为参数的函数。这被称为 <strong>关联函数</strong>（<em>associated functions</em>），因为它们与结构体相关联。它们仍是函数而不是方法，因为它们并不作用于一个结构体的实例。在Java中这叫静态方法。</p>
+<p>每个结构体都允许拥有多个 <code>impl</code> 块。</p>
+<p>像这样定义枚举：</p>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">enum</span> <span class="title">IpAddrKind</span></span> &#123;</span><br><span class="line">    V4,</span><br><span class="line">    V6,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>像这样使用其中成员：</p>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> four = IpAddrKind::V4;</span><br><span class="line"><span class="keyword">let</span> six = IpAddrKind::V6;</span><br></pre></td></tr></table></figure>
+<p>还可以把数据直接放入枚举成员中：</p>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">enum</span> <span class="title">IpAddr</span></span> &#123;</span><br><span class="line">    V4(<span class="built_in">String</span>),</span><br><span class="line">    V6(<span class="built_in">String</span>),</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> home = IpAddr::V4(<span class="built_in">String</span>::from(<span class="string">&quot;127.0.0.1&quot;</span>));</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> loopback = IpAddr::V6(<span class="built_in">String</span>::from(<span class="string">&quot;::1&quot;</span>));</span><br></pre></td></tr></table></figure>
+<p>枚举的好处是能让那些不同类型的成员都有同样的类型：枚举类型，这样就可以用一个函数处理他们。</p>
+<p>枚举里面也可以定义方法。</p>
+<p>Option&lt;T&gt;是一个重要的枚举</p>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">enum</span> <span class="title">Option</span></span>&lt;T&gt; &#123;</span><br><span class="line">    <span class="literal">Some</span>(T),</span><br><span class="line">    <span class="literal">None</span>,</span><br><span class="line">&#125; <span class="comment">// Some也是一个枚举</span></span><br><span class="line"><span class="keyword">let</span> some_number = <span class="literal">Some</span>(<span class="number">5</span>);</span><br><span class="line"><span class="keyword">let</span> some_string = <span class="literal">Some</span>(<span class="string">&quot;a string&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> absent_number: <span class="built_in">Option</span>&lt;<span class="built_in">i32</span>&gt; = <span class="literal">None</span>; <span class="comment">// 如果为None，需要显示指定Option的T类型</span></span><br></pre></td></tr></table></figure>
+<p>match匹配：</p>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">enum</span> <span class="title">Coin</span></span> &#123;</span><br><span class="line">    Penny,</span><br><span class="line">    Nickel,</span><br><span class="line">    Dime,</span><br><span class="line">    Quarter,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">value_in_cents</span></span>(coin: Coin) -&gt; <span class="built_in">u8</span> &#123;</span><br><span class="line">    <span class="keyword">match</span> coin &#123;</span><br><span class="line">        Coin::Penny =&gt; <span class="number">1</span>,</span><br><span class="line">        Coin::Nickel =&gt; <span class="number">5</span>,</span><br><span class="line">        Coin::Dime =&gt; <span class="number">10</span>,</span><br><span class="line">        Coin::Quarter =&gt; <span class="number">25</span>,</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>match必须匹配完所有的模式，如果后面的不想管可以用_表示。</p>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> some_u8_value = <span class="number">0u8</span>;</span><br><span class="line"><span class="keyword">match</span> some_u8_value &#123;</span><br><span class="line">    <span class="number">1</span> =&gt; <span class="built_in">println!</span>(<span class="string">&quot;one&quot;</span>),</span><br><span class="line">    <span class="number">3</span> =&gt; <span class="built_in">println!</span>(<span class="string">&quot;three&quot;</span>),</span><br><span class="line">    <span class="number">5</span> =&gt; <span class="built_in">println!</span>(<span class="string">&quot;five&quot;</span>),</span><br><span class="line">    <span class="number">7</span> =&gt; <span class="built_in">println!</span>(<span class="string">&quot;seven&quot;</span>),</span><br><span class="line">    _ =&gt; (),</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>_</code> 模式会匹配所有的值。通过将其放置于其他分支之后，<code>_</code> 将会匹配所有之前没有指定的可能的值。</p>
+<p>如果只想要匹配一个的情况，可以用if let</p>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> some_u8_value = <span class="literal">Some</span>(<span class="number">0u8</span>);</span><br><span class="line"><span class="keyword">match</span> some_u8_value &#123;</span><br><span class="line">    <span class="literal">Some</span>(<span class="number">3</span>) =&gt; <span class="built_in">println!</span>(<span class="string">&quot;three&quot;</span>),</span><br><span class="line">    _ =&gt; (),</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 也可以写成</span></span><br><span class="line"><span class="keyword">if</span> <span class="keyword">let</span> <span class="literal">Some</span>(<span class="number">3</span>) = some_u8_value &#123;</span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;three&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>if let也可加else</p>
+]]></content>
+      <categories>
+        <category>计算机</category>
+      </categories>
+      <tags>
+        <tag>Rust</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Rust学习笔记（二）</title>
+    <url>/2020/10/17/Rust%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%BA%8C%EF%BC%89/</url>
+    <content><![CDATA[<p>访问堆必须要用指针访问，而且比访问栈慢的多</p>
+<p>首先，让我们看一下所有权的规则。当我们通过举例说明时，请谨记这些规则：</p>
+<blockquote>
+<ol type="1">
+<li><p>Rust 中的每一个值都有一个被称为其 <strong>所有者</strong>（<em>owner</em>）的变量。</p></li>
+<li><p>值在任一时刻有且只有一个所有者。</p></li>
+<li><p>当所有者（变量）离开作用域，这个值将被丢弃。</p></li>
+</ol>
+</blockquote>
+<ul>
+<li>当 <code>s</code> <strong>进入作用域</strong> 时，它就是有效的。</li>
+<li>这一直持续到它 <strong>离开作用域</strong> 为止。</li>
+</ul>
+<a id="more"></a>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="meta">#![allow(unused)]</span></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">&#123;                      <span class="comment">// s 在这里无效, 它尚未声明</span></span><br><span class="line">    <span class="keyword">let</span> s = <span class="string">&quot;hello&quot;</span>;   <span class="comment">// 从此处起，s 是有效的</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 使用 s</span></span><br><span class="line">&#125;                      <span class="comment">// 此作用域已结束，s 不再有效</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>字符串字面值是很方便的，不过它们并不适合使用文本的每一种场景。原因之一就是它们是不可变的。另一个原因是并非所有字符串的值都能在编写代码时就知道：例如，要是想获取用户输入并存储该怎么办呢？为此，Rust 有第二个字符串类型，String。这个类型被分配到堆上，所以能够存储在编译时未知大小的文本。可以使用 from 函数基于字符串字面值来创建 String，如下：</p>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="meta">#![allow(unused)]</span></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line"><span class="keyword">let</span> s = <span class="built_in">String</span>::from(<span class="string">&quot;hello&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>对于 <code>String</code> 类型，为了支持一个可变，可增长的文本片段，需要在堆上分配一块在编译时未知大小的内存来存放内容。这意味着：</p>
+<ul>
+<li>必须在运行时向操作系统请求内存。</li>
+<li>需要一个当我们处理完 <code>String</code> 时将内存返回给操作系统的方法。</li>
+</ul>
+<p>第一部分由我们完成：当调用 <code>String::from</code> 时，它的实现 (<em>implementation</em>) 请求其所需的内存。这在编程语言中是非常通用的。</p>
+<p>然而，第二部分实现起来就各有区别了。在有 <strong>垃圾回收</strong>（<em>garbage collector</em>，<em>GC</em>）的语言中， GC 记录并清除不再使用的内存，而我们并不需要关心它。没有 GC 的话，识别出不再使用的内存并调用代码显式释放就是我们的责任了，跟请求内存的时候一样。从历史的角度上说正确处理内存回收曾经是一个困难的编程问题。如果忘记回收了会浪费内存。如果过早回收了，将会出现无效变量。如果重复回收，这也是个 bug。我们需要精确的为一个 <code>allocate</code> 配对一个 <code>free</code>。</p>
+<p>Rust 采取了一个不同的策略：内存在拥有它的变量离开作用域后就被自动释放。</p>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="meta">#![allow(unused)]</span></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">let</span> s = <span class="built_in">String</span>::from(<span class="string">&quot;hello&quot;</span>); <span class="comment">// 从此处起，s 是有效的</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 使用 s</span></span><br><span class="line">&#125;                                  <span class="comment">// 此作用域已结束，</span></span><br><span class="line">                                   <span class="comment">// s 不再有效</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这是一个将 <code>String</code> 需要的内存返回给操作系统的很自然的位置：当 <code>s</code> 离开作用域的时候。当变量离开作用域，Rust 为我们调用一个特殊的函数。这个函数叫做 <code>drop</code>，在这里 <code>String</code> 的作者可以放置释放内存的代码。Rust 在结尾的 <code>&#125;</code> 处自动调用 <code>drop</code>。</p>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="meta">#![allow(unused)]</span></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line"><span class="keyword">let</span> x = <span class="number">5</span>;</span><br><span class="line"><span class="keyword">let</span> y = x;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>两个5被压入了栈中</p>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="meta">#![allow(unused)]</span></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line"><span class="keyword">let</span> s1 = <span class="built_in">String</span>::from(<span class="string">&quot;hello&quot;</span>);</span><br><span class="line"><span class="keyword">let</span> s2 = s1;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>String</code> 由三部分组成，如图左侧所示：一个指向存放字符串内容内存的指针，一个长度，和一个容量。这一组数据存储在栈上。右侧则是堆上存放内容的内存部分。</p>
+<p><img data-src="https://tva1.sinaimg.cn/large/007S8ZIlgy1gjspzvwrzjj30ni0ew3z9.jpg" /></p>
+<p>长度表示 <code>String</code> 的内容当前使用了多少字节的内存。容量是 <code>String</code> 从操作系统总共获取了多少字节的内存。</p>
+<p>当我们将 <code>s1</code> 赋值给 <code>s2</code>，<code>String</code> 的数据被复制了，这意味着我们从栈上拷贝了它的指针、长度和容量。我们并没有复制指针指向的堆上数据。换句话说，内存中数据的表现如图 4-2 所示。</p>
+<p><img data-src="/Users/taowei/Library/Application%20Support/typora-user-images/image-20201017225510210.png" /></p>
+<p>因为如果连数据也拷贝就会占用很多内存。</p>
+<p>之前我们提到过当变量离开作用域后，Rust 自动调用 <code>drop</code> 函数并清理变量的堆内存。不过图 4-2 展示了两个数据指针指向了同一位置。这就有了一个问题：当 <code>s2</code> 和 <code>s1</code> 离开作用域，他们都会尝试释放相同的内存。这是一个叫做 <strong>二次释放</strong>（<em>double free</em>）的错误，也是之前提到过的内存安全性 bug 之一。两次释放（相同）内存会导致内存污染，它可能会导致潜在的安全漏洞。</p>
+<p>为了确保内存安全，这种场景下 Rust 的处理有另一个细节值得注意。与其尝试拷贝被分配的内存，Rust 则认为 <code>s1</code> 不再有效，因此 Rust 不需要在 <code>s1</code> 离开作用域后清理任何东西。看看在 <code>s2</code> 被创建之后尝试使用 <code>s1</code> 会发生什么；这段代码不能运行：</p>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> s1 = <span class="built_in">String</span>::from(<span class="string">&quot;hello&quot;</span>);</span><br><span class="line"><span class="keyword">let</span> s2 = s1;</span><br><span class="line"></span><br><span class="line"><span class="built_in">println!</span>(<span class="string">&quot;&#123;&#125;, world!&quot;</span>, s1);</span><br></pre></td></tr></table></figure>
+<p>如果s1和s2是栈上的数据类型（例如整型）那就可以。</p>
+<p>如果你在其他语言中听说过术语 <strong>浅拷贝</strong>（<em>shallow copy</em>）和 <strong>深拷贝</strong>（<em>deep copy</em>），那么拷贝指针、长度和容量而不拷贝数据可能听起来像浅拷贝。不过因为 Rust 同时使第一个变量无效了，这个操作被称为 <strong>移动</strong>（<em>move</em>），而不是浅拷贝。上面的例子可以解读为 <code>s1</code> 被 <strong>移动</strong> 到了 <code>s2</code> 中。</p>
+<p>Rust 永远也不会自动创建数据的 “深拷贝”。深拷贝很消耗资源，因此，Rust中任何 <strong>自动</strong> 的复制可以被认为对运行时性能影响较小。</p>
+<p>如果我们 <strong>确实</strong> 需要深度复制 <code>String</code> 中堆上的数据，而不仅仅是栈上的数据，可以使用一个叫做 <code>clone</code> 的通用函数。</p>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="meta">#![allow(unused)]</span></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line"><span class="keyword">let</span> s1 = <span class="built_in">String</span>::from(<span class="string">&quot;hello&quot;</span>);</span><br><span class="line"><span class="keyword">let</span> s2 = s1.clone();</span><br><span class="line"></span><br><span class="line"><span class="built_in">println!</span>(<span class="string">&quot;s1 = &#123;&#125;, s2 = &#123;&#125;&quot;</span>, s1, s2);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这段代码能正常运行，并且明确产生图 4-3 中行为，这里堆上的数据 <strong>确实</strong> 被复制了。</p>
+<p>当出现 <code>clone</code> 调用时，你知道一些特定的代码被执行而且这些代码可能相当消耗资源。你很容易察觉到一些不寻常的事情正在发生。</p>
+<p>对于整型这种在编译时已知大小的类型被整个存储在栈上，没有深浅拷贝的区别。</p>
+<p>Rust 有一个叫做 <code>Copy</code> trait 的特殊注解，可以用在类似整型这样的存储在栈上的类型上。如果一个类型拥有 <code>Copy</code> trait，一个旧的变量在将其赋值给其他变量后仍然可用。Rust 不允许自身或其任何部分实现了 <code>Drop</code> trait 的类型使用 <code>Copy</code> trait。如果我们对其值离开作用域时需要特殊处理的类型使用 <code>Copy</code> 注解，将会出现一个编译时错误。</p>
+<p>元组，当且仅当其包含的类型也都是 <code>Copy</code> 的时候，也是Copy的。</p>
+<p>将值传递给函数在语义上与给变量赋值相似。向函数传递值可能会移动或者复制，就像赋值语句一样。</p>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    <span class="keyword">let</span> s = <span class="built_in">String</span>::from(<span class="string">&quot;hello&quot;</span>);  <span class="comment">// s 进入作用域</span></span><br><span class="line"></span><br><span class="line">    takes_ownership(s);             <span class="comment">// s 的值移动到函数里 ...</span></span><br><span class="line">                                    <span class="comment">// ... 所以到这里不再有效</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">let</span> x = <span class="number">5</span>;                      <span class="comment">// x 进入作用域</span></span><br><span class="line"></span><br><span class="line">    makes_copy(x);                  <span class="comment">// x 应该移动函数里，</span></span><br><span class="line">                                    <span class="comment">// 但 i32 是 Copy 的，所以在后面可继续使用 x</span></span><br><span class="line"></span><br><span class="line">&#125; <span class="comment">// 这里, x 先移出了作用域，然后是 s。但因为 s 的值已被移走，</span></span><br><span class="line">  <span class="comment">// 所以不会有特殊操作</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">takes_ownership</span></span>(some_string: <span class="built_in">String</span>) &#123; <span class="comment">// some_string 进入作用域</span></span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;&#123;&#125;&quot;</span>, some_string);</span><br><span class="line">&#125; <span class="comment">// 这里，some_string 移出作用域并调用 `drop` 方法。占用的内存被释放</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">makes_copy</span></span>(some_integer: <span class="built_in">i32</span>) &#123; <span class="comment">// some_integer 进入作用域</span></span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;&#123;&#125;&quot;</span>, some_integer);</span><br><span class="line">&#125; <span class="comment">// 这里，some_integer 移出作用域。不会有特殊操作</span></span><br></pre></td></tr></table></figure>
+<p>rust的函数实参和形参必须严格一致，如果声明是&amp; int，必须传入&amp; int，不能传入int。如果传入&amp; int，必须声明&amp; int，不能声明int。如果声明&amp;mut，必须也传入&amp;mut。&amp; 和后面的类型可以分开也可以合起来写。但是如果是&amp; self的话，可以传入self的类型值，不用加&amp;。</p>
+<p>把参数传入函数可以理解为将实参赋值给形参的过程。</p>
+<p>一个引用的作用域从声明的地方开始一直持续到最后一次使用为止。也可以用一对大括号显示地定义作用域。</p>
+<p>在特定作用域中的特定数据只能有一个可变引用。</p>
+<p>我们 <strong>也</strong> 不能在拥有不可变引用的同时拥有可变引用。</p>
+<p>在具有指针的语言中，很容易通过释放内存时保留指向它的指针而错误地生成一个 <strong>悬垂指针</strong>（<em>dangling pointer</em>），所谓悬垂指针是其指向的内存可能已经被分配给其它持有者。相比之下，在 Rust 中编译器确保引用永远也不会变成悬垂状态：当你拥有一些数据的引用，编译器确保数据不会在其引用之前离开作用域。</p>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    <span class="keyword">let</span> reference_to_nothing = dangle();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">dangle</span></span>() -&gt; &amp;<span class="built_in">String</span> &#123;</span><br><span class="line">    <span class="keyword">let</span> s = <span class="built_in">String</span>::from(<span class="string">&quot;hello&quot;</span>);</span><br><span class="line"></span><br><span class="line">    &amp;s</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>因为 <code>s</code> 是在 <code>dangle</code> 函数内创建的，当 <code>dangle</code> 的代码执行完毕后，<code>s</code> 将被释放。不过我们尝试返回它的引用。这意味着这个引用会指向一个无效的 <code>String</code></p>
+<p>这里的解决方法是直接返回 <code>String</code>：</p>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="meta">#![allow(unused)]</span></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">no_dangle</span></span>() -&gt; <span class="built_in">String</span> &#123;</span><br><span class="line">    <span class="keyword">let</span> s = <span class="built_in">String</span>::from(<span class="string">&quot;hello&quot;</span>);</span><br><span class="line"></span><br><span class="line">    s</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>字符串 slice</strong>（<em>string slice</em>）是 <code>String</code> 中一部分值的引用,“字符串 slice” 的类型声明写作 <code>&amp;str</code>。字符串字面值就是&amp;str。可以直接把参数里面的&amp;String写成&amp;str。</p>
+]]></content>
+      <categories>
+        <category>计算机</category>
+      </categories>
+      <tags>
+        <tag>Rust</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Rust学习笔记（五）</title>
+    <url>/2020/10/18/Rust%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%BA%94%EF%BC%89/</url>
+    <content><![CDATA[<h2 id="vector">vector</h2>
+<p>可以用Vec::new()创建一个新的空vector</p>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> v: <span class="built_in">Vec</span>&lt;<span class="built_in">i32</span>&gt; = <span class="built_in">Vec</span>::new();</span><br><span class="line"><span class="comment">// 也可以不加i32这个类型注解，Rust会根据插入的第一个数据自动推断vector中元素的类型</span></span><br><span class="line"><span class="keyword">let</span> <span class="keyword">mut</span> v = <span class="built_in">Vec</span>::new();</span><br><span class="line"></span><br><span class="line">v.push(<span class="number">5</span>);</span><br><span class="line">v.push(<span class="number">6</span>);</span><br><span class="line">v.push(<span class="number">7</span>);</span><br><span class="line">v.push(<span class="number">8</span>);</span><br><span class="line"><span class="comment">// 或者也可以用vec!宏来定义</span></span><br><span class="line"><span class="keyword">let</span> v = <span class="built_in">vec!</span>[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>];</span><br></pre></td></tr></table></figure>
+<p>对于数组和元组，当且仅当其中所有元素是copy的时候，它是copy的，对于vector，它就是不可copy的。但是对于数组、元组、vector中单个的元素，如果这些元素本身是可以copy的类型，这些元素都是可以copy的。</p>
+<p>可以用get方法获取Option&lt;&amp;T&gt;来获取vector中的元素：</p>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> v = <span class="built_in">vec!</span>[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>];</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> third: &amp;<span class="built_in">i32</span> = &amp;v[<span class="number">2</span>];</span><br><span class="line"><span class="built_in">println!</span>(<span class="string">&quot;The third element is &#123;&#125;&quot;</span>, third);</span><br><span class="line"></span><br><span class="line"><span class="keyword">match</span> v.get(<span class="number">2</span>) &#123;</span><br><span class="line">    <span class="literal">Some</span>(third) =&gt; <span class="built_in">println!</span>(<span class="string">&quot;The third element is &#123;&#125;&quot;</span>, third),</span><br><span class="line">    <span class="literal">None</span> =&gt; <span class="built_in">println!</span>(<span class="string">&quot;There is no third element.&quot;</span>),</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>vector 只能储存相同类型的值。这是很不方便的；绝对会有需要储存一系列不同类型的值的用例。幸运的是，枚举的成员都被定义为相同的枚举类型，所以当需要在 vector 中储存不同类型值时，我们可以定义并使用一个枚举！</p>
+<p>例如，假如我们想要从电子表格的一行中获取值，而这一行的有些列包含数字，有些包含浮点值，还有些是字符串。我们可以定义一个枚举，其成员会存放这些不同类型的值，同时所有这些枚举成员都会被当作相同类型，那个枚举的类型。接着可以创建一个储存枚举值的 vector，这样最终就能够储存不同类型的值了。代码如下：</p>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">enum</span> <span class="title">SpreadsheetCell</span></span> &#123;</span><br><span class="line">    Int(<span class="built_in">i32</span>),</span><br><span class="line">    Float(<span class="built_in">f64</span>),</span><br><span class="line">    Text(<span class="built_in">String</span>),</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> row = <span class="built_in">vec!</span>[</span><br><span class="line">    SpreadsheetCell::Int(<span class="number">3</span>),</span><br><span class="line">    SpreadsheetCell::Text(<span class="built_in">String</span>::from(<span class="string">&quot;blue&quot;</span>)),</span><br><span class="line">    SpreadsheetCell::Float(<span class="number">10.12</span>),</span><br><span class="line">];</span><br></pre></td></tr></table></figure>
+<h2 id="string">String</h2>
+<p>像vector一样使用new来新建</p>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> <span class="keyword">mut</span> s = <span class="built_in">String</span>::new();</span><br></pre></td></tr></table></figure>
+<p>通常字符串会有初始数据，因为我们希望一开始就有这个字符串。为此，可以使用 <code>to_string</code> 方法，它能用于任何实现了 <code>Display</code> trait 的类型，字符串字面值也实现了它。</p>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> data = <span class="string">&quot;initial contents&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> s = data.to_string();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 该方法也可直接用于字符串字面值：</span></span><br><span class="line"><span class="keyword">let</span> s = <span class="string">&quot;initial contents&quot;</span>.to_string();</span><br></pre></td></tr></table></figure>
+<p>也可以使用 <code>String::from</code> 函数来从字符串字面值创建 <code>String</code>。</p>
+<p>由于String是采用UTF-8编码的，所以可以用任何语言的字面值去初始化它。</p>
+<p>可以使用push_str()在String后面添加&amp;str把它变长，也可以使用push()添加字符</p>
+<p>可以使用+拼接，使用format!宏</p>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> s1 = <span class="built_in">String</span>::from(<span class="string">&quot;Hello, &quot;</span>);</span><br><span class="line"><span class="keyword">let</span> s2 = <span class="built_in">String</span>::from(<span class="string">&quot;world!&quot;</span>);</span><br><span class="line"><span class="keyword">let</span> s3 = s1 + &amp;s2; <span class="comment">// 注意 s1 被移动了，不能继续使用</span></span><br></pre></td></tr></table></figure>
+<p>这里+实际调用的是add函数，add函数原型如下：</p>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">add</span></span>(<span class="keyword">self</span>, s: &amp;<span class="built_in">str</span>) -&gt; <span class="built_in">String</span> &#123;</span><br></pre></td></tr></table></figure>
+<p>首先，<code>s2</code> 使用了 <code>&amp;</code>，意味着我们使用第二个字符串的 <strong>引用</strong> 与第一个字符串相加。这是因为 <code>add</code> 函数的 <code>s</code> 参数：只能将 <code>&amp;str</code> 和 <code>String</code> 相加，不能将两个 <code>String</code> 值相加。不过等一下 —— 正如 <code>add</code> 的第二个参数所指定的，<code>&amp;s2</code> 的类型是 <code>&amp;String</code> 而不是 <code>&amp;str</code>。为什么这段代码还能编译呢？</p>
+<p>之所以能够在 <code>add</code> 调用中使用 <code>&amp;s2</code> 是因为 <code>&amp;String</code> 可以被 <strong>强转</strong>（<em>coerced</em>）成 <code>&amp;str</code>。当<code>add</code>函数被调用时，Rust 使用了一个被称为 <strong>解引用强制多态</strong>（<em>deref coercion</em>）的技术，你可以将其理解为它把 <code>&amp;s2</code> 变成了 <code>&amp;s2[..]</code>。</p>
+<p>其次，可以发现签名中 <code>add</code> 获取了 <code>self</code> 的所有权，因为 <code>self</code> <strong>没有</strong> 使用 <code>&amp;</code>。这意味着示例 8-18 中的 <code>s1</code> 的所有权将被移动到 <code>add</code> 调用中，之后就不再有效。所以虽然 <code>let s3 = s1 + &amp;s2;</code> 看起来就像它会复制两个字符串并创建一个新的字符串，而实际上这个语句会获取 <code>s1</code> 的所有权，附加上从 <code>s2</code> 中拷贝的内容，并返回结果的所有权。换句话说，它看起来好像生成了很多拷贝，不过实际上并没有：这个实现比拷贝要更高效。</p>
+<p>format!宏使用示范：</p>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> s1 = <span class="built_in">String</span>::from(<span class="string">&quot;tic&quot;</span>);</span><br><span class="line"><span class="keyword">let</span> s2 = <span class="built_in">String</span>::from(<span class="string">&quot;tac&quot;</span>);</span><br><span class="line"><span class="keyword">let</span> s3 = <span class="built_in">String</span>::from(<span class="string">&quot;toe&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> s = <span class="built_in">format!</span>(<span class="string">&quot;&#123;&#125;-&#123;&#125;-&#123;&#125;&quot;</span>, s1, s2, s3);</span><br></pre></td></tr></table></figure>
+<p>字符串不支持用[]直接索引</p>
+<p>可以使用&amp;str来获取索引，但是不建议这么做：</p>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> hello = <span class="string">&quot;Здравствуйте&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> s = &amp;hello[<span class="number">0</span>..<span class="number">4</span>]; <span class="comment">// 这样可以</span></span><br><span class="line"><span class="keyword">let</span> s = &amp;hello[<span class="number">0</span>..<span class="number">1</span>]; <span class="comment">// 这会panic</span></span><br></pre></td></tr></table></figure>
+<p>可以使用chars()返回每个字符，也可以使用bytes()获取每个字节值</p>
+<h2 id="hash-map">hash map</h2>
+<p>可以使用 <code>new</code> 创建一个空的 <code>HashMap</code>，并使用 <code>insert</code> 增加元素。</p>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="keyword">use</span> std::collections::HashMap;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> <span class="keyword">mut</span> scores = HashMap::new();</span><br><span class="line"></span><br><span class="line">scores.insert(<span class="built_in">String</span>::from(<span class="string">&quot;Blue&quot;</span>), <span class="number">10</span>);</span><br><span class="line">scores.insert(<span class="built_in">String</span>::from(<span class="string">&quot;Yellow&quot;</span>), <span class="number">50</span>);</span><br></pre></td></tr></table></figure>
+<p>注意必须首先 <code>use</code> 标准库中集合部分的 <code>HashMap</code>。在这三个常用集合中，<code>HashMap</code> 是最不常用的，所以并没有被 prelude 自动引用。标准库中对 <code>HashMap</code> 的支持也相对较少，例如，并没有内建的构建宏。</p>
+<p>另一个构建哈希 map 的方法是使用一个元组的 vector 的 <code>collect</code> 方法，其中每个元组包含一个键值对。<code>collect</code> 方法可以将数据收集进一系列的集合类型，包括 <code>HashMap</code>。例如，如果队伍的名字和初始分数分别在两个 vector 中，可以使用 <code>zip</code> 方法来创建一个元组的 vector，其中 “Blue” 与 10 是一对，依此类推。接着就可以使用 <code>collect</code> 方法将这个元组 vector 转换成一个 <code>HashMap</code>，示例如下：</p>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="keyword">use</span> std::collections::HashMap;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> teams  = <span class="built_in">vec!</span>[<span class="built_in">String</span>::from(<span class="string">&quot;Blue&quot;</span>), <span class="built_in">String</span>::from(<span class="string">&quot;Yellow&quot;</span>)];</span><br><span class="line"><span class="keyword">let</span> initial_scores = <span class="built_in">vec!</span>[<span class="number">10</span>, <span class="number">50</span>];</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> scores: HashMap&lt;_, _&gt; = teams.iter().zip(initial_scores.iter()).collect();</span><br></pre></td></tr></table></figure>
+<p>这里 <code>HashMap&lt;_, _&gt;</code> 类型注解是必要的，因为可能 <code>collect</code> 很多不同的数据结构，而除非显式指定否则 Rust 无从得知你需要的类型。但是对于键和值的类型参数来说，可以使用下划线占位，而 Rust 能够根据 vector 中数据的类型推断出 <code>HashMap</code> 所包含的类型。</p>
+<p>对于像 <code>i32</code> 这样的实现了 <code>Copy</code> trait 的类型，其值可以拷贝进哈希 map。对于像 <code>String</code> 这样拥有所有权的值，其值将被移动而哈希 map 会成为这些值的所有者。如果将值的引用插入哈希 map，这些值本身将不会被移动进哈希 map。但是这些引用指向的值必须至少在哈希 map 有效时也是有效的。</p>
+<p>可以通过 <code>get</code> 方法并提供对应的键来从哈希 map 中获取值</p>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="keyword">use</span> std::collections::HashMap;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> <span class="keyword">mut</span> scores = HashMap::new();</span><br><span class="line"></span><br><span class="line">scores.insert(<span class="built_in">String</span>::from(<span class="string">&quot;Blue&quot;</span>), <span class="number">10</span>);</span><br><span class="line">scores.insert(<span class="built_in">String</span>::from(<span class="string">&quot;Yellow&quot;</span>), <span class="number">50</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> team_name = <span class="built_in">String</span>::from(<span class="string">&quot;Blue&quot;</span>);</span><br><span class="line"><span class="keyword">let</span> score = scores.get(&amp;team_name);</span><br></pre></td></tr></table></figure>
+<p>可以使用与 vector 类似的方式来遍历哈希 map 中的每一个键值对，也就是 <code>for</code> 循环：</p>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="keyword">use</span> std::collections::HashMap;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> <span class="keyword">mut</span> scores = HashMap::new();</span><br><span class="line"></span><br><span class="line">scores.insert(<span class="built_in">String</span>::from(<span class="string">&quot;Blue&quot;</span>), <span class="number">10</span>);</span><br><span class="line">scores.insert(<span class="built_in">String</span>::from(<span class="string">&quot;Yellow&quot;</span>), <span class="number">50</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (key, value) <span class="keyword">in</span> &amp;scores &#123;</span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;&#123;&#125;: &#123;&#125;&quot;</span>, key, value);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果我们插入了一个键值对，接着用相同的键插入一个不同的值，与这个键相关联的旧值将被替换</p>
+<p>我们经常会检查某个特定的键是否有值，如果没有就插入一个值。为此哈希 map 有一个特有的 API，叫做 <code>entry</code>，它获取我们想要检查的键作为参数。<code>entry</code> 函数的返回值是一个枚举，<code>Entry</code>，它代表了可能存在也可能不存在的值。</p>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="keyword">use</span> std::collections::HashMap;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> <span class="keyword">mut</span> scores = HashMap::new();</span><br><span class="line">scores.insert(<span class="built_in">String</span>::from(<span class="string">&quot;Blue&quot;</span>), <span class="number">10</span>);</span><br><span class="line"></span><br><span class="line">scores.entry(<span class="built_in">String</span>::from(<span class="string">&quot;Yellow&quot;</span>)).or_insert(<span class="number">50</span>);</span><br><span class="line">scores.entry(<span class="built_in">String</span>::from(<span class="string">&quot;Blue&quot;</span>)).or_insert(<span class="number">50</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">println!</span>(<span class="string">&quot;&#123;:?&#125;&quot;</span>, scores);</span><br></pre></td></tr></table></figure>
+<p><code>Entry</code> 的 <code>or_insert</code> 方法在键对应的值存在时就返回这个值的可变引用，如果不存在则将参数作为新值插入并返回新值的可变引用。</p>
+<p>另一个常见的哈希 map 的应用场景是找到一个键对应的值并根据旧的值更新它。例如，以下的代码计数一些文本中每一个单词分别出现了多少次。我们使用哈希 map 以单词作为键并递增其值来记录我们遇到过几次这个单词。如果是第一次看到某个单词，就插入值 <code>0</code>。</p>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="keyword">use</span> std::collections::HashMap;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> text = <span class="string">&quot;hello world wonderful world&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> <span class="keyword">mut</span> map = HashMap::new();</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> word <span class="keyword">in</span> text.split_whitespace() &#123;</span><br><span class="line">    <span class="keyword">let</span> count = map.entry(word).or_insert(<span class="number">0</span>);</span><br><span class="line">    *count += <span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">println!</span>(<span class="string">&quot;&#123;:?&#125;&quot;</span>, map);</span><br></pre></td></tr></table></figure>
+<p>这会打印出 <code>&#123;"world": 2, "hello": 1, "wonderful": 1&#125;</code>，<code>or_insert</code> 方法事实上会返回这个键的值的一个可变引用（<code>&amp;mut V</code>）。这里我们将这个可变引用储存在 <code>count</code> 变量中，所以为了赋值必须首先使用星号（<code>*</code>）解引用 <code>count</code>。</p>
+]]></content>
+      <categories>
+        <category>计算机</category>
+      </categories>
+      <tags>
+        <tag>Rust</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Rust学习笔记（四）</title>
+    <url>/2020/10/18/Rust%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E5%9B%9B%EF%BC%89/</url>
+    <content><![CDATA[<ul>
+<li><strong>包</strong>（<em>Packages</em>）： Cargo 的一个功能，它允许你构建、测试和分享 crate。</li>
+<li><strong>Crates</strong> ：一个模块的树形结构，它形成了库或二进制项目。</li>
+<li><strong>模块</strong>（<em>Modules</em>）和 <strong>use</strong>： 允许你控制作用域和路径的私有性。</li>
+<li><strong>路径</strong>（<em>path</em>）：一个命名例如结构体、函数或模块等项的方式</li>
+</ul>
+<p><em>包</em>（<em>package</em>） 是提供一系列功能的一个或者多个 crate。一个包会包含有一个 <em>Cargo.toml</em> 文件，阐述如何去构建这些 crate。包中所包含的内容由几条规则来确立。一个包中至多 <strong>只能</strong> 包含一个库 crate(library crate)；包中可以包含任意多个二进制 crate(binary crate)；包中至少包含一个 crate，无论是库的还是二进制的。</p>
+<p>Cargo 遵循的一个约定：<em>src/main.rs</em> 就是一个与包同名的二进制 crate 的 crate 根。同样的，Cargo 知道如果包目录中包含 <em>src/lib.rs</em>，则包带有与其同名的库 crate，且 <em>src/lib.rs</em> 是 crate 根。crate 根文件将由 Cargo 传递给 <code>rustc</code> 来实际构建库或者二进制项目。</p>
+<p>通过将文件放在 <em>src/bin</em> 目录下，一个包可以拥有多个二进制 crate：每个 <em>src/bin</em> 下的文件都会被编译成一个独立的二进制 crate。</p>
+<p>一个 crate 会将一个作用域内的相关功能分组到一起，使得该功能可以很方便地在多个项目之间共享。举一个例子， <code>rand</code> crate 提供了生成随机数的功能。通过将 <code>rand</code> crate 加入到我们项目的作用域中，我们就可以在自己的项目中使用该功能。<code>rand</code> crate 提供的所有功能都可以通过该 crate 的名字：<code>rand</code> 进行访问。</p>
+<p>将一个 crate 的功能保持在其自身的作用域中，可以知晓一些特定的功能是在我们的 crate 中定义的还是在 <code>rand</code> crate 中定义的，这可以防止潜在的冲突。例如，<code>rand</code> crate 提供了一个名为 <code>Rng</code> 的特性（trait）。我们还可以在我们自己的 crate 中定义一个名为 <code>Rng</code> 的 <code>struct</code>。因为一个 crate 的功能是在自身的作用域进行命名的，当我们将 <code>rand</code> 作为一个依赖，编译器不会混淆 <code>Rng</code> 这个名字的指向。在我们的 crate 中，它指向的是我们自己定义的 <code>struct Rng</code>。我们可以通过 <code>rand::Rng</code> 这一方式来访问 <code>rand</code> crate 中的 <code>Rng</code> 特性（trait）。</p>
+<p><em>模块</em> 让我们可以将一个 crate 中的代码进行分组，以提高可读性与重用性。模块还可以控制项的 <em>私有性</em>，即项是可以被外部代码使用的（<em>public</em>），还是作为一个内部实现的内容，不能被外部代码使用（<em>private</em>）。</p>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="keyword">mod</span> front_of_house &#123;</span><br><span class="line">    <span class="keyword">mod</span> hosting &#123;</span><br><span class="line">        <span class="function"><span class="keyword">fn</span> <span class="title">add_to_waitlist</span></span>() &#123;&#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">fn</span> <span class="title">seat_at_table</span></span>() &#123;&#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">mod</span> serving &#123;</span><br><span class="line">        <span class="function"><span class="keyword">fn</span> <span class="title">take_order</span></span>() &#123;&#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">fn</span> <span class="title">server_order</span></span>() &#123;&#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">fn</span> <span class="title">take_payment</span></span>() &#123;&#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>以上定义的模块构成了一个模块树：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">crate</span><br><span class="line"> └── front_of_house</span><br><span class="line">     ├── hosting</span><br><span class="line">     │   ├── add_to_waitlist</span><br><span class="line">     │   └── seat_at_table</span><br><span class="line">     └── serving</span><br><span class="line">         ├── take_order</span><br><span class="line">         ├── serve_order</span><br><span class="line">         └── take_payment</span><br></pre></td></tr></table></figure>
+<p>路径有两种形式：</p>
+<ul>
+<li><strong>绝对路径</strong>（<em>absolute path</em>）从 crate 根开始，以 crate 名或者字面值 <code>crate</code> 开头。</li>
+<li><strong>相对路径</strong>（<em>relative path</em>）从当前模块开始，以 <code>self</code>、<code>super</code> 或当前模块的标识符开头。</li>
+</ul>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="keyword">mod</span> front_of_house &#123;</span><br><span class="line">    <span class="keyword">pub</span> <span class="keyword">mod</span> hosting &#123;</span><br><span class="line">        <span class="keyword">pub</span> <span class="function"><span class="keyword">fn</span> <span class="title">add_to_waitlist</span></span>() &#123;&#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">pub</span> <span class="function"><span class="keyword">fn</span> <span class="title">eat_at_restaurant</span></span>() &#123;</span><br><span class="line">    <span class="comment">// Absolute path</span></span><br><span class="line">    crate::front_of_house::hosting::add_to_waitlist();</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Relative path</span></span><br><span class="line">    front_of_house::hosting::add_to_waitlist();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>兄弟模块之间可以互相访问，子模块可以访问父模块，但是父模块无法访问私有的子模块。</p>
+<p>使用super开头的路径示例如下：</p>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">serve_order</span></span>() &#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">mod</span> back_of_house &#123;</span><br><span class="line">    <span class="function"><span class="keyword">fn</span> <span class="title">fix_incorrect_order</span></span>() &#123;</span><br><span class="line">        cook_order();</span><br><span class="line">        super::serve_order();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">fn</span> <span class="title">cook_order</span></span>() &#123;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>一般采用绝对路径。</p>
+<p>对于公有结构体，其内部成员仍然是私有的，需要显示指定为公有。如果一个结构体含有私有变量，那么最好提供一个公有的静态初始化方法，否则外部将无法创建这个结构体的实例。</p>
+<p>对于公有枚举，其内部所有成员默认也是公有的。</p>
+<p>可以通过use将模块引入作用域来简化路径的书写：</p>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="keyword">mod</span> front_of_house &#123;</span><br><span class="line">    <span class="keyword">pub</span> <span class="keyword">mod</span> hosting &#123;</span><br><span class="line">        <span class="keyword">pub</span> <span class="function"><span class="keyword">fn</span> <span class="title">add_to_waitlist</span></span>() &#123;&#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">use</span> crate::front_of_house::hosting;</span><br><span class="line"></span><br><span class="line"><span class="keyword">pub</span> <span class="function"><span class="keyword">fn</span> <span class="title">eat_at_restaurant</span></span>() &#123;</span><br><span class="line">    hosting::add_to_waitlist();</span><br><span class="line">    hosting::add_to_waitlist();</span><br><span class="line">    hosting::add_to_waitlist();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>使用 <code>use</code> 将函数引入作用域的习惯用法是use到函数的父模块而不是use到函数。要想使用 <code>use</code> 将函数的父模块引入作用域，我们必须在调用函数时指定父模块，这样可以清晰地表明函数不是在本地定义的，同时使完整路径的重复度最小化。</p>
+<p>另一方面，使用 <code>use</code> 引入结构体、枚举和其他项时，习惯是指定它们的完整路径。</p>
+<p>当使用 <code>use</code> 关键字将名称导入作用域时，在新作用域中可用的名称是私有的。如果为了让调用你编写的代码的代码能够像在自己的作用域内引用这些类型，可以结合 <code>pub</code> 和 <code>use</code>。这个技术被称为 “<em>重导出</em>（<em>re-exporting</em>）”，因为这样做将项引入作用域并同时使其可供其他代码引入自己的作用域。</p>
+<p>我们可以使用嵌套路径将相同的项在一行中引入作用域。这么做需要指定路径的相同部分，接着是两个冒号，接着是大括号中的各自不同的路径部分</p>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="keyword">use</span> std::cmp::Ordering;</span><br><span class="line"><span class="keyword">use</span> std::io;</span><br><span class="line"><span class="comment">// 等价于</span></span><br><span class="line"><span class="keyword">use</span> std::&#123;cmp::Ordering, io&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">use</span> std::io;</span><br><span class="line"><span class="keyword">use</span> std::io::Write;</span><br><span class="line"><span class="comment">// 等价于</span></span><br><span class="line"><span class="keyword">use</span> std::io::&#123;<span class="keyword">self</span>, Write&#125;;</span><br></pre></td></tr></table></figure>
+<p>如果希望将一个路径下 <strong>所有</strong> 公有项引入作用域，可以指定路径后跟 <code>*</code></p>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="keyword">use</span> std::collections::*;</span><br></pre></td></tr></table></figure>
+<p>在 <code>mod front_of_house</code> 后使用分号，而不是代码块，这将告诉 Rust 在另一个与模块同名的文件中加载模块的内容。</p>
+<p>例如，有一个front_of_house.rs中有如下代码：</p>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="keyword">pub</span> <span class="keyword">mod</span> hosting &#123;</span><br><span class="line">    <span class="keyword">pub</span> <span class="function"><span class="keyword">fn</span> <span class="title">add_to_waitlist</span></span>() &#123;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在lib.rs中想引用的话，定义如下：</p>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="keyword">mod</span> front_of_house;</span><br><span class="line"></span><br><span class="line"><span class="keyword">pub</span> <span class="keyword">use</span> crate::front_of_house::hosting;</span><br><span class="line"></span><br><span class="line"><span class="keyword">pub</span> <span class="function"><span class="keyword">fn</span> <span class="title">eat_at_restaurant</span></span>() &#123;</span><br><span class="line">    hosting::add_to_waitlist();</span><br><span class="line">    hosting::add_to_waitlist();</span><br><span class="line">    hosting::add_to_waitlist();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>继续重构我们例子，将 <code>hosting</code> 模块也提取到其自己的文件中，仅对 <em>src/front_of_house.rs</em> 包含 <code>hosting</code> 模块的声明进行修改：</p>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="keyword">pub</span> <span class="keyword">mod</span> hosting;</span><br></pre></td></tr></table></figure>
+<p>接着我们创建一个 <em>src/front_of_house</em> 目录和一个包含 <code>hosting</code> 模块定义的 <em>src/front_of_house/hosting.rs</em> 文件：</p>
+<figure class="highlight rust"><table><tr><td class="code"><pre><span class="line"><span class="keyword">pub</span> <span class="function"><span class="keyword">fn</span> <span class="title">add_to_waitlist</span></span>() &#123;&#125;</span><br></pre></td></tr></table></figure>
+<p>模块树依然保持相同，<code>eat_at_restaurant</code> 中的函数调用也无需修改继续保持有效，即便其定义存在于不同的文件中。这个技巧让你可以在模块代码增长时，将它们移动到新文件中。</p>
+]]></content>
+      <categories>
+        <category>计算机</category>
+      </categories>
+      <tags>
+        <tag>Rust</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>latex学习笔记（一）</title>
+    <url>/2020/10/15/latex%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%80%EF%BC%89/</url>
+    <content><![CDATA[<p>latex分数：</p>
+<figure class="highlight latex"><table><tr><td class="code"><pre><span class="line"><span class="tag">\<span class="name">frac</span><span class="string">&#123;分子&#125;</span><span class="string">&#123;分母&#125;</span></span></span><br></pre></td></tr></table></figure>
+<p>latex小于等于:</p>
+<figure class="highlight latex"><table><tr><td class="code"><pre><span class="line"><span class="tag">\<span class="name">leq</span></span>或<span class="tag">\<span class="name">le</span></span></span><br></pre></td></tr></table></figure>
+<p>大于等于：</p>
+<figure class="highlight latex"><table><tr><td class="code"><pre><span class="line"><span class="tag">\<span class="name">geq</span></span>或<span class="tag">\<span class="name">ge</span></span></span><br></pre></td></tr></table></figure>
+<p>Mac下可以将输入法切换为希腊文来打希腊字母</p>
+<p>不等于：</p>
+<figure class="highlight latex"><table><tr><td class="code"><pre><span class="line"><span class="tag">\<span class="name">ne</span></span></span><br></pre></td></tr></table></figure>
+<p>大括号：</p>
+<figure class="highlight latex"><table><tr><td class="code"><pre><span class="line">LeakyReLU=<span class="tag">\<span class="name">left</span></span><span class="tag">\<span class="name">&#123;</span></span></span><br><span class="line"><span class="tag">\<span class="name">begin</span><span class="string">&#123;array&#125;</span><span class="string">&#123;lr&#125;</span></span></span><br><span class="line">x&amp;x<span class="tag">\<span class="name">geq</span></span>0  <span class="tag">\<span class="name">\</span></span></span><br><span class="line">px&amp;x&lt;0 </span><br><span class="line"><span class="tag">\<span class="name">end</span><span class="string">&#123;array&#125;</span></span></span><br><span class="line"><span class="tag">\<span class="name">right</span></span>.</span><br></pre></td></tr></table></figure>
+<p>效果：</p>
+<p><span class="math display">\[LeakyReLU=\left\{
+\begin{array}{lr}
+x&amp;x\geq0  \\
+px&amp;x&lt;0 
+\end{array}
+\right.\]</span></p>
+<p>去mathjax.org可以在线将latex转为mathML，然后可以直接拷贝到word中变成公式，然后就可以拷贝到ppt中。</p>
+]]></content>
+      <categories>
+        <category>计算机</category>
+      </categories>
+      <tags>
+        <tag>latex</tag>
+        <tag>论文写作</tag>
+        <tag>word</tag>
+        <tag>ppt</tag>
       </tags>
   </entry>
   <entry>
@@ -167,39 +504,6 @@
       <tags>
         <tag>算法</tag>
         <tag>leetcode</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>latex学习笔记（一）</title>
-    <url>/2020/10/15/latex%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%80%EF%BC%89/</url>
-    <content><![CDATA[<p>latex分数：</p>
-<figure class="highlight latex"><table><tr><td class="code"><pre><span class="line"><span class="tag">\<span class="name">frac</span><span class="string">&#123;分子&#125;</span><span class="string">&#123;分母&#125;</span></span></span><br></pre></td></tr></table></figure>
-<p>latex小于等于:</p>
-<figure class="highlight latex"><table><tr><td class="code"><pre><span class="line"><span class="tag">\<span class="name">leq</span></span>或<span class="tag">\<span class="name">le</span></span></span><br></pre></td></tr></table></figure>
-<p>大于等于：</p>
-<figure class="highlight latex"><table><tr><td class="code"><pre><span class="line"><span class="tag">\<span class="name">geq</span></span>或<span class="tag">\<span class="name">ge</span></span></span><br></pre></td></tr></table></figure>
-<p>Mac下可以将输入法切换为希腊文来打希腊字母</p>
-<p>不等于：</p>
-<figure class="highlight latex"><table><tr><td class="code"><pre><span class="line"><span class="tag">\<span class="name">ne</span></span></span><br></pre></td></tr></table></figure>
-<p>大括号：</p>
-<figure class="highlight latex"><table><tr><td class="code"><pre><span class="line">LeakyReLU=<span class="tag">\<span class="name">left</span></span><span class="tag">\<span class="name">&#123;</span></span></span><br><span class="line"><span class="tag">\<span class="name">begin</span><span class="string">&#123;array&#125;</span><span class="string">&#123;lr&#125;</span></span></span><br><span class="line">x&amp;x<span class="tag">\<span class="name">geq</span></span>0  <span class="tag">\<span class="name">\</span></span></span><br><span class="line">px&amp;x&lt;0 </span><br><span class="line"><span class="tag">\<span class="name">end</span><span class="string">&#123;array&#125;</span></span></span><br><span class="line"><span class="tag">\<span class="name">right</span></span>.</span><br></pre></td></tr></table></figure>
-<p>效果：</p>
-<p><span class="math display">\[LeakyReLU=\left\{
-\begin{array}{lr}
-x&amp;x\geq0  \\
-px&amp;x&lt;0 
-\end{array}
-\right.\]</span></p>
-<p>去mathjax.org可以在线将latex转为mathML，然后可以直接拷贝到word中变成公式，然后就可以拷贝到ppt中。</p>
-]]></content>
-      <categories>
-        <category>计算机</category>
-      </categories>
-      <tags>
-        <tag>latex</tag>
-        <tag>论文写作</tag>
-        <tag>word</tag>
-        <tag>ppt</tag>
       </tags>
   </entry>
   <entry>
