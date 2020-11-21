@@ -1,0 +1,1237 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next-medium.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next-small.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.0/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"taowei1999.com","root":"/","scheme":"Gemini","version":"8.0.1","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":true,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+  </script>
+
+  <meta name="description" content="首先放上几篇文章，个人觉得讲的很好的： 关于B树、B+树、LSM-Tree这几种数据结构的介绍 LSM-Tree与LevelDB LevelDB详细讲解 LevelDB与RocksDB 然后是个人拙见（这篇文章是信息存储课交的报告，在此感谢我的两位室友，fd和ljl，名字就不放了）： 基于LSM-Tree的存储技术的调研 摘 要：近年来，一种新型的数据存储结构——LSM-Tree受到业界的广泛欢迎">
+<meta property="og:type" content="article">
+<meta property="og:title" content="LSM-Tree及其相关知识">
+<meta property="og:url" content="http://taowei1999.com/2020/11/21/LSM-Tree%E5%8F%8A%E5%85%B6%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86/index.html">
+<meta property="og:site_name" content="fwxiaotao博客站">
+<meta property="og:description" content="首先放上几篇文章，个人觉得讲的很好的： 关于B树、B+树、LSM-Tree这几种数据结构的介绍 LSM-Tree与LevelDB LevelDB详细讲解 LevelDB与RocksDB 然后是个人拙见（这篇文章是信息存储课交的报告，在此感谢我的两位室友，fd和ljl，名字就不放了）： 基于LSM-Tree的存储技术的调研 摘 要：近年来，一种新型的数据存储结构——LSM-Tree受到业界的广泛欢迎">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="file:////Users/taowei/Library/Group%20Containers/UBF8T346G9.Office/TemporaryItems/msohtmlclip/clip_image002.jpg">
+<meta property="og:image" content="file:////Users/taowei/Library/Group%20Containers/UBF8T346G9.Office/TemporaryItems/msohtmlclip/clip_image004.jpg">
+<meta property="og:image" content="file:////Users/taowei/Library/Group%20Containers/UBF8T346G9.Office/TemporaryItems/msohtmlclip/clip_image006.jpg">
+<meta property="og:image" content="file:////Users/taowei/Library/Group%20Containers/UBF8T346G9.Office/TemporaryItems/msohtmlclip/clip_image007.jpg">
+<meta property="og:image" content="file:////Users/taowei/Library/Group%20Containers/UBF8T346G9.Office/TemporaryItems/msohtmlclip/clip_image009.jpg">
+<meta property="og:image" content="file:////Users/taowei/Library/Group%20Containers/UBF8T346G9.Office/TemporaryItems/msohtmlclip/clip_image011.jpg">
+<meta property="og:image" content="file:////Users/taowei/Library/Group%20Containers/UBF8T346G9.Office/TemporaryItems/msohtmlclip/clip_image013.jpg">
+<meta property="og:image" content="file:////Users/taowei/Library/Group%20Containers/UBF8T346G9.Office/TemporaryItems/msohtmlclip/clip_image015.jpg">
+<meta property="og:image" content="file:////Users/taowei/Library/Group%20Containers/UBF8T346G9.Office/TemporaryItems/msohtmlclip/clip_image017.jpg">
+<meta property="og:image" content="file:////Users/taowei/Library/Group%20Containers/UBF8T346G9.Office/TemporaryItems/msohtmlclip/clip_image019.jpg">
+<meta property="og:image" content="file:////Users/taowei/Library/Group%20Containers/UBF8T346G9.Office/TemporaryItems/msohtmlclip/clip_image021.jpg">
+<meta property="og:image" content="file:////Users/taowei/Library/Group%20Containers/UBF8T346G9.Office/TemporaryItems/msohtmlclip/clip_image023.jpg">
+<meta property="og:image" content="file:////Users/taowei/Library/Group%20Containers/UBF8T346G9.Office/TemporaryItems/msohtmlclip/clip_image025.jpg">
+<meta property="og:image" content="file:////Users/taowei/Library/Group%20Containers/UBF8T346G9.Office/TemporaryItems/msohtmlclip/clip_image027.jpg">
+<meta property="og:image" content="file:////Users/taowei/Library/Group%20Containers/UBF8T346G9.Office/TemporaryItems/msohtmlclip/clip_image029.jpg">
+<meta property="article:published_time" content="2020-11-21T11:40:53.000Z">
+<meta property="article:modified_time" content="2020-11-21T11:49:18.661Z">
+<meta property="article:author" content="fwxiaotao">
+<meta property="article:tag" content="数据结构">
+<meta property="article:tag" content="KV Store">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="file:////Users/taowei/Library/Group%20Containers/UBF8T346G9.Office/TemporaryItems/msohtmlclip/clip_image002.jpg">
+
+
+<link rel="canonical" href="http://taowei1999.com/2020/11/21/LSM-Tree%E5%8F%8A%E5%85%B6%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86/">
+
+
+<script data-pjax class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script><script src="https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget@latest/autoload.js"></script>
+
+
+  <title>LSM-Tree及其相关知识 | fwxiaotao博客站</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">fwxiaotao博客站</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">Keep calm and carry on</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">16</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">2</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">18</span></a>
+
+  </li>
+        <li class="menu-item menu-item-commonweal">
+
+    <a href="/404/" rel="section"><i class="fa fa-heartbeat fa-fw"></i>公益 404</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <section class="post-toc-wrap sidebar-panel">
+          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%BC%95%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">1 引言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#lsm-tree%E5%87%BA%E7%8E%B0%E7%9A%84%E8%83%8C%E6%99%AF"><span class="nav-number">2.</span> <span class="nav-text">2 LSM-Tree出现的背景</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#lsm-tree%E4%B8%8Ebtree%E5%AF%B9%E6%AF%94"><span class="nav-number">3.</span> <span class="nav-text">3 LSM-Tree与B+Tree对比</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#btree"><span class="nav-number">3.1.</span> <span class="nav-text">3.1 B+Tree</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#lsm-tree"><span class="nav-number">3.2.</span> <span class="nav-text">3.2 LSM-Tree</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#lsm-tree-vs.-b%E6%A0%91"><span class="nav-number">3.3.</span> <span class="nav-text">3.3 LSM-Tree vs. B+树</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#lsm-tree%E5%9C%A8%E6%95%B0%E6%8D%AE%E5%BA%93%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8"><span class="nav-number">4.</span> <span class="nav-text">4 LSM-Tree在数据库中的应用</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#leveldb"><span class="nav-number">4.1.</span> <span class="nav-text">4.1 LevelDB</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#rocksdb"><span class="nav-number">4.2.</span> <span class="nav-text">4.2 RocksDB</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#lsm-tree%E5%AD%98%E5%9C%A8%E7%9A%84%E6%8C%91%E6%88%98%E4%B8%8E%E4%BC%98%E5%8C%96"><span class="nav-number">5.</span> <span class="nav-text">5 LSM-Tree存在的挑战与优化</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8C%91%E6%88%98"><span class="nav-number">5.1.</span> <span class="nav-text">5.1 挑战</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BC%98%E5%8C%96%E6%96%B9%E6%B3%95"><span class="nav-number">5.2.</span> <span class="nav-text">5.2 优化方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#wisckey"><span class="nav-number">5.2.1.</span> <span class="nav-text">5.2.1 WiscKey</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#accordion"><span class="nav-number">5.2.2.</span> <span class="nav-text">5.2.2 Accordion</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#lazy-leveling%E5%92%8Cfluid-lsm-tree"><span class="nav-number">5.2.3.</span> <span class="nav-text">5.2.3 Lazy Leveling和Fluid LSM-Tree</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#skip-tree"><span class="nav-number">5.2.4.</span> <span class="nav-text">5.2.4 Skip-Tree</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">6.</span> <span class="nav-text">6 总结</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E6%96%87%E7%8C%AE"><span class="nav-number">7.</span> <span class="nav-text">参考文献</span></a></li></ol></div>
+      </section>
+      <!--/noindex-->
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="fwxiaotao"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">fwxiaotao</p>
+  <div class="site-description" itemprop="description">一个用于记录学习笔记和生活心得的博客网站</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">18</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">16</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Sullivan12138" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Sullivan12138" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:ericsullivan538@gmail.com" title="E-Mail → mailto:ericsullivan538@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/Code_newbie" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;Code_newbie" rel="noopener" target="_blank"><i class="fab fa-weibo fa-fw"></i>Weibo</a>
+      </span>
+  </div>
+  <div class="cc-license site-overview-item animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed-zh" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+<div class="cc-license animated" itemprop="sponsor">
+  <a href="https://www.netlify.com" class="cc-opacity" title="Deploy with Netlify → https://www.netlify.com" target="_blank"><img width="80" src="https://www.netlify.com/img/global/badges/netlify-dark.svg" alt="Netlify"></a>
+</div>
+<div id="music163player">
+    <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=515143305&auto=1&height=66"></iframe>
+</div>
+<div style="">
+  <canvas id="canvas" style="width:60%;">当前浏览器不支持canvas，请更换浏览器后再试</canvas>
+</div>
+<script>
+(function(){
+
+   var digit=
+    [
+        [
+            [0,0,1,1,1,0,0],
+            [0,1,1,0,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,0,1,1,0],
+            [0,0,1,1,1,0,0]
+        ],//0
+        [
+            [0,0,0,1,1,0,0],
+            [0,1,1,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [1,1,1,1,1,1,1]
+        ],//1
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,0,0,0],
+            [0,1,1,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,0,0,0,1,1],
+            [1,1,1,1,1,1,1]
+        ],//2
+        [
+            [1,1,1,1,1,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//3
+        [
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,1,0],
+            [0,0,1,1,1,1,0],
+            [0,1,1,0,1,1,0],
+            [1,1,0,0,1,1,0],
+            [1,1,1,1,1,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,1,1]
+        ],//4
+        [
+            [1,1,1,1,1,1,1],
+            [1,1,0,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,1,1,1,1,0],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//5
+        [
+            [0,0,0,0,1,1,0],
+            [0,0,1,1,0,0,0],
+            [0,1,1,0,0,0,0],
+            [1,1,0,0,0,0,0],
+            [1,1,0,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//6
+        [
+            [1,1,1,1,1,1,1],
+            [1,1,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,0,0,1,1,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0],
+            [0,0,1,1,0,0,0]
+        ],//7
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,1,1,0]
+        ],//8
+        [
+            [0,1,1,1,1,1,0],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [1,1,0,0,0,1,1],
+            [0,1,1,1,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,0,1,1],
+            [0,0,0,0,1,1,0],
+            [0,0,0,1,1,0,0],
+            [0,1,1,0,0,0,0]
+        ],//9
+        [
+            [0,0,0,0,0,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,1,1,1,0,0],
+            [0,0,0,0,0,0,0]
+        ]//:
+    ];
+
+var canvas = document.getElementById('canvas');
+
+if(canvas.getContext){
+    var cxt = canvas.getContext('2d');
+    //声明canvas的宽高
+    var H = 100,W = 700;
+    canvas.height = H;
+    canvas.width = W;
+    cxt.fillStyle = '#f00';
+    cxt.fillRect(10,10,50,50);
+
+    //存储时间数据
+    var data = [];
+    //存储运动的小球
+    var balls = [];
+    //设置粒子半径
+    var R = canvas.height/20-1;
+    (function(){
+        var temp = /(\d)(\d):(\d)(\d):(\d)(\d)/.exec(new Date());
+        //存储时间数字，由十位小时、个位小时、冒号、十位分钟、个位分钟、冒号、十位秒钟、个位秒钟这7个数字组成
+        data.push(temp[1],temp[2],10,temp[3],temp[4],10,temp[5],temp[6]);
+    })();
+
+    /*生成点阵数字*/
+    function renderDigit(index,num){
+        for(var i = 0; i < digit[num].length; i++){
+            for(var j = 0; j < digit[num][i].length; j++){
+                if(digit[num][i][j] == 1){
+                    cxt.beginPath();
+                    cxt.arc(14*(R+2)*index + j*2*(R+1)+(R+1),i*2*(R+1)+(R+1),R,0,2*Math.PI);
+                    cxt.closePath();
+                    cxt.fill();
+                }
+            }
+        }
+    }
+
+    /*更新时钟*/
+    function updateDigitTime(){
+        var changeNumArray = [];
+        var temp = /(\d)(\d):(\d)(\d):(\d)(\d)/.exec(new Date());
+        var NewData = [];
+        NewData.push(temp[1],temp[2],10,temp[3],temp[4],10,temp[5],temp[6]);
+        for(var i = data.length-1; i >=0 ; i--){
+            //时间发生变化
+            if(NewData[i] !== data[i]){
+                //将变化的数字值和在data数组中的索引存储在changeNumArray数组中
+                changeNumArray.push(i+'_'+(Number(data[i])+1)%10);
+            }
+        }
+        //增加小球
+        for(var i = 0; i< changeNumArray.length; i++){
+            addBalls.apply(this,changeNumArray[i].split('_'));
+        }
+        data = NewData.concat();
+    }
+
+    /*更新小球状态*/
+    function updateBalls(){
+        for(var i = 0; i < balls.length; i++){
+            balls[i].stepY += balls[i].disY;
+            balls[i].x += balls[i].stepX;
+            balls[i].y += balls[i].stepY;
+            if(balls[i].x > W + R || balls[i].y > H + R){
+                balls.splice(i,1);
+                i--;
+            }
+        }
+    }
+
+    /*增加要运动的小球*/
+    function addBalls(index,num){
+        var numArray = [1,2,3];
+        var colorArray =  ["#3BE","#09C","#A6C","#93C","#9C0","#690","#FB3","#F80","#F44","#C00"];
+        for(var i = 0; i < digit[num].length; i++){
+            for(var j = 0; j < digit[num][i].length; j++){
+                if(digit[num][i][j] == 1){
+                    var ball = {
+                        x:14*(R+2)*index + j*2*(R+1)+(R+1),
+                        y:i*2*(R+1)+(R+1),
+                        stepX:Math.floor(Math.random() * 4 -2),
+                        stepY:-2*numArray[Math.floor(Math.random()*numArray.length)],
+                        color:colorArray[Math.floor(Math.random()*colorArray.length)],
+                        disY:1
+                    };
+                    balls.push(ball);
+                }
+            }
+        }
+    }
+
+    /*渲染*/
+    function render(){
+        //重置画布宽度，达到清空画布的效果
+        canvas.height = 100;
+        //渲染时钟
+        for(var i = 0; i < data.length; i++){
+            renderDigit(i,data[i]);
+        }
+        //渲染小球
+        for(var i = 0; i < balls.length; i++){
+            cxt.beginPath();
+            cxt.arc(balls[i].x,balls[i].y,R,0,2*Math.PI);
+            cxt.fillStyle = balls[i].color;
+            cxt.closePath();
+            cxt.fill();
+        }
+    }
+
+    clearInterval(oTimer);
+    var oTimer = setInterval(function(){
+        //更新时钟
+        updateDigitTime();
+        //更新小球状态
+        updateBalls();
+        //渲染
+        render();
+    },50);
+}
+
+})();
+</script>
+
+      </section>
+        <div class="back-to-top animated">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+  <a href="https://github.com/Sullivan12138" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+      
+
+      
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://taowei1999.com/2020/11/21/LSM-Tree%E5%8F%8A%E5%85%B6%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="fwxiaotao">
+      <meta itemprop="description" content="一个用于记录学习笔记和生活心得的博客网站">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="fwxiaotao博客站">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          LSM-Tree及其相关知识
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2020-11-21 19:40:53 / 修改时间：19:49:18" itemprop="dateCreated datePublished" datetime="2020-11-21T19:40:53+08:00">2020-11-21</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/" itemprop="url" rel="index"><span itemprop="name">计算机</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2020/11/21/LSM-Tree%E5%8F%8A%E5%85%B6%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2020/11/21/LSM-Tree及其相关知识/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+      </div>
+      <div class="post-meta">
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>15k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>14 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>首先放上几篇文章，个人觉得讲的很好的：</p>
+<p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/3fb899684392">关于B树、B+树、LSM-Tree这几种数据结构的介绍</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/SweeNeil/article/details/86482781">LSM-Tree与LevelDB</a></p>
+<p><a target="_blank" rel="noopener" href="http://www.manongjc.com/article/17436.html">LevelDB详细讲解</a></p>
+<p><a target="_blank" rel="noopener" href="https://daemondshu.github.io/2019/03/21/Programming/Data%20Structure/LevelDB_RocksDB/">LevelDB与RocksDB</a></p>
+<p>然后是个人拙见（这篇文章是信息存储课交的报告，在此感谢我的两位室友，fd和ljl，名字就不放了）：</p>
+<p>基于LSM-Tree的存储技术的调研</p>
+<p><strong>摘</strong> <strong>要：</strong>近年来，一种新型的数据存储结构——LSM-Tree受到业界的广泛欢迎。由于其在顺序写方面的优异性能和顺序读方面的尚可表现，逐渐替代B+树成为KV数据库的首选结构。如今一些著名的开源NoSQL数据库——例如Google的LevelDB、Facebook的RocksDB等都采用了LSM-Tree这种存储结构。但是，LSM-Tree仍然有一些问题，例如读写放大、无法进行范围读等等。对此，科研人员也提出了很多优化方案。在这篇文章中，我们首先介绍了LSM-Tree的出现背景，分析了它的结构与原理，并与B+树进行对比。然后，我们介绍了LSM-Tree在一些主流NoSQL数据库中的应用。最后，我们介绍了一些典型的性能较好的对LSM-Tree的具体优化措施。</p>
+<p><strong>关键词：</strong>数据存储结构；LSM-Tree；数据库</p>
+<p>Abstract: In recent years, a new kind of storage structure called LSM-Tree has been widely adopted by the industry. Due to its excellent performance in sequential write and not-so-bad score in sequential read, it has taken place of B+ Tree to be the prior choice of KV database gradually. Nowadays some famous open source NoSQL database, such as LevelDB of Google and RocksDB of Facebook, all take LSM-Tree as their storage structure. However, there still exist a few problems in LSM-Tree like read and write amplification or poor scan performance. Scientists have been dedicated in the research about the optimization of LSM-Tree and a quantity of strategies have been proposed. In this article we firstly introduce the background of LSM-Tree's emergence, analyze its structure and principle and compare it with B+ Tree. We then list the application of LSM-Tree in some prevalent NoSQL database. Finally, we discuss some typical high-performance optimization approaches towards LSM-Tree.</p>
+<p><strong>Key words:</strong> storage structure；LSM-Tree；database</p>
+<h1 id="引言">1 引言</h1>
+<p>LSM-Tree全称是Log-Structured Merge-Tree(日志结构合并树)，是近年来新兴起的一种数据结构，并迅速且广泛地在KV存储中得到应用。现在很多大型的NoSQL数据库，采用KV存储，底层都是LSM-Tree这种结构，包括LevelDB、RocksDB、Cassandra等等。LSM-Tree的特点是将所有的数据先缓存在内存中，然后再顺序地刷到磁盘上，所有的写都被转换成追加写，在刷到磁盘上时对这些追加写进行合并。相比于传统的MySQL数据库采用的B+树存储，LSM-Tree的优点是写的速度很快（因为磁盘的追加写速度远高于随机写），同时空间利用率很高，也很利于并发与恢复。但是，LSM-Tree中也存在一些问题，典型的就是读写放大，近年来很多文章都着力于优化LSM-Tree的结构来降低读写放大开销。</p>
+<p>在文章接下来的内容，主要分为以下几个部分：在第二章我们将介绍LSM-Tree出现的背景，在第三章我们会介绍LSM-Treed的结构以及它与B+树的对比，第四章简单列举了一下LSM-Tree在现代数据库中的应用，第五章讲述了LSM-Tree仍然存在的挑战与近年来对它的优化工作，最后我们对文章作出总结、提出自己的一点看法。</p>
+<h1 id="lsm-tree出现的背景">2 LSM-Tree出现的背景</h1>
+<p>长久以来，数据库存储引擎中有两种更新策略，一种叫in-place update，一种叫out-of-place update[14]。前者指的是直接覆盖旧的记录去存储新的记录，典型代表如B+树；后者指的是不直接覆盖旧纪录，而是把这次更新存在新的位置，典型代表就是LSM-Tree。In-place update是读友好的，因为只有最近版本的数据被存储了，但是，这种设计牺牲了写性能，因为它会带来随机写，而磁盘的随机写性能很差，另外，磁盘页会被update和delete分成碎片，不利于空间的利用。相对地，out-of-place update提升了写性能，因为它利用了顺序写，磁盘的顺序写性能是远远高于随机写的。因为没有覆盖旧数据，所以它的恢复过程也变的简单。但是，这样做牺牲了读性能，因为数据可能被存放在任何位置，同时，我们需要一个将分散数据重组的过程来提高存储和访问效率。</p>
+<p>基于out-of-place update的存储结构早在上世纪70年代就有人提出，例如Differential Files[1]、Postgres project[2]等等。但是，它们都没有解决读请求慢以及空间利用率差的问题。1996年，O Neil[3]等人提出了LSM-Tree，通过设计了一个磁盘上的合并过程，终于较好地解决了这两个问题。</p>
+<p>现在，随着Web2.0时代的到来，互联网上的非结构化数据（例如：图片、视频、HTML文档等）呈指数级增长，这些数据很难用传统的关系型数据库去存储，而且它们数量巨大，传统的关系型数据库因为扩展性差难以胜任存储。取而代之的，KV型NoSQL数据库能够很好的存储它们，同时还能提供更好的扩展性与存储海量数据的能力，这种数据库也开始逐渐流行起来。海量数据存储NoSQL数据库的特点就是写多读少，而LSM-Tree恰好符合这一特点。2006年Google提出了BigTable[9]，开启了分布式NoSQL数据库的先河，并率先使用LSM-Tree，随后，越来越多的NoSQL数据库采用LSM-Tree结构。现在，几乎所有NoSQL数据库底层都采用了LSM-Tree这种数据结构。</p>
+<h1 id="lsm-tree与btree对比">3 LSM-Tree与B+Tree对比</h1>
+<h2 id="btree">3.1 B+Tree</h2>
+<p>我们首先介绍一下B+树的前身：B树。在计算机科学中，B树是一种自平衡树数据结构，用于维护排序的数据，并允许以对数时间进行搜索，顺序访问，插入和删除。 B树允许具有两个以上子节点的节点，B树其实可以被看成“多叉树”，二叉树是B树2阶的特例。与其他自平衡二分搜索树不同，B树非常适合于读写相对较大的数据块（例如磁盘）的存储系统。 它通常用于数据库和文件系统。</p>
+<p>B树是由Rudolf Bayer和Edward M.McCreight在波音研究实验室工作时发明的，目的是有效地管理大型随机访问文件的索引页。</p>
+<p>根据Knuth的定义，阶数为m的B树是满足以下属性的树：</p>
+<p>· 每个节点最多有m个孩子。</p>
+<p>· 每个非叶节点（根除外）至少具有⌈m/2⌉个子节点。</p>
+<p>· 如果根不是叶节点，则根至少有两个子代。</p>
+<p>· 一个有k个子节点的非叶子节点包含k − 1个密钥。</p>
+<p>· 所有叶子都出现在同一层</p>
+<p>下图是一个4阶的B树的示意图：</p>
+<figure>
+<img data-src="file:////Users/taowei/Library/Group%20Containers/UBF8T346G9.Office/TemporaryItems/msohtmlclip/clip_image002.jpg" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>图3-1 4阶B树示意图</p>
+<p>B树的搜索过程是：从根结点开始，对结点内的关键字（有序）序列进行二分查找，如果命中则结束，否则进入查询关键字所属范围的儿子结点；重复，直到所对应的儿子指针为空，或已经是叶子结点；</p>
+<p>B+树是对B树的一种变形，与B树的差异在于：</p>
+<p>\1. 非叶子节点的子节点数=关键字数。非叶子节点不保存数据，只用来索引，所有数据都保存在叶子节点。</p>
+<p>\2. 所有的叶子结点中包含了全部关键字的信息，及指向含这些关键字记录的指针，且叶子结点本身依关键字的大小自小而大顺序链接。</p>
+<p>\3. 为所有叶子结点增加一个链指针，便于区间查找和遍历。</p>
+<p>\4. 所有关键字都在叶子结点出现。</p>
+<p>下图是一棵4阶B+树示意图：</p>
+<figure>
+<img data-src="file:////Users/taowei/Library/Group%20Containers/UBF8T346G9.Office/TemporaryItems/msohtmlclip/clip_image004.jpg" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>图3-2 4阶B+树示意图</p>
+<p>B+树的搜索与B树也基本相同，区别是B+树只有达到叶子结点才命中（B树可以在非叶子结点命中），其性能也等价于在关键字全集做一次二分查找。</p>
+<p>B+树相对B树的优点是：因为非叶子节点不包含数据，所以非叶子节点所占空间变小了，每个非叶子节点能存放更多关键字，从而树的高度也变小了，能加快查找。同时，所有叶子节点都在同一层，查找只有查到叶子节点层才返回，查找速度也比B树稳定。另外，底层的叶子节点链表十分有利于全节点的遍历操作，同时还是有序的，说明B+树天然支持排序。但是B树相对B+树也有优点，如果经常访问的关键字离根节点较近，那么显然是B树更快。</p>
+<h2 id="lsm-tree">3.2 LSM-Tree</h2>
+<p>LSM-Tree是一种多层结构，上小下大。LSM-Tree分成两个部分，一部分在内存，一部分在硬盘，C0层存在内存，磁盘中的部分分为C1,C2,…Ck等多层。内存中的结构是有序的，并且可以随时进行in-place update，支持随机读写。内存中的部分满了之后，与磁盘上的C1层合并，然后刷到C1，这其中会进行一个归并排序，让C1层上的数据也成为按key有序的，当C1满了之后再刷到C2，以此类推。这在LSM-Tree中被称为compaction。每一层的容量都比上层的要大。Compaction可以后台异步进行，不阻塞I/O。下图展示了LSM-Tree基本结构：</p>
+<figure>
+<img data-src="file:////Users/taowei/Library/Group%20Containers/UBF8T346G9.Office/TemporaryItems/msohtmlclip/clip_image006.jpg" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>图3-3 LSM-Tree 基本结构示意图</p>
+<p>在写入流程中可以看到，最新的数据在 C0 层，最老的数据在 Ck 层，所以查询也是先查 C0 层，如果没有要查的 key，再查 C1，逐层查。因为数据可能存在任意一层，所以最坏情况下要读所有的层，这也意味着LSM-Tree的读性能并没有那么好。所以它适合写多读少的情况。</p>
+<p>为了加快查找速度，LSM-Tree中还采用了一种叫做Bloom Filter的数据结构，它实际上是一个bitmap。一个key被k个hash函数计算之后产生k个bit，当所有的bit都为1时key存在，如果有1个bit不为1则key不存在。这样利用Bloom Filter可以加快查找速度，在每一层设置一个Bloom Filter，key在存储的时候先存Bloom filter，查找时先访问Bloom Filter，如果Bloom Filter返回false那么一定不存在。但是Bloom Filter也存在假阳性率，即，如果Bloom Filter返回false，那么确实一定不存在，但是Bloom Filter返回true，仍然有可能不存在。</p>
+<h2 id="lsm-tree-vs.-b树">3.3 LSM-Tree vs. B+树</h2>
+<p>LSM树和B+树的差异主要在于读性能和写性能进行权衡。</p>
+<p>当写读比例很大的时候（写比读多），LSM树相比于B树有更好的性能。随着insert操作，为了维护B+树结构，节点分裂。读磁盘的随机读写概率会变大，性能会逐渐减弱。而LSM-Tree的写都是顺序写，而硬盘的顺序写性能远高于随机写。</p>
+<p>另外，由于LSM-Tree在硬盘上的每一层都是连续的存储区域，它对存储空间的利用率也是比B+Tree要好很多的。研究显示[4]，B+树中叶子节点的页平均只有2/3是满的。</p>
+<p>但是相应地，LSM-Tree的读性能比B+Tree要差。在B+Tree中，数据的查找十分接近二分查找。但是在LSM-Tree中，由于数据可能存在任何一层，所以最坏情况下查找一个数据要遍历所有层所有文件。</p>
+<p>所以，两种数据结构适用于不同的场景，LSM-Tree适合写多读少，B+Tree适合读多写少。传统的MySQL数据库一般采用B+Tree作为存储结构，而近年来的NoSQL数据库一般采用LSM-Tree。</p>
+<h1 id="lsm-tree在数据库中的应用">4 LSM-Tree在数据库中的应用</h1>
+<p>LSM Tree在数据库中有着广泛的应用，LevelDB[5]、RocksDB[6]、Scylladb[7]、Cassandra[8]等数据库都采用了LSM Tree作为底层的基本存储结构。下面主要介绍LSM Tree在一些主流数据库中的应用。</p>
+<h2 id="leveldb">4.1 LevelDB</h2>
+<p>LevelDB是Google研究员Jeffrey Dean和Sanjay Ghemawat编写的开源磁盘键值存储。受Bigtable的启发，LevelDB在New BSD许可下托管在GitHub上，并已移植到各种基于Unix的系统以及macOS，Windows和Android。</p>
+<p>LevelDB 结构包括六个主要部分，内存中的MemTable和Immutable MemTable，磁盘上的主要文件包括Current文件，Manifest文件，log文件以及SSTable文件。下图是LevelDB的基本结构：</p>
+<figure>
+<img data-src="file:////Users/taowei/Library/Group%20Containers/UBF8T346G9.Office/TemporaryItems/msohtmlclip/clip_image007.jpg" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>图4-1 LevelDB 架构图</p>
+<p>当要写数据时，首先将写入操作加到写前日志(Write-Ahead Log，简称WAL)中，接下来把数据写到 MemTable中，当 MemTable 满了，就将这个 MemTable 切换为不可更改的 Immutable MemTable，并新开一个 MemTable 接收新的写入请求。而这个 Immutable MemTable 就可以刷磁盘了。这里刷磁盘是直接刷成 L0 层的 SSTable 文件，并不直接跟 L0 层的文件合并。当L0层满了以后，数据再刷到L1层，这里会与L1层的数据进行合并，具体是一个归并排序，去掉重复的数据并保证数据在L1层上有序。当L1层满了以后再刷到L2层…以此类推。也就是说，除了L0层可能有key重叠，并且无序，其余每一层都是key不重叠且有序的。每一层的大小都比上一层大，LevelDB中将下一层的大小设置成上一层的10倍。数据在磁盘上都是以SSTable文件的形式存放。</p>
+<p>Manifest记载了SSTable各个文件的管理信息，包括文件所属Level，文件名，最小的Key和最大的Key，主要用于加快查找。Current文件的内容只记载当前的manifest文件名，因为在Compaction的过程中可能产生新版本的Manifest，这时老版本的Manifest就没有用了。Log文件在系统中的作用主要是用于系统崩溃恢复而不丢失数据。</p>
+<p>数据查找的时候先查MemTable，再查Immutable MemTable，再从L0开始一层层往下查，找到了就立刻返回。Manifest文件和Bloom Filter可以帮助加速查找。</p>
+<h2 id="rocksdb">4.2 RocksDB</h2>
+<p>结构和LevelDB大同小异，只是多了一些改进[15]：</p>
+<p>\1. 增加了column family，有了列簇的概念，可把一些相关的key存储在一起</p>
+<p>\2. 内存中有多个Immutable MemTable，可防止LevelDB中的 write stall</p>
+<p>\3. 可支持多线程同时Compaction，理论上多线程同时Compaction会比一个线程Compaction要快</p>
+<p>\4. 支持TTL</p>
+<p>\5. flush与Compaction分开不同的线程池来调度，并具有不同的优先级，flush要优于Compaction，这样可以加快flush，防止stall</p>
+<p>\6. 对SSD存储做了优化，可以以in-memory方式运行</p>
+<p>\7. 增加了对 Write Ahead Log（WAL）的管理机制，更方便管理WAL</p>
+<p>\8. 支持多种不同的compaction策略</p>
+<p>下图是RocksDB的结构示意图：</p>
+<figure>
+<img data-src="file:////Users/taowei/Library/Group%20Containers/UBF8T346G9.Office/TemporaryItems/msohtmlclip/clip_image009.jpg" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>图4-2 RocksDB结构示意图</p>
+<h1 id="lsm-tree存在的挑战与优化">5 LSM-Tree存在的挑战与优化</h1>
+<h2 id="挑战">5.1 挑战</h2>
+<p>LSM-Tree中存在的问题主要可分为三类：</p>
+<p>\1. 写放大。以LevelDB为例，由于每一层是上一层大小的 10 倍，所以在最坏情况下，上一层的一个文件可能需要和下一层的十个文件进行合并，这样本来只需要进行一次写入操作，在实际写入时却写了10次，所以合并的写放大是 10。假设每行数据经过一系列 compaction 最终都会落入最终层，每层都需要重新写一次，那么从 L1 到 L6 的写放大为 5，加上 WAL 和 L0，最终写放大可能会超过 50。在机械硬盘上由于顺序写的速度远远高于随机写，所以这种写放大带来的开销可以忽略。但是如果是在SSD或者NVM这些顺序写和随机写差别不大的材料上，这种写放大就会带来很大开销。</p>
+<p>\2. 读放大。同样以LevelDB为例，为了查询一个 1KB 的数据。最坏需要读 L0 层的 8 个文件，再读 L1 到 L6 的每一个文件，一共 14 个文件。而每一个SSTable文件内部需要读 16KB 的索引，4KB的布隆过滤器，4KB的数据块。一共 24*14/1=336倍。key-value 越小读放大越大。LSM-Tree的读放大比写放大更为严重。</p>
+<p>\3. 空间放大。假设需要存储10MB数据，但实际硬盘占用了30MB，那么空间放大就是3。有比较多的因素会影响空间放大，比如在Compaction过程中需要临时存储空间，空间碎片，Block中有效数据的比例小，旧版本数据未及时删除等等。</p>
+<p>下图展示了LSM-Tree在两种数据集大小情况下的读写放大情况。针对这些问题，近年来也有很多文章提出了优化算法。</p>
+<figure>
+<img data-src="file:////Users/taowei/Library/Group%20Containers/UBF8T346G9.Office/TemporaryItems/msohtmlclip/clip_image011.jpg" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>图 4‑1 LSM-Tree在不同数据集下的读写方法情况</p>
+<h2 id="优化方法">5.2 优化方法</h2>
+<h3 id="wisckey">5.2.1 WiscKey</h3>
+<p>Lanyue Lu等人提出WiscKey[10]用于设计SSD上的LSM-Tree，旨在充分利用SSD的并行性并减少写放大与读放大。WiscKey 的核心思想是将数据中的 Key 和 Value 分离，只在 LSM-Tree 中有序存储 Key，而将 Value 存放在单独的 Log 中。这样带来了两点好处：</p>
+<p>\1. 当 LSM-Tree 进行 compaction 时，只会对 Key 进行排序和重写，不会影响到没有改变的 Value，也就显著降低了写放大</p>
+<p>\2. 将 Value 分离后，LSM-Tree 本身会大幅减小，所以对应磁盘中的层级会更少，可以减少查询时从磁盘读取的次数，并且可以更好的利用缓存的效果</p>
+<p>具体实现上，在 LSM-Tree 的基础上，WiscKey 引入了一个额外的存储用于存储分离出的值，称为 Value Log。整体的读写路径为：</p>
+<p>l 当用户添加一个 KV 时，WiscKey 会先将 Value 写入到 Value-Log 中（顺序写），然后将 Key 和 Value 在 Value Log 中的地址写入 LSM-Tree</p>
+<p>l 当用户删除一个 Key 时，仅在 LSM-Tree 中删除 Key 的记录，之后通过 GC 清理掉 Value Log 中的数据</p>
+<p>l 当用户查询一个 Key 时，会先从 LSM-Tree 中查询到 Value 的地址，再根据地址将 Value 真正从 Value-Log 中读取出来（随机读）</p>
+<p>假设 Key 的大小为 16 Bytes，Value 的大小为 1KB，优化后的效果为：</p>
+<p>l 如果在 LSM-Tree 中的单层的写放大率是 10，那么使用 WiscKey 后单层的写放大率将变为 ((16 x 10) + (1024 x 1)) / (16 + 1024) = 1.14，远小于之前的 10 倍</p>
+<p>l 如果一个标准的 LSM-Tree 的大小为 100G，那么将 Value 分离后 LSM-Tree 本身的大小将会减少到 2G，层级会减少 1~2 级，并且缓存到内存中的比例会更高，从而降低读放大</p>
+<p>当然，这样做也带来了一些问题，主要有：</p>
+<p>l 在标准的 LSM-Tree 中，由于 Key 和 Value 是按照顺序存储在一起的，所以范围查询只需要顺序读即可遍历整个 SSTable 的所有数据。但是在 WiscKey 中，每个 Key 都需要额外的一次随机读才能读取到对应的 Value，因此效率会很差。</p>
+<p>对此，WiscKey 内部维护一个 32 线程的线程池，当用户使用迭代器迭代一行时，迭代器会预先取出多个 Key，并放入到一个队列中，线程池会从队列中读取 Key 并行的查找对应的 Value。图中展示了顺序读、随机读、随机32路读的性能差异：</p>
+<figure>
+<img data-src="file:////Users/taowei/Library/Group%20Containers/UBF8T346G9.Office/TemporaryItems/msohtmlclip/clip_image013.jpg" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>图 4‑2 WiscKey的读写差异</p>
+<p>可以看到，在请求大小达到64k以后，随机32路读的性能和顺序读的性能已经差不多了。</p>
+<p>l 当用户删除一个 Key 时，WiscKey 只会将 LSM-Tree 中的 Key 删除掉，所以需要一个额外的方式清理 Value-Log 中的值。</p>
+<p>WiscKey的解决方法是：维护一个 Value Log 的有效区间（由 head 和 tail 两个地址组成），通过不断地搬运有效数据来达到淘汰无效数据。如图所示。</p>
+<figure>
+<img data-src="file:////Users/taowei/Library/Group%20Containers/UBF8T346G9.Office/TemporaryItems/msohtmlclip/clip_image015.jpg" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>图 4‑3 WiscKey淘汰过程</p>
+<p>整个流程为：</p>
+<p>\1. 对于 Value-Log 中的每个值，需要额外存储 Key，为了方便从 LSM-Tree 中进行反查（相对 Value，Key 会比较小，所以写入放大不会增加太多）</p>
+<p>\2. 从 tail 的位置读取 KV，通过 Key 在 LSM-Tree 中查询 Value 是否还在被引用</p>
+<p>\3. 如果 Value 还在被引用，则将 Value 写入到 head，并将新的 Value 地址写回 LSM-Tree 中</p>
+<p>\4. 如果 Value 已经没有被引用，则跳过这行数据，接着读取下一个 KV</p>
+<p>\5. 当已经确认数据写入 head 之后，就可以将 tail 之后的数据都删除掉了</p>
+<p>将key与value分离，如何保证一致性也是一个很难的问题。WiscKey 通过查询时的容错机制保证 Key 和 Value 的原子性：当用户查询时，如果在 LSM-Tree 中找不到 Key，则返回 Key 不存在；如果在 LSM-Tree 中可以找到 Key，但是通过地址在 Value-Log 中无法找到匹配的 Value，则说明 Value 在写入时丢失了，同样返回不存在。</p>
+<p>此外，WiscKey还对这个与key分开的Value Log做了一些其他的优化：</p>
+<p>为了提高写入效率，WiscKey 首先会将 Value 写入到 Write Buffer 中，等待 Write Buffer 达到一定大小再一起刷新到文件中。所以查询时首先也要先从 Write Buffer 中查询。当崩溃时，Write Buffer 中的数据会丢失。</p>
+<p>在 WiscKey 中，Value-Log 和 WAL 都是基于用户的写入顺序进行存储的，并且也具备了恢复数据的所有内容，所以理论上 Value-Log 是可以同时作为 WAL 的，从而减少 WAL 的写放大。由于 Value Log 的 GC 比 WAL 更加低频，并且包含了大量已经持久化的数据，直接通过 Value-Log 进行恢复的话可能会导致回放大量已经持久化到 SST 的数据。所以 WiscKey 会定期将已经持久化到 SST 的 head 写入到 LSM-Tree 中，这样当恢复时只需要从最新持久化的 head 开始恢复即可。</p>
+<h3 id="accordion">5.2.2 Accordion</h3>
+<p>Edward Bortnikov等人提出了Accordion[11]，通过将LSM设计原理重新应用于内存管理，来解决LSM-Tree中频繁的compaction操作带来的开销（写放大）以及动态内存存储的碎片化内存布局问题。</p>
+<p>Accordion利用了静态段是不可变的事实，并把它们的索引布局优化成水平的。该算法还执行内存中压缩，从而在将冗余数据写入磁盘之前消除了冗余数据。下图是Accordion的结构：</p>
+<figure>
+<img data-src="file:////Users/taowei/Library/Group%20Containers/UBF8T346G9.Office/TemporaryItems/msohtmlclip/clip_image017.jpg" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>图 4‑4 Accordion结构图</p>
+<p>Accordion将数据作为按照事件排序的段的管道来管理，每个段包含一组数据单元格上的索引。时间上最近的段被称为active的，它们是可变的并吸收写操作，其余的段是不可变的。读操作可以就像搜索传统的LSM在磁盘上的多个文件一样遍历内存中的所有段，并且可以并发地搜索多个段。</p>
+<p>数据先写到active段，当active段达到一定大小时触发内存中的刷新，数据刷到水平段上，这个刷新过程会将动态段的索引以一个紧凑的有序数组代替。水平段段索引因为更加紧凑从而延迟了刷新到disk的过程，也就减少了disk中的compaction操作。当水平段的数量达到上限后触发内存中的合并，以一个段去代替多个段，这个段的索引覆盖了所有原始段的索引数据。接下来是一个可选的内存中compaction，通过创建一个没有冗余的水平索引并部署冗余数据单元（如果内存存储会在内部管理数据单元存储，就将留下的单元重定向到新的数据块，否则，就简单地取消引用冗余数据）进一步消除冗余。最后刷新到磁盘的过程和标准的LSM-Tree的一样。这四个过程中的索引结构如下图所示：</p>
+<figure>
+<img data-src="file:////Users/taowei/Library/Group%20Containers/UBF8T346G9.Office/TemporaryItems/msohtmlclip/clip_image019.jpg" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>图 4‑5 四个过程的索引结构</p>
+<p>Accordion使用一种自适应的策略去决定是否执行上述内存中compaction。它根据数据中的冗余程度和感知的成本效益来选择是否消除冗余数据或不消除，自适应在单个LSM存储的级别上起作用。这个自适应策略主要由两个参数决定：限流参数t，随着数据量的增大而变大；唯一性参数u，根据段索引的先前合并期间遇到的唯一键的比例，估计内存存储中唯一键的比率。Accordion还会进行WAL截断来解决由于内存中的压缩会延迟磁盘刷新导致的HLog文件（WAL）变长的问题。</p>
+<p>水平段管道是由一个双端队列实现的，管道的读取器和写入器通过轻量级的写时复制进行协调，并通过维护版本号的方式来维持一致性。</p>
+<h3 id="lazy-leveling和fluid-lsm-tree">5.2.3 Lazy Leveling和Fluid LSM-Tree</h3>
+<p>Niv Dayan[12]等人指出，现有的LSM技术并没有很好地在update的I/O开销和查询的I/O开销以及存储空间之间达到平衡。他们提出了“Lazy Leveling”，在除了最大层之外的所有层之中移除了合并操作，Lazy Leveling在维持了一样的点查性能、范围查询性能、存储空间的情况下提升了最坏情况下的update开销的复杂度。而后又进一步提出了Fluid LSM-Tree，相比Lazy Leveling，它可以在最大层上有更少的合并，于是可以更加优化update，同时，它在所有其他层上有更多合并，从而能更加优化小范围的查询。</p>
+<p>建立Lazy leveling的动机是在小的层上的归并会显著提升更新的开销，但是对点查询、范围查询以及空间放大只有微小的提升。下图展示了Lazy Leveling的结构和性能特点。</p>
+<figure>
+<img data-src="file:////Users/taowei/Library/Group%20Containers/UBF8T346G9.Office/TemporaryItems/msohtmlclip/clip_image021.jpg" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>图 4‑6 Lazy Leveling的结构和各种开销复杂度</p>
+<p>图中最顶层展示了Lazy Leveling的结构并和tiering、leveling进行了比较。Lazy Leveling的核心是tiering与leveling的混合：在最大层上应用leveling，在其他层上应用tiering。因此在最大层上的运行次数是1，所有其他层上的运行次数最多T-1，也就是第T个请求到来时才触发合并。</p>
+<p>下面每一层是Lazy Leveling在各个方面的开销与其他两种策略的比较，其中zero-result point lookup cost代表的是在最坏情况下查询多余的I/O开销。可以看到，Lazy Leveling在空间放大、点查开销以及大范围的查询开销上和leveling表现一样，但是降低了update开销的复杂度，同时只提供了一个稍微差一点的小范围性能。</p>
+<p>下图比较了不同合并策略在层大小比例T从2变化到上限Tlim的行为差异。A部分表示更新开销与点查开销随T值的变化，B和C部分表示更新开销分别与小范围查询和大范围查询开销随T值的变化。显然，每个策略的图线在T=2时都相交，因为此时它们的行为都是一样的：每一层都在第二次运行到来时发生合并。图中A部分显示，相比于leveling，Lazy Leveling对于update开销的上升能换来更好的点查开销下降，这两条曲线在T=Tlim时相交，此时它们都退化成了有序数组。B部分显示，lazy leveling对于小范围查询的开销增大是可以接受的，C部分进一步显示，这个差异在随着范围变大变的更加微不足道。</p>
+<figure>
+<img data-src="file:////Users/taowei/Library/Group%20Containers/UBF8T346G9.Office/TemporaryItems/msohtmlclip/clip_image023.jpg" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>图 4‑7 各种合并策略在不同T情况下的行为差异</p>
+<p>Fluid LSM-Tree是对这些LSM-Tree的综合，通过对最大层和所有其他层分别控制合并操作的频率的方式，实现了上述这些不同合并策略之间的切换与结合使用。下图显示了Fluid LSM-Tree的基本结构。</p>
+<figure>
+<img data-src="file:////Users/taowei/Library/Group%20Containers/UBF8T346G9.Office/TemporaryItems/msohtmlclip/clip_image025.jpg" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>图 4‑8 Fluid LSM-Tree的结构和各种开销复杂度</p>
+<p>在最大层最多有Z次运行，在其他较小的层最多有K次。每一层有一个活跃的运行，将来自上一层的所有运行合并到这个运行中。每一个活跃运行有一个大小上限，基于它所在的层数。当一个活跃运行达到上限后，我们在那一层启动一个新的活跃运行。最后当一层达到容量后，所有的运行都合并然后刷到下一层。</p>
+<p>K和Z是调节参数，K和Z在不同情况下，Fluid LSM-Tree就是不同的合并策略：</p>
+<p>l K=1,Z=1就是leveling</p>
+<p>l K=T-1,Z=T-1就是tiering</p>
+<p>l K=T-1,Z=1就是lazy leveling</p>
+<p>在Fluid LSM-Tree中，各个指标的开销如图中B-G层所示。</p>
+<p>下图是加入Fluid LSM-Tree之后的图。</p>
+<figure>
+<img data-src="file:////Users/taowei/Library/Group%20Containers/UBF8T346G9.Office/TemporaryItems/msohtmlclip/clip_image027.jpg" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>图 4‑9 更新开销</p>
+<p>圆圈表示三种合并策略的相交点也就是T等于2时，方块表示T=10，这是大部分主流的KV存储中LSM-Tree的T值。虚线表示两条过渡曲线，表示Fluid LSM-Tree是如何平滑地从一种策略过渡到另一种策略的。其中trans1表示从lazy leveling过渡到tiering，trans2表示从lazy leveling过渡到leveling。注意到A中lazy leveling有一个拐点，在拐点之上随着T的增大update开销变小，于是，Niv Dayan他们将过渡曲线trans1的T值固定为拐点的T值，将Z值从1变化到T-1，这样得到的曲线可以获得更好的update与点查开销权衡。</p>
+<p>为了能在范围查询上表现的更好，于是设计了trans2。这是一条固定K，变化T的曲线，图中K被固定为拐点的T-1。A部分显示trans2的点查与update开销权衡和lazy leveling接近，B和C则显示trans2的范围查询与update开销权衡和leveling几乎一样。可见，trans2对于小范围的查询开销优化有很好的控制。</p>
+<p>通过这样的图线，可以对于一个特定的应用场景需求，找到一种最合适的参数配置，使得有最低的开销。</p>
+<h3 id="skip-tree">5.2.4 Skip-Tree</h3>
+<p>Yinliang Yue[13]等人提出了Skip-Tree来解决LSM-Tree中的写放大问题，Skip-Tree的核心思想是在数据从LSM-Tree的上层刷到下层时，选择性地跳过某些层。</p>
+<p>这种控制KV数据跳过某些层的机制如下：首先使用Bloom Filter确定对于一个特定的key，是否有一个value版本存在于一个数据块中。他们对于每个数据块都维护了一个Bloom Filter，每个KV数据项的key在被存储到块之前都需要被加入到Bloom Filter中。能够跳过多层的数据，必须满足值版本限制，即如果一个第Ci层的数据想要被直接刷到Ci+k层，那么必须确保CI+1,…,CI+k-1层都没有这个key值。由于Bloom Filter存在假阳性率（即，Bloom Filter判定不存在的一定不存在，但是Bloom Filter判定存在的也可能不存在），可能存在误判，于是，他们保守性地估计在Bloom Filter判定存在的时候，在CI+2层中的数据块中至少含有一个SSTable含有一样的key。</p>
+<p>经过测试，他们发现一次只跳过一层虽然可以最小化get与put延迟的增长，但是写放大的减少会受到限制。相反，一次跳过多个层，能显著减少写放大，但是同时也导致了很高的get与put延迟。为此他们对每个设计了最大跳过层数。最后他们经过测试发现这个数字设置为2时能够系统能达到最好性能。</p>
+<p>下图描述了Skip-Tree的结构。</p>
+<figure>
+<img data-src="file:////Users/taowei/Library/Group%20Containers/UBF8T346G9.Office/TemporaryItems/msohtmlclip/clip_image029.jpg" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>图 4‑10 Skip-Tree结构图</p>
+<p>虽然一个数据要想跳跃性地从Ci层直接刷到Ci+2或者更底层，最直接的想法就是直接把这个KV数据项直接和目标SSTable合并，但是这样会带来大量额外的Disk I/O，导致严重的写放大。</p>
+<p>于是他们提出了基于buffer的延迟合并以及排序机制。对于每个磁盘上的层Ci，他们在内存中准备了一个buffer Bi，用于缓存将要跳跃地刷到这一层的数据。这样就将这些跳跃下来的数据的合并与排序推迟到磁盘compaction的时候再进行。这些内存中的buffer不同于磁盘上的层的SSTable存储形式，它们只是以一个简单的按key排序的链表的形式组织。Skip-Tree使用WAL(提前写日志)的方式来保证易失性buffer里面数据的可靠性，为了减小logging开销，它们只使用log记录键以及原始SSTable的ID，并在buffer里面还有对SSTable的引用时阻止删除这个SSTable。</p>
+<h1 id="总结">6 总结</h1>
+<p>在这篇文章中，我们主要介绍了LSM-Tree这种数据结构出现的背景，将其与传统关系型数据库存储结构B+Tree进行比较，分析了二者各自的基本结构与优缺点。然后我们介绍了LSM-Tree在当今主流NoSQL数据库中的具体应用，最后我们列举了一些对LSM-Tree的改进工作。</p>
+<p>同时，我们认为LSM-Tree也可以和现在新兴的非易失性存储（Non-Volatile Memory, NVM）相结合，因为NVM是一种优秀的存储介质，具有可持久化、可按字节寻址、访问速度远高于磁盘等特点。利用NVM，可以很好地解决LSM-Tree中读速度较慢的问题。</p>
+<h1 id="参考文献">参考文献</h1>
+<p>[1] Severance, D.G., Lohman, G.M.: Differential files: Their appli-cation to the maintenance of large databases. ACM TODS 1(3), 256–267 (1976)</p>
+<p>[2] Stonebraker, M.: The design of the Postgres storage system. In: VLDB, pp. 289–300 (1987)</p>
+<p>[3] O’Neil, P., et al.: The log-structured merge-tree (LSM-tree). Acta Inf.33(4), 351–385 (1996)</p>
+<p>[4] Yao, A.C.C.: On random 2–3 trees. Acta Informatica 9(2), 159– 170 (1978)</p>
+<p>[5] LevelDB. https://github.com/google/leveldb.</p>
+<p>[6] RocksDB. http://rocksdb.org/.</p>
+<p>[7] Scylla. https://github.com/scylladb/scylla.</p>
+<p>[8] Cassandra. http://cassandra.apache.org.</p>
+<p>[9] Chang, F., Dean, J., Ghemawat, S., Hsieh, W. C., Wallach, D. A., Burrows, M., ... &amp; Gruber, R. E. (2008). Bigtable: A distributed storage system for structured data. ACM Transactions on Computer Systems (TOCS), 26(2), 1-26.</p>
+<p>[10] Lu L, Pillai T S, Gopalakrishnan H, et al. Wisckey: Separating keys from values in ssd-conscious storage[J]. ACM Transactions on Storage (TOS), 2017, 13(1): 1-28.</p>
+<p>[11] Bortnikov, E., et al.: Accordion: Better memory organization for LSM key-value stores. PVLDB11(12), 1863–1875 (2018)</p>
+<p>[12] Dayan, N., Idreos, S.: Dostoevsky: Better space-time trade-offs for LSM-tree based key-value stores via adaptive removal of superflu-ous merging. In: ACM SIGMOD, pp. 505–520 (2018)</p>
+<p>[13] Yue, Y., et al.: Building an efficient put-intensive key-value store with skip-tree. IEEE Transactions on Parallel and Distributed Sys-tems (TPDS)28(4), 961–973 (2017)</p>
+<p>[14] Luo, C., &amp; Carey, M. J. (2020). LSM-based storage techniques: a survey. The VLDB Journal, 29(1), 393-418.</p>
+<p>[15] Dong, S., Callaghan, M., Galanis, L., Borthakur, D., Savor, T., &amp; Strum, M. (2017, January). Optimizing Space Amplification in RocksDB. In CIDR (Vol. 3, p. 3).</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>您的关注与支持是我更新最大的动力！</div>
+  <button onclick="document.querySelector('.post-reward').classList.toggle('active');">
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/wechatpay.png" alt="fwxiaotao 微信">
+        <span>微信</span>
+      </div>
+      <div>
+        <img src="/images/alipay.png" alt="fwxiaotao 支付宝">
+        <span>支付宝</span>
+      </div>
+
+  </div>
+</div>
+
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>fwxiaotao
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="http://taowei1999.com/2020/11/21/LSM-Tree%E5%8F%8A%E5%85%B6%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86/" title="LSM-Tree及其相关知识">http://taowei1999.com/2020/11/21/LSM-Tree及其相关知识/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed-zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag"><i class="fa fa-tag"></i> 数据结构</a>
+              <a href="/tags/KV-Store/" rel="tag"><i class="fa fa-tag"></i> KV Store</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2020/11/06/ubuntu%E6%8D%A2%E6%BA%90/" rel="prev" title="ubuntu换源">
+                  <i class="fa fa-chevron-left"></i> ubuntu换源
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+      
+    
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      
+
+      
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">fwxiaotao</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">60k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">54 分钟</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div><!-- 网站运行时间的设置 -->
+<span id="timeDate">载入天数...</span>
+<span id="times">载入时分秒...</span>  
+<script>
+    var now = new Date();
+    function createtime() {
+        var grt= new Date("10/09/2020 00:00:00");//此处修改你的建站时间或者网站上线时间
+        now.setTime(now.getTime()+250);
+        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
+        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
+        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
+        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
+        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
+        document.getElementById("timeDate").innerHTML = "本站已安全运行 "+dnum+" 天 ";
+        document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒";
+    }
+setInterval("createtime()",250);
+</script>
+
+    </div>
+  </footer>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.0/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/@next-theme/pjax@0.4.0/pjax.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/medium-zoom@1.0.6/dist/medium-zoom.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1.16.0/dist/lozad.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/pangu@4.0.7/dist/browser/pangu.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+  <script>
+var pjax = new Pjax({
+  selectors: [
+    'head title',
+    '.page-configurations',
+    '.main-inner',
+    '.post-toc-wrap',
+    '.languages',
+    '.pjax'
+  ],
+  analytics: false,
+  cacheBust: false,
+  scrollRestoration: false,
+  scrollTo: !CONFIG.bookmark.enable
+});
+
+document.addEventListener('pjax:success', () => {
+  pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'));
+  NexT.boot.refresh();
+  // Define Motion Sequence & Bootstrap Motion.
+  if (CONFIG.motion.enable) {
+    NexT.motion.integrator
+      .init()
+      .add(NexT.motion.middleWares.subMenu)
+      .add(NexT.motion.middleWares.postList)
+      .bootstrap();
+  }
+  const hasTOC = document.querySelector('.post-toc');
+  document.querySelector('.sidebar-inner').classList.toggle('sidebar-nav-active', hasTOC);
+  document.querySelector(hasTOC ? '.sidebar-nav-toc' : '.sidebar-nav-overview').click();
+  NexT.utils.updateSidebarPosition();
+});
+</script>
+
+
+  
+
+
+
+
+  <script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script data-pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+
+
+
+    <div class="pjax">
+  
+
+  
+      <script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              const target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    const script = document.createElement('script');
+    script.src = '//cdn.jsdelivr.net/npm/mathjax@3.1.2/es5/tex-mml-chtml.js';
+    script.defer = true;
+    document.head.appendChild(script);
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.typesetClear();
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+  <script src="//cdn.jsdelivr.net/npm/quicklink@2.0.0/dist/quicklink.umd.js"></script>
+  <script>
+      window.addEventListener('load', () => {
+      quicklink.listen({
+        timeout : 3000,
+        priority: true,
+        ignores : [uri => uri.includes('#'),uri => uri === 'http://taowei1999.com/2020/11/21/LSM-Tree%E5%8F%8A%E5%85%B6%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86/',]
+      });
+      });
+  </script>
+
+<script>
+  function loadCount() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://fwxiaotao.disqus.com/count.js';
+    s.id = 'dsq-count-scr';
+    (d.head || d.body).appendChild(s);
+  }
+  // defer loading until the whole page loading is completed
+  window.addEventListener('load', loadCount, false);
+</script>
+<script>
+  var disqus_config = function() {
+    this.page.url = "http://taowei1999.com/2020/11/21/LSM-Tree%E5%8F%8A%E5%85%B6%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86/";
+    this.page.identifier = "2020/11/21/LSM-Tree及其相关知识/";
+    this.page.title = "LSM-Tree及其相关知识";
+    };
+  NexT.utils.loadComments('#disqus_thread', () => {
+    if (window.DISQUS) {
+      DISQUS.reset({
+        reload: true,
+        config: disqus_config
+      });
+    } else {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://fwxiaotao.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    }
+  });
+</script>
+
+
+  <script async src="/js/cursor/fireworks.js"></script>
+
+
+
+
+    </div>
+</body>
+</html>

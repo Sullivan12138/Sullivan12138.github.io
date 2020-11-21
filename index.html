@@ -140,17 +140,17 @@
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">11</span></a>
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">16</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
 
-    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">1</span></a>
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">2</span></a>
 
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">12</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">18</span></a>
 
   </li>
         <li class="menu-item menu-item-commonweal">
@@ -229,20 +229,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">12</span>
+          <span class="site-state-item-count">18</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-count">2</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-count">16</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -560,6 +560,1024 @@ if(canvas.getContext){
       
 
       
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://taowei1999.com/2020/11/21/LSM-Tree%E5%8F%8A%E5%85%B6%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="fwxiaotao">
+      <meta itemprop="description" content="一个用于记录学习笔记和生活心得的博客网站">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="fwxiaotao博客站">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/11/21/LSM-Tree%E5%8F%8A%E5%85%B6%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86/" class="post-title-link" itemprop="url">LSM-Tree及其相关知识</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2020-11-21 19:40:53 / 修改时间：19:49:18" itemprop="dateCreated datePublished" datetime="2020-11-21T19:40:53+08:00">2020-11-21</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/" itemprop="url" rel="index"><span itemprop="name">计算机</span></a>
+        </span>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2020/11/21/LSM-Tree%E5%8F%8A%E5%85%B6%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2020/11/21/LSM-Tree及其相关知识/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+      </div>
+      <div class="post-meta">
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>15k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>14 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>首先放上几篇文章，个人觉得讲的很好的：</p>
+<p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/3fb899684392">关于B树、B+树、LSM-Tree这几种数据结构的介绍</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/SweeNeil/article/details/86482781">LSM-Tree与LevelDB</a></p>
+<p><a target="_blank" rel="noopener" href="http://www.manongjc.com/article/17436.html">LevelDB详细讲解</a></p>
+<p><a target="_blank" rel="noopener" href="https://daemondshu.github.io/2019/03/21/Programming/Data%20Structure/LevelDB_RocksDB/">LevelDB与RocksDB</a></p>
+<p>然后是个人拙见（这篇文章是信息存储课交的报告，在此感谢我的两位室友，fd和ljl，名字就不放了）：</p>
+<p>基于LSM-Tree的存储技术的调研</p>
+<p><strong>摘</strong> <strong>要：</strong>近年来，一种新型的数据存储结构——LSM-Tree受到业界的广泛欢迎。由于其在顺序写方面的优异性能和顺序读方面的尚可表现，逐渐替代B+树成为KV数据库的首选结构。如今一些著名的开源NoSQL数据库——例如Google的LevelDB、Facebook的RocksDB等都采用了LSM-Tree这种存储结构。但是，LSM-Tree仍然有一些问题，例如读写放大、无法进行范围读等等。对此，科研人员也提出了很多优化方案。在这篇文章中，我们首先介绍了LSM-Tree的出现背景，分析了它的结构与原理，并与B+树进行对比。然后，我们介绍了LSM-Tree在一些主流NoSQL数据库中的应用。最后，我们介绍了一些典型的性能较好的对LSM-Tree的具体优化措施。</p>
+<p><strong>关键词：</strong>数据存储结构；LSM-Tree；数据库</p>
+<p>Abstract: In recent years, a new kind of storage structure called LSM-Tree has been widely adopted by the industry. Due to its excellent performance in sequential write and not-so-bad score in sequential read, it has taken place of B+ Tree to be the prior choice of KV database gradually. Nowadays some famous open source NoSQL database, such as LevelDB of Google and RocksDB of Facebook, all take LSM-Tree as their storage structure. However, there still exist a few problems in LSM-Tree like read and write amplification or poor scan performance. Scientists have been dedicated in the research about the optimization of LSM-Tree and a quantity of strategies have been proposed. In this article we firstly introduce the background of LSM-Tree's emergence, analyze its structure and principle and compare it with B+ Tree. We then list the application of LSM-Tree in some prevalent NoSQL database. Finally, we discuss some typical high-performance optimization approaches towards LSM-Tree.</p>
+<p><strong>Key words:</strong> storage structure；LSM-Tree；database</p>
+<h1 id="引言">1 引言</h1>
+<p>LSM-Tree全称是Log-Structured Merge-Tree(日志结构合并树)，是近年来新兴起的一种数据结构，并迅速且广泛地在KV存储中得到应用。现在很多大型的NoSQL数据库，采用KV存储，底层都是LSM-Tree这种结构，包括LevelDB、RocksDB、Cassandra等等。LSM-Tree的特点是将所有的数据先缓存在内存中，然后再顺序地刷到磁盘上，所有的写都被转换成追加写，在刷到磁盘上时对这些追加写进行合并。相比于传统的MySQL数据库采用的B+树存储，LSM-Tree的优点是写的速度很快（因为磁盘的追加写速度远高于随机写），同时空间利用率很高，也很利于并发与恢复。但是，LSM-Tree中也存在一些问题，典型的就是读写放大，近年来很多文章都着力于优化LSM-Tree的结构来降低读写放大开销。</p>
+<p>在文章接下来的内容，主要分为以下几个部分：在第二章我们将介绍LSM-Tree出现的背景，在第三章我们会介绍LSM-Treed的结构以及它与B+树的对比，第四章简单列举了一下LSM-Tree在现代数据库中的应用，第五章讲述了LSM-Tree仍然存在的挑战与近年来对它的优化工作，最后我们对文章作出总结、提出自己的一点看法。</p>
+<h1 id="lsm-tree出现的背景">2 LSM-Tree出现的背景</h1>
+<p>长久以来，数据库存储引擎中有两种更新策略，一种叫in-place update，一种叫out-of-place update[14]。前者指的是直接覆盖旧的记录去存储新的记录，典型代表如B+树；后者指的是不直接覆盖旧纪录，而是把这次更新存在新的位置，典型代表就是LSM-Tree。In-place update是读友好的，因为只有最近版本的数据被存储了，但是，这种设计牺牲了写性能，因为它会带来随机写，而磁盘的随机写性能很差，另外，磁盘页会被update和delete分成碎片，不利于空间的利用。相对地，out-of-place update提升了写性能，因为它利用了顺序写，磁盘的顺序写性能是远远高于随机写的。因为没有覆盖旧数据，所以它的恢复过程也变的简单。但是，这样做牺牲了读性能，因为数据可能被存放在任何位置，同时，我们需要一个将分散数据重组的过程来提高存储和访问效率。</p>
+<p>基于out-of-place update的存储结构早在上世纪70年代就有人提出，例如Differential Files[1]、Postgres project[2]等等。但是，它们都没有解决读请求慢以及空间利用率差的问题。1996年，O Neil[3]等人提出了LSM-Tree，通过设计了一个磁盘上的合并过程，终于较好地解决了这两个问题。</p>
+<p>现在，随着Web2.0时代的到来，互联网上的非结构化数据（例如：图片、视频、HTML文档等）呈指数级增长，这些数据很难用传统的关系型数据库去存储，而且它们数量巨大，传统的关系型数据库因为扩展性差难以胜任存储。取而代之的，KV型NoSQL数据库能够很好的存储它们，同时还能提供更好的扩展性与存储海量数据的能力，这种数据库也开始逐渐流行起来。海量数据存储NoSQL数据库的特点就是写多读少，而LSM-Tree恰好符合这一特点。2006年Google提出了BigTable[9]，开启了分布式NoSQL数据库的先河，并率先使用LSM-Tree，随后，越来越多的NoSQL数据库采用LSM-Tree结构。现在，几乎所有NoSQL数据库底层都采用了LSM-Tree这种数据结构。</p>
+<h1 id="lsm-tree与btree对比">3 LSM-Tree与B+Tree对比</h1>
+<h2 id="btree">3.1 B+Tree</h2>
+<p>我们首先介绍一下B+树的前身：B树。在计算机科学中，B树是一种自平衡树数据结构，用于维护排序的数据，并允许以对数时间进行搜索，顺序访问，插入和删除。 B树允许具有两个以上子节点的节点，B树其实可以被看成“多叉树”，二叉树是B树2阶的特例。与其他自平衡二分搜索树不同，B树非常适合于读写相对较大的数据块（例如磁盘）的存储系统。 它通常用于数据库和文件系统。</p>
+<p>B树是由Rudolf Bayer和Edward M.McCreight在波音研究实验室工作时发明的，目的是有效地管理大型随机访问文件的索引页。</p>
+<p>根据Knuth的定义，阶数为m的B树是满足以下属性的树：</p>
+<p>· 每个节点最多有m个孩子。</p>
+<p>· 每个非叶节点（根除外）至少具有⌈m/2⌉个子节点。</p>
+<p>· 如果根不是叶节点，则根至少有两个子代。</p>
+<p>· 一个有k个子节点的非叶子节点包含k − 1个密钥。</p>
+<p>· 所有叶子都出现在同一层</p>
+<p>下图是一个4阶的B树的示意图：</p>
+<figure>
+<img data-src="file:////Users/taowei/Library/Group%20Containers/UBF8T346G9.Office/TemporaryItems/msohtmlclip/clip_image002.jpg" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>图3-1 4阶B树示意图</p>
+<p>B树的搜索过程是：从根结点开始，对结点内的关键字（有序）序列进行二分查找，如果命中则结束，否则进入查询关键字所属范围的儿子结点；重复，直到所对应的儿子指针为空，或已经是叶子结点；</p>
+<p>B+树是对B树的一种变形，与B树的差异在于：</p>
+<p>\1. 非叶子节点的子节点数=关键字数。非叶子节点不保存数据，只用来索引，所有数据都保存在叶子节点。</p>
+<p>\2. 所有的叶子结点中包含了全部关键字的信息，及指向含这些关键字记录的指针，且叶子结点本身依关键字的大小自小而大顺序链接。</p>
+<p>\3. 为所有叶子结点增加一个链指针，便于区间查找和遍历。</p>
+<p>\4. 所有关键字都在叶子结点出现。</p>
+<p>下图是一棵4阶B+树示意图：</p>
+<figure>
+<img data-src="file:////Users/taowei/Library/Group%20Containers/UBF8T346G9.Office/TemporaryItems/msohtmlclip/clip_image004.jpg" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>图3-2 4阶B+树示意图</p>
+<p>B+树的搜索与B树也基本相同，区别是B+树只有达到叶子结点才命中（B树可以在非叶子结点命中），其性能也等价于在关键字全集做一次二分查找。</p>
+<p>B+树相对B树的优点是：因为非叶子节点不包含数据，所以非叶子节点所占空间变小了，每个非叶子节点能存放更多关键字，从而树的高度也变小了，能加快查找。同时，所有叶子节点都在同一层，查找只有查到叶子节点层才返回，查找速度也比B树稳定。另外，底层的叶子节点链表十分有利于全节点的遍历操作，同时还是有序的，说明B+树天然支持排序。但是B树相对B+树也有优点，如果经常访问的关键字离根节点较近，那么显然是B树更快。</p>
+<h2 id="lsm-tree">3.2 LSM-Tree</h2>
+<p>LSM-Tree是一种多层结构，上小下大。LSM-Tree分成两个部分，一部分在内存，一部分在硬盘，C0层存在内存，磁盘中的部分分为C1,C2,…Ck等多层。内存中的结构是有序的，并且可以随时进行in-place update，支持随机读写。内存中的部分满了之后，与磁盘上的C1层合并，然后刷到C1，这其中会进行一个归并排序，让C1层上的数据也成为按key有序的，当C1满了之后再刷到C2，以此类推。这在LSM-Tree中被称为compaction。每一层的容量都比上层的要大。Compaction可以后台异步进行，不阻塞I/O。下图展示了LSM-Tree基本结构：</p>
+<figure>
+<img data-src="file:////Users/taowei/Library/Group%20Containers/UBF8T346G9.Office/TemporaryItems/msohtmlclip/clip_image006.jpg" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>图3-3 LSM-Tree 基本结构示意图</p>
+<p>在写入流程中可以看到，最新的数据在 C0 层，最老的数据在 Ck 层，所以查询也是先查 C0 层，如果没有要查的 key，再查 C1，逐层查。因为数据可能存在任意一层，所以最坏情况下要读所有的层，这也意味着LSM-Tree的读性能并没有那么好。所以它适合写多读少的情况。</p>
+<p>为了加快查找速度，LSM-Tree中还采用了一种叫做Bloom Filter的数据结构，它实际上是一个bitmap。一个key被k个hash函数计算之后产生k个bit，当所有的bit都为1时key存在，如果有1个bit不为1则key不存在。这样利用Bloom Filter可以加快查找速度，在每一层设置一个Bloom Filter，key在存储的时候先存Bloom filter，查找时先访问Bloom Filter，如果Bloom Filter返回false那么一定不存在。但是Bloom Filter也存在假阳性率，即，如果Bloom Filter返回false，那么确实一定不存在，但是Bloom Filter返回true，仍然有可能不存在。</p>
+<h2 id="lsm-tree-vs.-b树">3.3 LSM-Tree vs. B+树</h2>
+<p>LSM树和B+树的差异主要在于读性能和写性能进行权衡。</p>
+<p>当写读比例很大的时候（写比读多），LSM树相比于B树有更好的性能。随着insert操作，为了维护B+树结构，节点分裂。读磁盘的随机读写概率会变大，性能会逐渐减弱。而LSM-Tree的写都是顺序写，而硬盘的顺序写性能远高于随机写。</p>
+<p>另外，由于LSM-Tree在硬盘上的每一层都是连续的存储区域，它对存储空间的利用率也是比B+Tree要好很多的。研究显示[4]，B+树中叶子节点的页平均只有2/3是满的。</p>
+<p>但是相应地，LSM-Tree的读性能比B+Tree要差。在B+Tree中，数据的查找十分接近二分查找。但是在LSM-Tree中，由于数据可能存在任何一层，所以最坏情况下查找一个数据要遍历所有层所有文件。</p>
+<p>所以，两种数据结构适用于不同的场景，LSM-Tree适合写多读少，B+Tree适合读多写少。传统的MySQL数据库一般采用B+Tree作为存储结构，而近年来的NoSQL数据库一般采用LSM-Tree。</p>
+<h1 id="lsm-tree在数据库中的应用">4 LSM-Tree在数据库中的应用</h1>
+<p>LSM Tree在数据库中有着广泛的应用，LevelDB[5]、RocksDB[6]、Scylladb[7]、Cassandra[8]等数据库都采用了LSM Tree作为底层的基本存储结构。下面主要介绍LSM Tree在一些主流数据库中的应用。</p>
+<h2 id="leveldb">4.1 LevelDB</h2>
+<p>LevelDB是Google研究员Jeffrey Dean和Sanjay Ghemawat编写的开源磁盘键值存储。受Bigtable的启发，LevelDB在New BSD许可下托管在GitHub上，并已移植到各种基于Unix的系统以及macOS，Windows和Android。</p>
+<p>LevelDB 结构包括六个主要部分，内存中的MemTable和Immutable MemTable，磁盘上的主要文件包括Current文件，Manifest文件，log文件以及SSTable文件。下图是LevelDB的基本结构：</p>
+<figure>
+<img data-src="file:////Users/taowei/Library/Group%20Containers/UBF8T346G9.Office/TemporaryItems/msohtmlclip/clip_image007.jpg" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>图4-1 LevelDB 架构图</p>
+<p>当要写数据时，首先将写入操作加到写前日志(Write-Ahead Log，简称WAL)中，接下来把数据写到 MemTable中，当 MemTable 满了，就将这个 MemTable 切换为不可更改的 Immutable MemTable，并新开一个 MemTable 接收新的写入请求。而这个 Immutable MemTable 就可以刷磁盘了。这里刷磁盘是直接刷成 L0 层的 SSTable 文件，并不直接跟 L0 层的文件合并。当L0层满了以后，数据再刷到L1层，这里会与L1层的数据进行合并，具体是一个归并排序，去掉重复的数据并保证数据在L1层上有序。当L1层满了以后再刷到L2层…以此类推。也就是说，除了L0层可能有key重叠，并且无序，其余每一层都是key不重叠且有序的。每一层的大小都比上一层大，LevelDB中将下一层的大小设置成上一层的10倍。数据在磁盘上都是以SSTable文件的形式存放。</p>
+<p>Manifest记载了SSTable各个文件的管理信息，包括文件所属Level，文件名，最小的Key和最大的Key，主要用于加快查找。Current文件的内容只记载当前的manifest文件名，因为在Compaction的过程中可能产生新版本的Manifest，这时老版本的Manifest就没有用了。Log文件在系统中的作用主要是用于系统崩溃恢复而不丢失数据。</p>
+<p>数据查找的时候先查MemTable，再查Immutable MemTable，再从L0开始一层层往下查，找到了就立刻返回。Manifest文件和Bloom Filter可以帮助加速查找。</p>
+<h2 id="rocksdb">4.2 RocksDB</h2>
+<p>结构和LevelDB大同小异，只是多了一些改进[15]：</p>
+<p>\1. 增加了column family，有了列簇的概念，可把一些相关的key存储在一起</p>
+<p>\2. 内存中有多个Immutable MemTable，可防止LevelDB中的 write stall</p>
+<p>\3. 可支持多线程同时Compaction，理论上多线程同时Compaction会比一个线程Compaction要快</p>
+<p>\4. 支持TTL</p>
+<p>\5. flush与Compaction分开不同的线程池来调度，并具有不同的优先级，flush要优于Compaction，这样可以加快flush，防止stall</p>
+<p>\6. 对SSD存储做了优化，可以以in-memory方式运行</p>
+<p>\7. 增加了对 Write Ahead Log（WAL）的管理机制，更方便管理WAL</p>
+<p>\8. 支持多种不同的compaction策略</p>
+<p>下图是RocksDB的结构示意图：</p>
+<figure>
+<img data-src="file:////Users/taowei/Library/Group%20Containers/UBF8T346G9.Office/TemporaryItems/msohtmlclip/clip_image009.jpg" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>图4-2 RocksDB结构示意图</p>
+<h1 id="lsm-tree存在的挑战与优化">5 LSM-Tree存在的挑战与优化</h1>
+<h2 id="挑战">5.1 挑战</h2>
+<p>LSM-Tree中存在的问题主要可分为三类：</p>
+<p>\1. 写放大。以LevelDB为例，由于每一层是上一层大小的 10 倍，所以在最坏情况下，上一层的一个文件可能需要和下一层的十个文件进行合并，这样本来只需要进行一次写入操作，在实际写入时却写了10次，所以合并的写放大是 10。假设每行数据经过一系列 compaction 最终都会落入最终层，每层都需要重新写一次，那么从 L1 到 L6 的写放大为 5，加上 WAL 和 L0，最终写放大可能会超过 50。在机械硬盘上由于顺序写的速度远远高于随机写，所以这种写放大带来的开销可以忽略。但是如果是在SSD或者NVM这些顺序写和随机写差别不大的材料上，这种写放大就会带来很大开销。</p>
+<p>\2. 读放大。同样以LevelDB为例，为了查询一个 1KB 的数据。最坏需要读 L0 层的 8 个文件，再读 L1 到 L6 的每一个文件，一共 14 个文件。而每一个SSTable文件内部需要读 16KB 的索引，4KB的布隆过滤器，4KB的数据块。一共 24*14/1=336倍。key-value 越小读放大越大。LSM-Tree的读放大比写放大更为严重。</p>
+<p>\3. 空间放大。假设需要存储10MB数据，但实际硬盘占用了30MB，那么空间放大就是3。有比较多的因素会影响空间放大，比如在Compaction过程中需要临时存储空间，空间碎片，Block中有效数据的比例小，旧版本数据未及时删除等等。</p>
+<p>下图展示了LSM-Tree在两种数据集大小情况下的读写放大情况。针对这些问题，近年来也有很多文章提出了优化算法。</p>
+<figure>
+<img data-src="file:////Users/taowei/Library/Group%20Containers/UBF8T346G9.Office/TemporaryItems/msohtmlclip/clip_image011.jpg" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>图 4‑1 LSM-Tree在不同数据集下的读写方法情况</p>
+<h2 id="优化方法">5.2 优化方法</h2>
+<h3 id="wisckey">5.2.1 WiscKey</h3>
+<p>Lanyue Lu等人提出WiscKey[10]用于设计SSD上的LSM-Tree，旨在充分利用SSD的并行性并减少写放大与读放大。WiscKey 的核心思想是将数据中的 Key 和 Value 分离，只在 LSM-Tree 中有序存储 Key，而将 Value 存放在单独的 Log 中。这样带来了两点好处：</p>
+<p>\1. 当 LSM-Tree 进行 compaction 时，只会对 Key 进行排序和重写，不会影响到没有改变的 Value，也就显著降低了写放大</p>
+<p>\2. 将 Value 分离后，LSM-Tree 本身会大幅减小，所以对应磁盘中的层级会更少，可以减少查询时从磁盘读取的次数，并且可以更好的利用缓存的效果</p>
+<p>具体实现上，在 LSM-Tree 的基础上，WiscKey 引入了一个额外的存储用于存储分离出的值，称为 Value Log。整体的读写路径为：</p>
+<p>l 当用户添加一个 KV 时，WiscKey 会先将 Value 写入到 Value-Log 中（顺序写），然后将 Key 和 Value 在 Value Log 中的地址写入 LSM-Tree</p>
+<p>l 当用户删除一个 Key 时，仅在 LSM-Tree 中删除 Key 的记录，之后通过 GC 清理掉 Value Log 中的数据</p>
+<p>l 当用户查询一个 Key 时，会先从 LSM-Tree 中查询到 Value 的地址，再根据地址将 Value 真正从 Value-Log 中读取出来（随机读）</p>
+<p>假设 Key 的大小为 16 Bytes，Value 的大小为 1KB，优化后的效果为：</p>
+<p>l 如果在 LSM-Tree 中的单层的写放大率是 10，那么使用 WiscKey 后单层的写放大率将变为 ((16 x 10) + (1024 x 1)) / (16 + 1024) = 1.14，远小于之前的 10 倍</p>
+<p>l 如果一个标准的 LSM-Tree 的大小为 100G，那么将 Value 分离后 LSM-Tree 本身的大小将会减少到 2G，层级会减少 1~2 级，并且缓存到内存中的比例会更高，从而降低读放大</p>
+<p>当然，这样做也带来了一些问题，主要有：</p>
+<p>l 在标准的 LSM-Tree 中，由于 Key 和 Value 是按照顺序存储在一起的，所以范围查询只需要顺序读即可遍历整个 SSTable 的所有数据。但是在 WiscKey 中，每个 Key 都需要额外的一次随机读才能读取到对应的 Value，因此效率会很差。</p>
+<p>对此，WiscKey 内部维护一个 32 线程的线程池，当用户使用迭代器迭代一行时，迭代器会预先取出多个 Key，并放入到一个队列中，线程池会从队列中读取 Key 并行的查找对应的 Value。图中展示了顺序读、随机读、随机32路读的性能差异：</p>
+<figure>
+<img data-src="file:////Users/taowei/Library/Group%20Containers/UBF8T346G9.Office/TemporaryItems/msohtmlclip/clip_image013.jpg" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>图 4‑2 WiscKey的读写差异</p>
+<p>可以看到，在请求大小达到64k以后，随机32路读的性能和顺序读的性能已经差不多了。</p>
+<p>l 当用户删除一个 Key 时，WiscKey 只会将 LSM-Tree 中的 Key 删除掉，所以需要一个额外的方式清理 Value-Log 中的值。</p>
+<p>WiscKey的解决方法是：维护一个 Value Log 的有效区间（由 head 和 tail 两个地址组成），通过不断地搬运有效数据来达到淘汰无效数据。如图所示。</p>
+<figure>
+<img data-src="file:////Users/taowei/Library/Group%20Containers/UBF8T346G9.Office/TemporaryItems/msohtmlclip/clip_image015.jpg" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>图 4‑3 WiscKey淘汰过程</p>
+<p>整个流程为：</p>
+<p>\1. 对于 Value-Log 中的每个值，需要额外存储 Key，为了方便从 LSM-Tree 中进行反查（相对 Value，Key 会比较小，所以写入放大不会增加太多）</p>
+<p>\2. 从 tail 的位置读取 KV，通过 Key 在 LSM-Tree 中查询 Value 是否还在被引用</p>
+<p>\3. 如果 Value 还在被引用，则将 Value 写入到 head，并将新的 Value 地址写回 LSM-Tree 中</p>
+<p>\4. 如果 Value 已经没有被引用，则跳过这行数据，接着读取下一个 KV</p>
+<p>\5. 当已经确认数据写入 head 之后，就可以将 tail 之后的数据都删除掉了</p>
+<p>将key与value分离，如何保证一致性也是一个很难的问题。WiscKey 通过查询时的容错机制保证 Key 和 Value 的原子性：当用户查询时，如果在 LSM-Tree 中找不到 Key，则返回 Key 不存在；如果在 LSM-Tree 中可以找到 Key，但是通过地址在 Value-Log 中无法找到匹配的 Value，则说明 Value 在写入时丢失了，同样返回不存在。</p>
+<p>此外，WiscKey还对这个与key分开的Value Log做了一些其他的优化：</p>
+<p>为了提高写入效率，WiscKey 首先会将 Value 写入到 Write Buffer 中，等待 Write Buffer 达到一定大小再一起刷新到文件中。所以查询时首先也要先从 Write Buffer 中查询。当崩溃时，Write Buffer 中的数据会丢失。</p>
+<p>在 WiscKey 中，Value-Log 和 WAL 都是基于用户的写入顺序进行存储的，并且也具备了恢复数据的所有内容，所以理论上 Value-Log 是可以同时作为 WAL 的，从而减少 WAL 的写放大。由于 Value Log 的 GC 比 WAL 更加低频，并且包含了大量已经持久化的数据，直接通过 Value-Log 进行恢复的话可能会导致回放大量已经持久化到 SST 的数据。所以 WiscKey 会定期将已经持久化到 SST 的 head 写入到 LSM-Tree 中，这样当恢复时只需要从最新持久化的 head 开始恢复即可。</p>
+<h3 id="accordion">5.2.2 Accordion</h3>
+<p>Edward Bortnikov等人提出了Accordion[11]，通过将LSM设计原理重新应用于内存管理，来解决LSM-Tree中频繁的compaction操作带来的开销（写放大）以及动态内存存储的碎片化内存布局问题。</p>
+<p>Accordion利用了静态段是不可变的事实，并把它们的索引布局优化成水平的。该算法还执行内存中压缩，从而在将冗余数据写入磁盘之前消除了冗余数据。下图是Accordion的结构：</p>
+<figure>
+<img data-src="file:////Users/taowei/Library/Group%20Containers/UBF8T346G9.Office/TemporaryItems/msohtmlclip/clip_image017.jpg" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>图 4‑4 Accordion结构图</p>
+<p>Accordion将数据作为按照事件排序的段的管道来管理，每个段包含一组数据单元格上的索引。时间上最近的段被称为active的，它们是可变的并吸收写操作，其余的段是不可变的。读操作可以就像搜索传统的LSM在磁盘上的多个文件一样遍历内存中的所有段，并且可以并发地搜索多个段。</p>
+<p>数据先写到active段，当active段达到一定大小时触发内存中的刷新，数据刷到水平段上，这个刷新过程会将动态段的索引以一个紧凑的有序数组代替。水平段段索引因为更加紧凑从而延迟了刷新到disk的过程，也就减少了disk中的compaction操作。当水平段的数量达到上限后触发内存中的合并，以一个段去代替多个段，这个段的索引覆盖了所有原始段的索引数据。接下来是一个可选的内存中compaction，通过创建一个没有冗余的水平索引并部署冗余数据单元（如果内存存储会在内部管理数据单元存储，就将留下的单元重定向到新的数据块，否则，就简单地取消引用冗余数据）进一步消除冗余。最后刷新到磁盘的过程和标准的LSM-Tree的一样。这四个过程中的索引结构如下图所示：</p>
+<figure>
+<img data-src="file:////Users/taowei/Library/Group%20Containers/UBF8T346G9.Office/TemporaryItems/msohtmlclip/clip_image019.jpg" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>图 4‑5 四个过程的索引结构</p>
+<p>Accordion使用一种自适应的策略去决定是否执行上述内存中compaction。它根据数据中的冗余程度和感知的成本效益来选择是否消除冗余数据或不消除，自适应在单个LSM存储的级别上起作用。这个自适应策略主要由两个参数决定：限流参数t，随着数据量的增大而变大；唯一性参数u，根据段索引的先前合并期间遇到的唯一键的比例，估计内存存储中唯一键的比率。Accordion还会进行WAL截断来解决由于内存中的压缩会延迟磁盘刷新导致的HLog文件（WAL）变长的问题。</p>
+<p>水平段管道是由一个双端队列实现的，管道的读取器和写入器通过轻量级的写时复制进行协调，并通过维护版本号的方式来维持一致性。</p>
+<h3 id="lazy-leveling和fluid-lsm-tree">5.2.3 Lazy Leveling和Fluid LSM-Tree</h3>
+<p>Niv Dayan[12]等人指出，现有的LSM技术并没有很好地在update的I/O开销和查询的I/O开销以及存储空间之间达到平衡。他们提出了“Lazy Leveling”，在除了最大层之外的所有层之中移除了合并操作，Lazy Leveling在维持了一样的点查性能、范围查询性能、存储空间的情况下提升了最坏情况下的update开销的复杂度。而后又进一步提出了Fluid LSM-Tree，相比Lazy Leveling，它可以在最大层上有更少的合并，于是可以更加优化update，同时，它在所有其他层上有更多合并，从而能更加优化小范围的查询。</p>
+<p>建立Lazy leveling的动机是在小的层上的归并会显著提升更新的开销，但是对点查询、范围查询以及空间放大只有微小的提升。下图展示了Lazy Leveling的结构和性能特点。</p>
+<figure>
+<img data-src="file:////Users/taowei/Library/Group%20Containers/UBF8T346G9.Office/TemporaryItems/msohtmlclip/clip_image021.jpg" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>图 4‑6 Lazy Leveling的结构和各种开销复杂度</p>
+<p>图中最顶层展示了Lazy Leveling的结构并和tiering、leveling进行了比较。Lazy Leveling的核心是tiering与leveling的混合：在最大层上应用leveling，在其他层上应用tiering。因此在最大层上的运行次数是1，所有其他层上的运行次数最多T-1，也就是第T个请求到来时才触发合并。</p>
+<p>下面每一层是Lazy Leveling在各个方面的开销与其他两种策略的比较，其中zero-result point lookup cost代表的是在最坏情况下查询多余的I/O开销。可以看到，Lazy Leveling在空间放大、点查开销以及大范围的查询开销上和leveling表现一样，但是降低了update开销的复杂度，同时只提供了一个稍微差一点的小范围性能。</p>
+<p>下图比较了不同合并策略在层大小比例T从2变化到上限Tlim的行为差异。A部分表示更新开销与点查开销随T值的变化，B和C部分表示更新开销分别与小范围查询和大范围查询开销随T值的变化。显然，每个策略的图线在T=2时都相交，因为此时它们的行为都是一样的：每一层都在第二次运行到来时发生合并。图中A部分显示，相比于leveling，Lazy Leveling对于update开销的上升能换来更好的点查开销下降，这两条曲线在T=Tlim时相交，此时它们都退化成了有序数组。B部分显示，lazy leveling对于小范围查询的开销增大是可以接受的，C部分进一步显示，这个差异在随着范围变大变的更加微不足道。</p>
+<figure>
+<img data-src="file:////Users/taowei/Library/Group%20Containers/UBF8T346G9.Office/TemporaryItems/msohtmlclip/clip_image023.jpg" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>图 4‑7 各种合并策略在不同T情况下的行为差异</p>
+<p>Fluid LSM-Tree是对这些LSM-Tree的综合，通过对最大层和所有其他层分别控制合并操作的频率的方式，实现了上述这些不同合并策略之间的切换与结合使用。下图显示了Fluid LSM-Tree的基本结构。</p>
+<figure>
+<img data-src="file:////Users/taowei/Library/Group%20Containers/UBF8T346G9.Office/TemporaryItems/msohtmlclip/clip_image025.jpg" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>图 4‑8 Fluid LSM-Tree的结构和各种开销复杂度</p>
+<p>在最大层最多有Z次运行，在其他较小的层最多有K次。每一层有一个活跃的运行，将来自上一层的所有运行合并到这个运行中。每一个活跃运行有一个大小上限，基于它所在的层数。当一个活跃运行达到上限后，我们在那一层启动一个新的活跃运行。最后当一层达到容量后，所有的运行都合并然后刷到下一层。</p>
+<p>K和Z是调节参数，K和Z在不同情况下，Fluid LSM-Tree就是不同的合并策略：</p>
+<p>l K=1,Z=1就是leveling</p>
+<p>l K=T-1,Z=T-1就是tiering</p>
+<p>l K=T-1,Z=1就是lazy leveling</p>
+<p>在Fluid LSM-Tree中，各个指标的开销如图中B-G层所示。</p>
+<p>下图是加入Fluid LSM-Tree之后的图。</p>
+<figure>
+<img data-src="file:////Users/taowei/Library/Group%20Containers/UBF8T346G9.Office/TemporaryItems/msohtmlclip/clip_image027.jpg" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>图 4‑9 更新开销</p>
+<p>圆圈表示三种合并策略的相交点也就是T等于2时，方块表示T=10，这是大部分主流的KV存储中LSM-Tree的T值。虚线表示两条过渡曲线，表示Fluid LSM-Tree是如何平滑地从一种策略过渡到另一种策略的。其中trans1表示从lazy leveling过渡到tiering，trans2表示从lazy leveling过渡到leveling。注意到A中lazy leveling有一个拐点，在拐点之上随着T的增大update开销变小，于是，Niv Dayan他们将过渡曲线trans1的T值固定为拐点的T值，将Z值从1变化到T-1，这样得到的曲线可以获得更好的update与点查开销权衡。</p>
+<p>为了能在范围查询上表现的更好，于是设计了trans2。这是一条固定K，变化T的曲线，图中K被固定为拐点的T-1。A部分显示trans2的点查与update开销权衡和lazy leveling接近，B和C则显示trans2的范围查询与update开销权衡和leveling几乎一样。可见，trans2对于小范围的查询开销优化有很好的控制。</p>
+<p>通过这样的图线，可以对于一个特定的应用场景需求，找到一种最合适的参数配置，使得有最低的开销。</p>
+<h3 id="skip-tree">5.2.4 Skip-Tree</h3>
+<p>Yinliang Yue[13]等人提出了Skip-Tree来解决LSM-Tree中的写放大问题，Skip-Tree的核心思想是在数据从LSM-Tree的上层刷到下层时，选择性地跳过某些层。</p>
+<p>这种控制KV数据跳过某些层的机制如下：首先使用Bloom Filter确定对于一个特定的key，是否有一个value版本存在于一个数据块中。他们对于每个数据块都维护了一个Bloom Filter，每个KV数据项的key在被存储到块之前都需要被加入到Bloom Filter中。能够跳过多层的数据，必须满足值版本限制，即如果一个第Ci层的数据想要被直接刷到Ci+k层，那么必须确保CI+1,…,CI+k-1层都没有这个key值。由于Bloom Filter存在假阳性率（即，Bloom Filter判定不存在的一定不存在，但是Bloom Filter判定存在的也可能不存在），可能存在误判，于是，他们保守性地估计在Bloom Filter判定存在的时候，在CI+2层中的数据块中至少含有一个SSTable含有一样的key。</p>
+<p>经过测试，他们发现一次只跳过一层虽然可以最小化get与put延迟的增长，但是写放大的减少会受到限制。相反，一次跳过多个层，能显著减少写放大，但是同时也导致了很高的get与put延迟。为此他们对每个设计了最大跳过层数。最后他们经过测试发现这个数字设置为2时能够系统能达到最好性能。</p>
+<p>下图描述了Skip-Tree的结构。</p>
+<figure>
+<img data-src="file:////Users/taowei/Library/Group%20Containers/UBF8T346G9.Office/TemporaryItems/msohtmlclip/clip_image029.jpg" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>图 4‑10 Skip-Tree结构图</p>
+<p>虽然一个数据要想跳跃性地从Ci层直接刷到Ci+2或者更底层，最直接的想法就是直接把这个KV数据项直接和目标SSTable合并，但是这样会带来大量额外的Disk I/O，导致严重的写放大。</p>
+<p>于是他们提出了基于buffer的延迟合并以及排序机制。对于每个磁盘上的层Ci，他们在内存中准备了一个buffer Bi，用于缓存将要跳跃地刷到这一层的数据。这样就将这些跳跃下来的数据的合并与排序推迟到磁盘compaction的时候再进行。这些内存中的buffer不同于磁盘上的层的SSTable存储形式，它们只是以一个简单的按key排序的链表的形式组织。Skip-Tree使用WAL(提前写日志)的方式来保证易失性buffer里面数据的可靠性，为了减小logging开销，它们只使用log记录键以及原始SSTable的ID，并在buffer里面还有对SSTable的引用时阻止删除这个SSTable。</p>
+<h1 id="总结">6 总结</h1>
+<p>在这篇文章中，我们主要介绍了LSM-Tree这种数据结构出现的背景，将其与传统关系型数据库存储结构B+Tree进行比较，分析了二者各自的基本结构与优缺点。然后我们介绍了LSM-Tree在当今主流NoSQL数据库中的具体应用，最后我们列举了一些对LSM-Tree的改进工作。</p>
+<p>同时，我们认为LSM-Tree也可以和现在新兴的非易失性存储（Non-Volatile Memory, NVM）相结合，因为NVM是一种优秀的存储介质，具有可持久化、可按字节寻址、访问速度远高于磁盘等特点。利用NVM，可以很好地解决LSM-Tree中读速度较慢的问题。</p>
+<h1 id="参考文献">参考文献</h1>
+<p>[1] Severance, D.G., Lohman, G.M.: Differential files: Their appli-cation to the maintenance of large databases. ACM TODS 1(3), 256–267 (1976)</p>
+<p>[2] Stonebraker, M.: The design of the Postgres storage system. In: VLDB, pp. 289–300 (1987)</p>
+<p>[3] O’Neil, P., et al.: The log-structured merge-tree (LSM-tree). Acta Inf.33(4), 351–385 (1996)</p>
+<p>[4] Yao, A.C.C.: On random 2–3 trees. Acta Informatica 9(2), 159– 170 (1978)</p>
+<p>[5] LevelDB. https://github.com/google/leveldb.</p>
+<p>[6] RocksDB. http://rocksdb.org/.</p>
+<p>[7] Scylla. https://github.com/scylladb/scylla.</p>
+<p>[8] Cassandra. http://cassandra.apache.org.</p>
+<p>[9] Chang, F., Dean, J., Ghemawat, S., Hsieh, W. C., Wallach, D. A., Burrows, M., ... &amp; Gruber, R. E. (2008). Bigtable: A distributed storage system for structured data. ACM Transactions on Computer Systems (TOCS), 26(2), 1-26.</p>
+<p>[10] Lu L, Pillai T S, Gopalakrishnan H, et al. Wisckey: Separating keys from values in ssd-conscious storage[J]. ACM Transactions on Storage (TOS), 2017, 13(1): 1-28.</p>
+<p>[11] Bortnikov, E., et al.: Accordion: Better memory organization for LSM key-value stores. PVLDB11(12), 1863–1875 (2018)</p>
+<p>[12] Dayan, N., Idreos, S.: Dostoevsky: Better space-time trade-offs for LSM-tree based key-value stores via adaptive removal of superflu-ous merging. In: ACM SIGMOD, pp. 505–520 (2018)</p>
+<p>[13] Yue, Y., et al.: Building an efficient put-intensive key-value store with skip-tree. IEEE Transactions on Parallel and Distributed Sys-tems (TPDS)28(4), 961–973 (2017)</p>
+<p>[14] Luo, C., &amp; Carey, M. J. (2020). LSM-based storage techniques: a survey. The VLDB Journal, 29(1), 393-418.</p>
+<p>[15] Dong, S., Callaghan, M., Galanis, L., Borthakur, D., Savor, T., &amp; Strum, M. (2017, January). Optimizing Space Amplification in RocksDB. In CIDR (Vol. 3, p. 3).</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://taowei1999.com/2020/11/06/ubuntu%E6%8D%A2%E6%BA%90/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="fwxiaotao">
+      <meta itemprop="description" content="一个用于记录学习笔记和生活心得的博客网站">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="fwxiaotao博客站">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/11/06/ubuntu%E6%8D%A2%E6%BA%90/" class="post-title-link" itemprop="url">ubuntu换源</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2020-11-06 15:32:20 / 修改时间：15:36:42" itemprop="dateCreated datePublished" datetime="2020-11-06T15:32:20+08:00">2020-11-06</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/" itemprop="url" rel="index"><span itemprop="name">计算机</span></a>
+        </span>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2020/11/06/ubuntu%E6%8D%A2%E6%BA%90/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2020/11/06/ubuntu换源/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+      </div>
+      <div class="post-meta">
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>1.3k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>1 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>有时候为了加速下载软件包，或者下载一些官方源没有的软件，可以考虑给ubuntu换源。</p>
+<p>首先运行<code>lsb_release -c</code>查看当前系统的版本号。然后</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd &#x2F;etc&#x2F;apt</span><br><span class="line">sudo mv sources.list sources.list.bak</span><br></pre></td></tr></table></figure>
+<p>保存系统原来的源。</p>
+<p>然后<code>gedit sources.list</code>编辑新源的文件：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">deb http:&#x2F;&#x2F;mirrors.aliyun.com&#x2F;ubuntu&#x2F; $Codename main multiverse restricted universe</span><br><span class="line">deb http:&#x2F;&#x2F;mirrors.aliyun.com&#x2F;ubuntu&#x2F; $Codename-backports main multiverse restricted universe</span><br><span class="line">deb http:&#x2F;&#x2F;mirrors.aliyun.com&#x2F;ubuntu&#x2F; $Codename-proposed main multiverse restricted universe</span><br><span class="line">deb http:&#x2F;&#x2F;mirrors.aliyun.com&#x2F;ubuntu&#x2F; $Codename-security main multiverse restricted universe</span><br><span class="line">deb http:&#x2F;&#x2F;mirrors.aliyun.com&#x2F;ubuntu&#x2F; $Codename-updates main multiverse restricted universe</span><br><span class="line">deb-src http:&#x2F;&#x2F;mirrors.aliyun.com&#x2F;ubuntu&#x2F; $Codename main multiverse restricted universe</span><br><span class="line">deb-src http:&#x2F;&#x2F;mirrors.aliyun.com&#x2F;ubuntu&#x2F; $Codename-backports main multiverse restricted universe</span><br><span class="line">deb-src http:&#x2F;&#x2F;mirrors.aliyun.com&#x2F;ubuntu&#x2F; $Codename-proposed main multiverse restricted universe</span><br><span class="line">deb-src http:&#x2F;&#x2F;mirrors.aliyun.com&#x2F;ubuntu&#x2F; $Codename-security main multiverse restricted universe</span><br><span class="line">deb-src http:&#x2F;&#x2F;mirrors.aliyun.com&#x2F;ubuntu&#x2F; $Codename-updates main multiverse restricted universe</span><br></pre></td></tr></table></figure>
+<p>将其中$Codename替换成你刚才看到的版本号即可。</p>
+<p>最后<code>sudo apt-get update</code>更新即可。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://taowei1999.com/2020/10/29/%E8%AE%B0%E4%B8%80%E6%AC%A1%E9%87%8D%E8%A3%85%E7%94%B5%E8%84%91%E7%B3%BB%E7%BB%9F%E7%BB%8F%E5%8E%86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="fwxiaotao">
+      <meta itemprop="description" content="一个用于记录学习笔记和生活心得的博客网站">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="fwxiaotao博客站">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/10/29/%E8%AE%B0%E4%B8%80%E6%AC%A1%E9%87%8D%E8%A3%85%E7%94%B5%E8%84%91%E7%B3%BB%E7%BB%9F%E7%BB%8F%E5%8E%86/" class="post-title-link" itemprop="url">记一次重装电脑系统经历</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2020-10-29 01:36:10" itemprop="dateCreated datePublished" datetime="2020-10-29T01:36:10+08:00">2020-10-29</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2020-11-09 17:12:59" itemprop="dateModified" datetime="2020-11-09T17:12:59+08:00">2020-11-09</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/" itemprop="url" rel="index"><span itemprop="name">计算机</span></a>
+        </span>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2020/10/29/%E8%AE%B0%E4%B8%80%E6%AC%A1%E9%87%8D%E8%A3%85%E7%94%B5%E8%84%91%E7%B3%BB%E7%BB%9F%E7%BB%8F%E5%8E%86/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2020/10/29/记一次重装电脑系统经历/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+      </div>
+      <div class="post-meta">
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>1.4k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>1 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>今天想在自己电脑上装linux双系统，结果没操作好反而把自己电脑原来系统搞崩了。一开机就是显示无效的分区表，参照网上很多文章都没用，没办法只能重装系统了。</p>
+<p>其实重装系统之前就装过很多次，只是都没记录下来。这次特地记录一下防止自己忘记。</p>
+<p>首先去官网下载win10系统的镜像文件，也就是.iso文件。这个我直接在我们学校官网下的。然后准备一个空u盘，容量至少8G吧。去网上下载一个u盘启动盘制作软件，我用的是rufus。然后，将iso文件刻录到u盘上，期间会格式化u盘，所以我们才要求一个空u盘。</p>
+<p>注意的是要把磁盘文件格式选为GPT，引导方式改为UEFI，因为现在流行的都是这种GPT+UEFI引导方式，原来的MBR+BIOS已经淘汰了，现在windows装系统都是UEFI引导，并且不允许在MBR盘上装。</p>
+<p>需要注意的是你自己的电脑的硬盘格式也要是GPT，查看方式是输入win+R，然后输入msinfo32，出现的引导方式如果是传统，那么就说明你是MBR，如果是UEFI，那么你就是GPT。将MBR硬盘改成GPT的方式如下：</p>
+<p>在cmd中输入（正常开机后，按win+R，再输入cmd就能进入cmd。如果你是在重装系统的时候才发现需要改成GPT格式，输入Shift+F10就能进入cmd）</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">diskpart</span><br></pre></td></tr></table></figure>
+<p>进入diskpart，依次输入以下命令：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">list disk <span class="comment"># 显示有哪些磁盘的磁盘</span></span><br><span class="line"><span class="built_in">select</span> disk <span class="number">0</span> <span class="comment"># 选择编号为0的磁盘</span></span><br><span class="line">clean <span class="comment"># 清除磁盘所有分区</span></span><br><span class="line">convert gpt <span class="comment"># 将磁盘格式转换为gpt</span></span><br><span class="line">list partition <span class="comment"># 查看当前磁盘分区情况</span></span><br><span class="line">create partition efi size=<span class="number">100</span> <span class="comment"># 默认大小为M</span></span><br><span class="line">create partition msr size =<span class="number">128</span></span><br><span class="line">create partition primary size =<span class="number">102400</span> <span class="comment"># 此处为你想设置C盘的大小</span></span><br></pre></td></tr></table></figure>
+<p>最后两次输入exit，搞定！</p>
+<p>如果你的电脑硬盘已经是GPT格式，那么就不需要上述操作，如果不是最好还是把硬盘转换成GPT格式，因为GPT格式已经逐渐成为现在的主流，未来的引导方式肯定也是只能支持GPT的了。注意转换过程中会格式化你的c盘所以最好备份一下。</p>
+<p>将iso文件刻录到u盘上之后，你的u盘就变成了启动盘。将u盘插在要重装系统的电脑上，开机，刚刚显示电脑品牌图标的时候迅速按下F12键（有些品牌的电脑是F2），进入bios系统。</p>
+<p>进入bios系统之后将启动方式更改了usb设备，然后退出，电脑就会进入你的u盘启动盘里面的系统了。</p>
+<p>接下来就比较简单了，一路按照要求安装win10就可以了。</p>
+<p>安装好了以后可能需要安装一些驱动软件，因为裸操作系统可能是没有驱动的。可以去网上下载一个驱动精灵，如果连网卡驱动都没有，就去能联网的机子上下一个然后用u盘拷到这台电脑上。</p>
+<p>接下来说说如何装ubuntu双系统。</p>
+<p>首先去网上下载ubuntu的镜像，可以去国内的镜像站例如清华的，会快一点，下好了以后同样是准备一个空u盘刻录。</p>
+<p>刻录完了以后，打开你的win10系统，右键“此电脑”，点击“管理”，进入磁盘管理界面。选择一个比较大的分区，右键点击“压缩卷”，里面输入大小，就是你要分配给ubuntu系统的大小，空间足够建议直接分100G，空间小就40G吧。</p>
+<p>如果你是双硬盘，SSD+机械，SSD做系统盘，这种配置的话，在SSD里面分500M的空间。</p>
+<p>然后，插入u盘重启，同样是进入bios，选择u盘启动，然后进入u盘里面的系统开始安装。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://taowei1999.com/2020/10/27/fast16-NOVA%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="fwxiaotao">
+      <meta itemprop="description" content="一个用于记录学习笔记和生活心得的博客网站">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="fwxiaotao博客站">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/10/27/fast16-NOVA%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/" class="post-title-link" itemprop="url">fast16-NOVA论文笔记</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2020-10-27 22:32:26" itemprop="dateCreated datePublished" datetime="2020-10-27T22:32:26+08:00">2020-10-27</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2020-10-29 22:56:26" itemprop="dateModified" datetime="2020-10-29T22:56:26+08:00">2020-10-29</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/" itemprop="url" rel="index"><span itemprop="name">计算机</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/%E8%8B%B1%E8%AF%AD%E8%AE%BA%E6%96%87/" itemprop="url" rel="index"><span itemprop="name">英语论文</span></a>
+        </span>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2020/10/27/fast16-NOVA%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2020/10/27/fast16-NOVA论文笔记/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+      </div>
+      <div class="post-meta">
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>5.7k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>5 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="摘要">摘要</h2>
+<p>NVMM(Non-volatile main memory，非易失性主存)能够提供高速的访问、高带宽和持久性存储。于是管理、访问和维持一致性成了问题。现有的文件系统针对磁盘和固态硬盘，不能利用它的优越性。模拟的NVMM文件系统上开销也很现有的差不多，还不能解决一致性问题。</p>
+<p>NOVA将传统的日志结构用在NVMM上。它对每个节点维护分开的日志来提升并发度，并且把文件数据存在磁盘之外来最小化日志大小和减少垃圾回收开销。NOVA的日志提供metadata、data、mmap原子性，把复杂的metadata结构存在DRAM里面来提升查找速度。</p>
+<p>state-of-the-art 最先进的</p>
+<h2 id="介绍">1.介绍</h2>
+<p>emerging 新兴的</p>
+<p>albeit 尽管</p>
+<p>overhead 开销</p>
+<p>squander 浪费</p>
+<p>in case of一旦发生；为了防止...</p>
+<p>contiguous 相邻的</p>
+<p>reclaim 要求收回</p>
+<p>bypass 绕过，不管</p>
+<p>近来最激动人心的进展就是将NVM放在处理器的内存总线上，在传统的DRAM旁边。这样能把快速但易失的DRAM和速度稍慢但不易失的NVM结合起来成为杂交系统，兼具二者优点。</p>
+<p>传统的文件系统不再适合这种杂交系统了，因为他们都是为传统磁盘设计的，符合传统磁盘的一致性。但是NVM很快，DRAM更快，并且他们的一致性要求不一样。前者是扇区原子性，后者是64位存储原子性。</p>
+<p>现代CPU和内存系统可能会将存储重新排序到内存，以维持数据的一致性，这种系统在系统故障时一致性会被打破。为了弥补这种情况，文件系统需要显式地刷新CPU缓存中的数据以强制执行顺序，这会浪费NVM的性能。</p>
+<p>克服这些问题很重要，因为很多应用程序依赖原子性文件系统操作来保证他们自己的正确性。主流文件系统采用日志、影子分页和日志结构来实现原子性。但是，日志因为要两次写入到存储设施，浪费了带宽。影子分页要求从叶节点到根的一个级联的更新。这些都要求严格的排序操作，会使得性能下降。</p>
+<p>日志结构文件系统（Log-structured File System, LFS）将小的随机写组成一个更大的顺序写，有利于硬盘和SSD。但是，传统的LFS依赖于相邻的自由区域的可用性，并且维护这些区域会带来昂贵的垃圾回收开销。因此，近来的研究表明LFS在NVMM上表现的比日志差。</p>
+<p>NOVA的优点：高并发、减少log大小、最小化垃圾回收开销、保证传统文件操作和mmap-based存取访问的一致性。NOVA使用链表来存储，这样数据不必在内存中相邻，并且用对日志的尾指针的原子性更新来提供原子性的日志追加。对于跨越多个节点的操作，NOVA使用轻量级日志。</p>
+<p>NOVA不会log数据，所以恢复过程只需要扫描NVMM的一小部分，这使得NOVA可以立刻要求回收页当他们过期时，减少了垃圾回收开销，并让NOVA即使在文件系统几乎全满时也能保持良好性能。</p>
+<p>这篇论文</p>
+<ul>
+<li>扩展了现存的日志结构文件系统技术来利用杂交存储系统的特点</li>
+<li>描述了mmap，一种简化的接口，能直接将NVMM暴露给具有强一致性的应用</li>
+<li>示范了NOVA在杂交存储系统比现存的日志、影子分页、日志结构文件系统的表现都要好</li>
+<li>表明NOVA在很多受推荐的NVMM技术中独具一格，提供了别人没有的好处</li>
+</ul>
+<p>我们用一系列的micro-和macro-benchmarks来评估NOVA，在基于硬件的NVMM模拟器上。</p>
+<h2 id="背景">2. 背景</h2>
+<p>metadata 元数据</p>
+<h3 id="非易失性存储技术">2.1 非易失性存储技术</h3>
+<p>新兴的non-volatile 存储技术，例如spin-torque转换器RAM(STT-RAM)，阶段改变存储(PCM)，对抗RAM(ReRAM)和3D XPoint存储技术，能够提供快速、非易失、字节访问级的存储。这些技术有不同的优点和缺点，这使得他们被用在不用的方向。</p>
+<h3 id="nvmm软件的挑战">2.2 NVMM软件的挑战</h3>
+<p>NVMM软件带来的挑战主要集中在：平衡存储的性能和软件的开销，强制更新的有序来保证一致性，提供原子性更新。</p>
+<h4 id="性能">2.2.1性能</h4>
+<p>传统的硬盘很慢，所以软件的时延也变的不重要，但是现在NVMM的速度很快，所以软件时延成为了主要时延。</p>
+<p>既然NVMM提供了低时延并且被部署在处理器的存储总线上，软件就需要能够通过loads和stores直接访问他们。近来的基于NVMM的文件系统绕过了DRAM页cache并使用一种叫做Direct Access(DAX)或者eXecute In Place(XIP)的技术直接访问NVMM，避免了在存储栈上NVMM和DRAM之间的额外copy操作。NOVA是一个DAX文件系统。</p>
+<h4 id="写重排序">2.2.2 写重排序</h4>
+<p>现代的处理器和他们的缓存层级结构可能会将存储操作重排序来提升性能。CPU的存储一致性协议保证了内存更新的顺序，但是现存的模型并没有提供当更新到达NVMM时的保证。</p>
+<p>考虑到NVMM的软件可以通过显式地刷新cache并提出内存屏障来强制写顺序。x86结构提供clflush命令来刷新CPU cacheline。但是clflush是严格有序的并且不必要地让cacheline作废了，这会带来性能的下降。并且clflush只把数据发送给内存控制器，它并不保证数据会到达内存。内存屏障例如Intel的mfence命令，强制屏障之前和之后的内存操作有序。但是mfence只保证所有的CPU对内存有相同的视角，并没有对写回到NVMM的数据强制顺序。</p>
+<h4 id="原子性">2.2.3 原子性</h4>
+<p>POSIX风格的文件系统的语义要求很多操作都是原子性的（即，要么都成功要么都不成功）。例如，对于POSIX <em>rename</em> 操作，如果失败，要求不管是老名字的文件还是新名字的文件都不能被创建或是被修改。重命名一个文件是一个只有元数据的操作，但是一些原子性的更新对文件系统元数据和数据都有运用。例如，追加写一个文件原子性地更新了文件数据并改变了文件的长度和修改时间。很多应用的正确性依赖于原子性的文件系统。</p>
+<p>存储设备典型地只提供对于原子性的初步实现。磁盘提供原子性的扇区写，处理器只保证8字节的（或者更小的）对齐的存储是原子性的。为了建立文件系统要求的更加复杂的原子性更新，程序员必须使用更加复杂的技术。</p>
+<h3 id="建立复杂的原子性操作">2.3 建立复杂的原子性操作</h3>
+<p>现存的文件系统使用一系列技术例如日志，影子分页，或者日志结构来提供原子性保证。他们以不同方式并带来不同类型的开销。</p>
+<h3 id="日志">2.3.1 日志</h3>
+<p>日志（Journaling）（提前写日志）广泛地用在日志文件系统和数据库中来保证原子性。一个日志系统对于所有更新，在应用他们之前先记录在一个日志上，当断电时，重新执行日志来恢复系统到一个稳定的状态。日志机制要求将数据写两次：一次到log一次到目标位置。为了提升性能日志文件系统经常只将metadata记录到日志。最近的工作提出了后向指针（back pointer）和来自耐久性的解耦排序（decoupling ordering from durability）来减小日志机制的开销。</p>
+<h4 id="影子分页">2.3.2 影子分页</h4>
+<p>很多文件系统使用一种写时复制的机制，叫做影子分页（Shadow paging）。影子分页文件系统很大程度上依赖于他们的树结构来提供原子性。影子分页并不在一次写过程中将数据就地改变，而是写一个被影响页的新拷贝到存储设备的一个空的部分。然后，它将新页粘接到文件系统树，通过更新页和根之间的节点。这带来的级联更新开销是很昂贵的。</p>
+<h4 id="日志结构">2.3.3 日志结构</h4>
+<p>日志结构文件系统最初是被设计用于完全发掘硬盘驱动器在顺序访问时的高性能。LFS将随机写缓存在内存中，然后将他们转化成更大的对磁盘的顺序写，最大限度地利用硬盘的优势。</p>
+<p>尽管LFS是一个优秀的想法，有效地实现它很复杂，因为LFS依赖于对磁盘相邻的空闲区域的顺序写。为了保证对于这些区域的一致性供应，LFS常常清理并合并log来回收那些过期数据的空间。</p>
+<p>log清理增加了开销并降低了LFS的性能。为了减少清理的开销，一些LFS设计分离了冷热数据并对他们采用不同的清理方案。SSD在顺序写负载下页表现的很好，所以LFS技术也被应用在了SSD上。SFS技术将块基于他们的更新可能性来分类，然后将有相似的热度的块写到一样的log段中来减少清理开销。F2FS使用多头logging，把元数据和数据写到各自的log中，然后在磁盘使用率高时把新数据直接写到脏段的空闲空间，来减少频繁的垃圾回收。</p>
+<p>RAMCloud是一个基于DRAM的存储系统，把它的所有数据都保存在DRAM中来服务读操作并维持一个持久的版本在硬盘上。RAMClound对DRAM和硬盘都用了log结构，它将DRAM以一种日志结构的方式分配，达到了比其他内存分配器更高的DRAM分配率。并把备份数据以log形式存在硬盘上。</p>
+<h3 id="针对-nvmm-的文件系统">2.4 针对 NVMM 的文件系统</h3>
+<p>很多团队已经设计出基于NVMM的文件系统，能够解决2.2中提出了一些问题，通过使用一种或者更多的2.3中提出的技术。但是没有人能够达到现代应用程序在文件系统上的所有要求。</p>
+<p>BPFS是一个影子分页文件系统，提供元数据和数据持久性。BPFS提出了一种硬盘机制来强迫存储耐久性和有序性。BPFS使用短回路影子分页来减少影子分页在通常情况下的开销。但是特定的跨越文件系统树的一大部分的操作（例如在字典之间移动）仍然能带来很大开销。</p>
+<p>PMFS是一种轻量级的DAX文件系统，绕过了block层和文件系统页cache来提升性能。PMFS对于元数据更新使用日志。它对于写操作是就地执行，所以不是原子性的。</p>
+<p>Ext4-DAX用DAX能访问NVMM的能力扩展了Ext4，并使用日志来保证元数据更新的原子性。正常的（非DAX的）Ext4文件系统you一个数据-日志模式来提供数据原子性。Ext4-DAX并不支持这种模式，所以它不是原子性的。</p>
+<p>SCMFS使用操作系统的虚拟内存管理模块并将文件映射到大的相邻的虚拟地址区域，让文件的访问变得简单且轻量级。SCMFS并不支持任何的对于元数据或者数据一致性保证。</p>
+<p>Aerie在用户空间实现了文件系统接口和功能来提供对NVMM中数据低时延的访问。它有一个优化，通过放宽POSIX语义来提升性能。Aerie对于元数据建立日志，但是并不支持数据原子性或者mmap操作。</p>
+<h2 id="nova-设计概括">3. NOVA 设计概括</h2>
+<p>stem 花的茎，阻止（液体流动等）</p>
+<p>stem from... 源自于</p>
+<p>radix 基数</p>
+<p>NOVA是一个日志结构的，POSIX文件系统，建立于LFS的优点上，并把它们的优点和杂交存储系统的优点结合起来。因为它针对了一个不同的存储技术，NOVA看起来和传统的为了最大化磁盘带宽而建立的日志文件文件系统很不一样。</p>
+<p>我们将NOVA建立在三个观察上。首先，支持原子性更新的日志在NVMM中很容易实现，但是它们对于查找操作并不是很高效（例如，字典查询和随机访问一个文件）。相反地，支持快速查询的数据结构（树结构）很难在NVMM中正确且高效地实现。第二，清理日志的复杂性主要源自于提供存储中相邻的空闲区域，但是这在NVMM中并不必要，因为随机访问很快。第三，使用单个日志对于磁盘有意义（磁盘有一个磁头，因此提升空间局部性是首要任务），但是它限制了并发。既然NVMM支持快速、高并发的随机读取，使用多日志并不对性能有什么负面影响。</p>
+<p>基于以上的观察，我们设计了NOVA。</p>
+<h3 id="将日志保存在nvmm中将索引保存在dram中">3.1 将日志保存在NVMM中，将索引保存在DRAM中</h3>
+<p>NOVA将日志和文件数据保存在NVMM中，并建立了根树在DRAM中来提升查找操作的速度，让在NVMM中的数据结构简单且高效。我们使用了一棵基数树，因为在Linux内核中有对这个的成熟的，经过完整测试的，使用广泛的实现。基数树的叶子结点指向日志中的条目，条目又依次指向文件数据。</p>
+<h3 id="给每个节点自己的日志">3.2 给每个节点自己的日志</h3>
+<p>每个NOVA中的节点有它自己的日志，允许跨越文件的并发更新而无需同步。这个结构允许在文件访问和恢复过程中的并发。NOVA也保证了有效的日志条目数目很小（基于文件的大小程度），保证了扫描日志很快。</p>
+<h3 id="使用logging和轻量日志来进行复杂的原子性更新">3.3 使用logging和轻量日志来进行复杂的原子性更新</h3>
+<p>NOVA是日志结构的，因为它相比日志和影子分页提供了更廉价的原子性更新。为了原子性地将数据写到log中，NOVA首先将数据追加写到log，然后原子性地更新日志尾部来提交更新，因而避免了日志文件系统的双倍写开销和影子分页的级联开销。</p>
+<p>一些字典操作，例如一次字典之间的移动，跨越多个节点，对此NOVA使用日志去原子性地更新多个logs。NOVA首先将数据写到每个节点的log的尾部，然后将日志尾部的更新记录到日志中来原子性地更新它们。NOVA的日志是轻量级的因为它只包含log尾部（相比元数据和数据而言），并且非POSIX文件操作在超过四个节点上操作。</p>
+<h3 id="实现log为一个单独的链表">3.4 实现log为一个单独的链表</h3>
+<p>顺序log的局部性优势在基于NVMM的存储上显得不是那么重要，所以NOVA使用一个4KB NVMM页的链表来存储log和指向下一页的指针。</p>
+<p>允许非顺序的log存储提供了三个好处。首先，分配log空间变得容易了，因为NOVA不必再去分配大的、相邻的区域给log。第二，NOVA可以在细粒度（页大小粒度）上有更好的log清理表现。第三，收回包含过期数据的log页只需要一些指针的操作即可。</p>
+<h3 id="不将文件数据存在log上">3.5 不将文件数据存在log上</h3>
+<p>在NOVA中的节点log并不包含文件数据。取而代之的是，NOVA使用写时复制来修改页并将对于这次写以元数据形式追加到log。这个元数据描述了这次写，并指向数据页。4.4详细描述了文件写操作。</p>
+<p>对于文件数据使用写时复制技术是很有用的，有以下几个原因。首先，它使得log更短，加速了恢复过程。其次，它使得垃圾回收更加简单且高效，因为NOVA永远不必把文件数据从log中拷贝出来来收回一个log页。第三，收回过期的页和分配新的数据页都变简单了，因为它们只需要添加和移除DRAM中的空闲列表中的页。第四，既然它可以立即收回过期的数据页，NOVA可以在很高的写负载和很高的NVMM使用率下仍然维持性能。</p>
+<p>下一部分描述了NOVA的具体实现。</p>
+<h2 id="实现nova">4. 实现NOVA</h2>
+<p>hook 钩子</p>
+<p>我们在Linux内核4.0版本上实现了NOVA。NOVA使用内核中现存的NVMM钩子并通过了Linux POSIX文件系统测试。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://taowei1999.com/2020/10/25/leetcode845%E9%A2%98%E8%A7%A3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="fwxiaotao">
+      <meta itemprop="description" content="一个用于记录学习笔记和生活心得的博客网站">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="fwxiaotao博客站">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/10/25/leetcode845%E9%A2%98%E8%A7%A3/" class="post-title-link" itemprop="url">leetcode845题解</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2020-10-25 17:10:27" itemprop="dateCreated datePublished" datetime="2020-10-25T17:10:27+08:00">2020-10-25</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2020-10-27 22:31:55" itemprop="dateModified" datetime="2020-10-27T22:31:55+08:00">2020-10-27</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/" itemprop="url" rel="index"><span itemprop="name">计算机</span></a>
+        </span>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2020/10/25/leetcode845%E9%A2%98%E8%A7%A3/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2020/10/25/leetcode845题解/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+      </div>
+      <div class="post-meta">
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>1.2k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>1 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>leetcode845题，一道动态规划题。</p>
+<p>题目描述：</p>
+<p>我们把数组 A 中符合下列属性的任意连续子数组 B 称为 “山脉”：</p>
+<p>B.length &gt;= 3 存在 0 &lt; i &lt; B.length - 1 使得 B[0] &lt; B[1] &lt; ... B[i-1] &lt; B[i] &gt; B[i+1] &gt; ... &gt; B[B.length - 1] （注意：B 可以是 A 的任意子数组，包括整个数组 A。）</p>
+<p>给出一个整数数组 A，返回最长 “山脉” 的长度。</p>
+<p>如果不含有 “山脉” 则返回 0。</p>
+<p>示例 1：</p>
+<p>输入：[2,1,4,7,3,2,5] 输出：5 解释：最长的 “山脉” 是 [1,4,7,3,2]，长度为 5。 示例 2：</p>
+<p>输入：[2,2,2] 输出：0 解释：不含 “山脉”。</p>
+<p>提示：</p>
+<p>0 &lt;= A.length &lt;= 10000 0 &lt;= A[i] &lt;= 10000</p>
+<p>题解：</p>
+<p>可以用动态规划的方法做。针对每个元素维护两个数组，一个left一个right，left表示在这个元素“左山脉”的长度（即如果它有山脉的话，山脉在它左边的长度），例如，示例1中A[1]的左山脉长度为0，A[2]的左山脉长度为1，同理right为“右山脉”的长度。很明显有以下转移方程：</p>
+<p><span class="math display">\[left[i]=\left\{
+\begin{array}{lr}
+left[i-1]+1&amp;A[i]&gt;A[i-1]  \\
+0&amp;A[i]\le A[i-1]
+\end{array}
+\right.\]</span></p>
+<p><span class="math display">\[right[i]=\left\{
+\begin{array}{lr}
+right[i+1]+1&amp;A[i]&gt;A[i+1]  \\
+0&amp;A[i]\le A[i+1]
+\end{array}
+\right.\]</span></p>
+<p>并且<span class="math display">\[left[0]=left[n-1]=0,right[0]=right[n-1]=0\]</span></p>
+<p>最后计算山脉的长度时，将左山脉+右山脉+1即可。注意如果左山脉或者右山脉为0则山脉长度为0（因为这时山脉已经不存在了）</p>
+<p>代码如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">longestMountain</span>(<span class="params">self, A</span>):</span></span><br><span class="line">        n = len(A)</span><br><span class="line">        <span class="keyword">if</span> n == <span class="number">0</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line">        left = [<span class="number">0</span>] * n</span><br><span class="line">        right = [<span class="number">0</span>] * n</span><br><span class="line">        mountainLength = [<span class="number">0</span>] * n </span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>, n):</span><br><span class="line">            <span class="keyword">if</span> A[i] &gt; A[i<span class="number">-1</span>]:</span><br><span class="line">                left[i] = left[i<span class="number">-1</span>] + <span class="number">1</span></span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                left[i] = <span class="number">0</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(n - <span class="number">2</span>, <span class="number">-1</span>, <span class="number">-1</span>):</span><br><span class="line">            <span class="keyword">if</span> A[i] &gt; A[i+<span class="number">1</span>]:</span><br><span class="line">                right[i] = right[i+<span class="number">1</span>] + <span class="number">1</span></span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                right[i] = <span class="number">0</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>, n - <span class="number">1</span>):</span><br><span class="line">            <span class="keyword">if</span> left[i] == <span class="number">0</span> <span class="keyword">or</span> right[i] == <span class="number">0</span>:</span><br><span class="line">                <span class="keyword">continue</span></span><br><span class="line">            mountainLength[i] = left[i] + right[i] + <span class="number">1</span></span><br><span class="line">        <span class="keyword">return</span> max(mountainLength)</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://taowei1999.com/2020/10/18/Rust%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E5%85%AD%EF%BC%89/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="fwxiaotao">
+      <meta itemprop="description" content="一个用于记录学习笔记和生活心得的博客网站">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="fwxiaotao博客站">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/10/18/Rust%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E5%85%AD%EF%BC%89/" class="post-title-link" itemprop="url">Rust学习笔记（六）</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2020-10-18 22:40:54" itemprop="dateCreated datePublished" datetime="2020-10-18T22:40:54+08:00">2020-10-18</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2020-10-19 09:49:50" itemprop="dateModified" datetime="2020-10-19T09:49:50+08:00">2020-10-19</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/" itemprop="url" rel="index"><span itemprop="name">计算机</span></a>
+        </span>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2020/10/18/Rust%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E5%85%AD%EF%BC%89/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2020/10/18/Rust学习笔记（六）/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+      </div>
+      <div class="post-meta">
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>5.5k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>5 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>使用match匹配的方式匹配Result&lt;T, E&gt;，除此之外还有很多辅助方法。</p>
+<p>unwrap:如果 <code>Result</code> 值是成员 <code>Ok</code>，<code>unwrap</code> 会返回 <code>Ok</code> 中的值。如果 <code>Result</code> 是成员 <code>Err</code>，<code>unwrap</code> 会为我们调用 <code>panic!</code>。</p>
+<p>expect:<code>expect</code> 与 <code>unwrap</code> 的使用方式一样：返回文件句柄或调用 <code>panic!</code> 宏。<code>expect</code> 用来调用 <code>panic!</code> 的错误信息将会作为参数传递给 <code>expect</code> ，而不像<code>unwrap</code> 那样使用默认的 <code>panic!</code> 信息。</p>
+<p>当编写一个其实现会调用一些可能会失败的操作的函数时，除了在这个函数中处理错误外，还可以选择让调用者知道这个错误并决定该如何处理。这被称为 <strong>传播</strong>（<em>propagating</em>）错误，这样能更好的控制代码调用，因为比起你代码所拥有的上下文，调用者可能拥有更多信息或逻辑来决定应该如何处理错误。</p>
+<p>Rust中有?运算符专门实现了这个传播错误的操作</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/10/18/Rust%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E5%85%AD%EF%BC%89/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
     
 
 
@@ -1108,711 +2126,6 @@ if(canvas.getContext){
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://taowei1999.com/2020/10/17/Rust%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%80%EF%BC%89/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="fwxiaotao">
-      <meta itemprop="description" content="一个用于记录学习笔记和生活心得的博客网站">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="fwxiaotao博客站">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/10/17/Rust%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%80%EF%BC%89/" class="post-title-link" itemprop="url">Rust学习笔记（一）</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-      
-
-      <time title="创建时间：2020-10-17 21:09:53 / 修改时间：21:42:33" itemprop="dateCreated datePublished" datetime="2020-10-17T21:09:53+08:00">2020-10-17</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/" itemprop="url" rel="index"><span itemprop="name">计算机</span></a>
-        </span>
-    </span>
-
-  
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus：</span>
-    
-    <a title="disqus" href="/2020/10/17/Rust%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%80%EF%BC%89/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2020/10/17/Rust学习笔记（一）/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-      </div>
-      <div class="post-meta">
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>1.7k</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>2 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>mut用来声明可变数据，数据默认不可变，用let来声明。可以在声明一个数据以后再次声明一个同名的，这时前面的会被覆盖</p>
-<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> a = <span class="number">1</span></span><br><span class="line"><span class="keyword">let</span> <span class="keyword">mut</span> b = <span class="number">1</span></span><br><span class="line">a = <span class="number">2</span> <span class="comment">// 这句话会报错</span></span><br><span class="line">b = <span class="number">2</span> <span class="comment">// 这句话可以</span></span><br><span class="line"><span class="keyword">let</span> a = <span class="string">&quot;Hello&quot;</span> <span class="comment">// a变成了字符串&quot;Hello&quot;</span></span><br></pre></td></tr></table></figure>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/10/17/Rust%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%80%EF%BC%89/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://taowei1999.com/2020/10/15/latex%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%80%EF%BC%89/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="fwxiaotao">
-      <meta itemprop="description" content="一个用于记录学习笔记和生活心得的博客网站">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="fwxiaotao博客站">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/10/15/latex%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%80%EF%BC%89/" class="post-title-link" itemprop="url">latex学习笔记（一）</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-      
-
-      <time title="创建时间：2020-10-15 23:08:05 / 修改时间：23:19:14" itemprop="dateCreated datePublished" datetime="2020-10-15T23:08:05+08:00">2020-10-15</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/" itemprop="url" rel="index"><span itemprop="name">计算机</span></a>
-        </span>
-    </span>
-
-  
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus：</span>
-    
-    <a title="disqus" href="/2020/10/15/latex%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%80%EF%BC%89/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2020/10/15/latex学习笔记（一）/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-      </div>
-      <div class="post-meta">
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>378</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>1 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>latex分数：</p>
-<figure class="highlight latex"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">\<span class="name">frac</span><span class="string">&#123;分子&#125;</span><span class="string">&#123;分母&#125;</span></span></span><br></pre></td></tr></table></figure>
-<p>latex小于等于:</p>
-<figure class="highlight latex"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">\<span class="name">leq</span></span>或<span class="tag">\<span class="name">le</span></span></span><br></pre></td></tr></table></figure>
-<p>大于等于：</p>
-<figure class="highlight latex"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">\<span class="name">geq</span></span>或<span class="tag">\<span class="name">ge</span></span></span><br></pre></td></tr></table></figure>
-<p>Mac下可以将输入法切换为希腊文来打希腊字母</p>
-<p>不等于：</p>
-<figure class="highlight latex"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">\<span class="name">ne</span></span></span><br></pre></td></tr></table></figure>
-<p>大括号：</p>
-<figure class="highlight latex"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">LeakyReLU=<span class="tag">\<span class="name">left</span></span><span class="tag">\<span class="name">&#123;</span></span></span><br><span class="line"><span class="tag">\<span class="name">begin</span><span class="string">&#123;array&#125;</span><span class="string">&#123;lr&#125;</span></span></span><br><span class="line">x&amp;x<span class="tag">\<span class="name">geq</span></span>0  <span class="tag">\<span class="name">\</span></span></span><br><span class="line">px&amp;x&lt;0 </span><br><span class="line"><span class="tag">\<span class="name">end</span><span class="string">&#123;array&#125;</span></span></span><br><span class="line"><span class="tag">\<span class="name">right</span></span>.</span><br></pre></td></tr></table></figure>
-<p>效果：</p>
-<p><span class="math display">\[LeakyReLU=\left\{
-\begin{array}{lr}
-x&amp;x\geq0  \\
-px&amp;x&lt;0 
-\end{array}
-\right.\]</span></p>
-<p>去mathjax.org可以在线将latex转为mathML，然后可以直接拷贝到word中变成公式，然后就可以拷贝到ppt中。</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://taowei1999.com/2020/10/11/Kotlin%E5%85%A5%E9%97%A8/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="fwxiaotao">
-      <meta itemprop="description" content="一个用于记录学习笔记和生活心得的博客网站">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="fwxiaotao博客站">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/10/11/Kotlin%E5%85%A5%E9%97%A8/" class="post-title-link" itemprop="url">Kotlin入门</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-      
-
-      <time title="创建时间：2020-10-11 09:12:21 / 修改时间：09:31:44" itemprop="dateCreated datePublished" datetime="2020-10-11T09:12:21+08:00">2020-10-11</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/" itemprop="url" rel="index"><span itemprop="name">计算机</span></a>
-        </span>
-    </span>
-
-  
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus：</span>
-    
-    <a title="disqus" href="/2020/10/11/Kotlin%E5%85%A5%E9%97%A8/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2020/10/11/Kotlin入门/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-      </div>
-      <div class="post-meta">
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>1k</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>1 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>编译型语言的特点是编译器会将我们的源代码一次性地编译成计算机可识别的二进制文件，而解释型语言的特点是解释器会一行行地读取我们的源代码然后实时地将他们解释称计算机可识别的二进制数据，所以解释型语言效率差一些。</p>
-<p>虽然Java是先编译再运行的，但是Java编译之后生成的并不是计算机可识别的二进制文件，而是一种特殊的class文件，这种文件只有Java虚拟机才能识别，这个Java虚拟机实际上是一种解释器，它将class文件解释成计算机可识别的二进制文件，所以Java实际属于解释型语言。</p>
-<p>那么，如果我们开发一门新的语言，将它编译成同样规格的class文件，Java虚拟机能不能识别呢？答案是肯定的。这就是Kotlin语言的工作原理。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/10/11/Kotlin%E5%85%A5%E9%97%A8/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://taowei1999.com/2020/10/11/leetcode416%E9%A2%98%E8%A7%A3/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="fwxiaotao">
-      <meta itemprop="description" content="一个用于记录学习笔记和生活心得的博客网站">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="fwxiaotao博客站">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/10/11/leetcode416%E9%A2%98%E8%A7%A3/" class="post-title-link" itemprop="url">leetcode416题解</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-      
-
-      <time title="创建时间：2020-10-11 07:48:19 / 修改时间：08:23:24" itemprop="dateCreated datePublished" datetime="2020-10-11T07:48:19+08:00">2020-10-11</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/" itemprop="url" rel="index"><span itemprop="name">计算机</span></a>
-        </span>
-    </span>
-
-  
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus：</span>
-    
-    <a title="disqus" href="/2020/10/11/leetcode416%E9%A2%98%E8%A7%A3/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2020/10/11/leetcode416题解/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-      </div>
-      <div class="post-meta">
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>1.8k</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>2 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="题目描述">题目描述</h2>
-<p>给定一个只包含正整数的非空数组。是否可以将这个数组分割成两个子集，使得两个子集的元素和相等。</p>
-<p>注意:</p>
-<p>每个数组中的元素不会超过 100 数组的大小不会超过 200</p>
-<p>示例 1:</p>
-<p>输入: [1, 5, 11, 5]</p>
-<p>输出: true</p>
-<p>解释: 数组可以分割成 [1, 5, 5] 和 [11].</p>
-<p>示例 2:</p>
-<p>输入: [1, 2, 3, 5]</p>
-<p>输出: false</p>
-<p>解释: 数组不能分割成两个元素和相等的子集.</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/10/11/leetcode416%E9%A2%98%E8%A7%A3/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://taowei1999.com/2020/10/11/2020-10-11%E6%9D%82%E8%B0%88/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="fwxiaotao">
-      <meta itemprop="description" content="一个用于记录学习笔记和生活心得的博客网站">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="fwxiaotao博客站">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/10/11/2020-10-11%E6%9D%82%E8%B0%88/" class="post-title-link" itemprop="url">2020-10-11杂谈</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-      
-
-      <time title="创建时间：2020-10-11 07:42:09 / 修改时间：07:47:24" itemprop="dateCreated datePublished" datetime="2020-10-11T07:42:09+08:00">2020-10-11</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/" itemprop="url" rel="index"><span itemprop="name">计算机</span></a>
-        </span>
-    </span>
-
-  
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus：</span>
-    
-    <a title="disqus" href="/2020/10/11/2020-10-11%E6%9D%82%E8%B0%88/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2020/10/11/2020-10-11杂谈/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-      </div>
-      <div class="post-meta">
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>213</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>1 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>Python中三个有用的函数：</p>
-<ul>
-<li>max()，可以传入数组，直接返回数组的最大值，与之对应的还有min()</li>
-<li>enumerate()，可以传入数组，返回(i, num)的序列，其中i为下标，num为数组对应下标处的元素，可以用于for循环</li>
-<li>sum()，可以传入数组，直接返回数组元素之和</li>
-</ul>
-<p>另外，Python中//表示除法向下取整，类似C语言里的除法，Python里面的/是返回浮点数的。</p>
-<p>定义一个一维全0数组可以这样写：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nums = [<span class="number">0</span>] * n</span><br></pre></td></tr></table></figure>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://taowei1999.com/2020/10/07/Android%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%80%EF%BC%89/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="fwxiaotao">
-      <meta itemprop="description" content="一个用于记录学习笔记和生活心得的博客网站">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="fwxiaotao博客站">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/10/07/Android%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%80%EF%BC%89/" class="post-title-link" itemprop="url">安卓开发学习笔记（一）</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2020-10-07 19:00:53" itemprop="dateCreated datePublished" datetime="2020-10-07T19:00:53+08:00">2020-10-07</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2020-10-11 06:45:06" itemprop="dateModified" datetime="2020-10-11T06:45:06+08:00">2020-10-11</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/" itemprop="url" rel="index"><span itemprop="name">计算机</span></a>
-        </span>
-    </span>
-
-  
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus：</span>
-    
-    <a title="disqus" href="/2020/10/07/Android%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%80%EF%BC%89/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2020/10/07/Android开发学习笔记（一）/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-      </div>
-      <div class="post-meta">
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>3.4k</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>3 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="文件结构">文件结构</h2>
-<p>app/src/main/java目录下存放所有的java代码和Kotlin代码。app/src/main/AndroidManifest.xml是整个Android项目的配置文件，程序中定义的四大组件（Activity、Service、BroadcastReceiver、ContentProvider）都要在这里注册了以后才能用。app/src/main/res目录下，以drawable开头的文件夹存放着图片，以mipmap开头的存放着图标，以values开头的存放着字符串、样式、颜色等配置，以layout开头的存放着布局文件。所有界面都是通过XML文件编写出来的。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/10/07/Android%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%80%EF%BC%89/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
 
   
   <nav class="pagination">
@@ -1869,14 +2182,14 @@ px&amp;x&lt;0
       <i class="fa fa-chart-line"></i>
     </span>
       <span>站点总字数：</span>
-    <span title="站点总字数">30k</span>
+    <span title="站点总字数">60k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">27 分钟</span>
+    <span title="站点阅读时长">54 分钟</span>
   </span>
 </div>
 <div class="busuanzi-count">
